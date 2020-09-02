@@ -1,0 +1,24 @@
+# Iceland
+
+```{r ice_setup, include=FALSE, echo=FALSE}
+if(!require("codebook")){install.packages("codebook");  library(codebook)}
+if(!require("haven")){install.packages("haven");  library(haven)}
+if(!require("here")){install.packages("here");  library(here)}
+if(!require("tidyverse")){install.packages("tidyverse");  library(tidyverse)}
+if(!require("knitr")){install.packages("knitr");  library(knitr)}
+if(!require("magick")){install.packages("magick");  library(magick)}
+if(!require("utf8")){install.packages("utf8");  library(utf8)}
+
+opts_chunk
+
+```
+
+```{r ice_load_data}
+
+di <- read_sav('C:\\Users/svein/Documents/norkomdata/Terrorism_Iceland.sav') 
+
+```
+
+```{r ice_codebook, cache=TRUE}
+codebook(di)
+```

@@ -1,0 +1,24 @@
+# Final Words
+
+```{r swe_setup, include=FALSE, echo=FALSE}
+if(!require("codebook")){install.packages("codebook");  library(codebook)}
+if(!require("haven")){install.packages("haven");  library(haven)}
+if(!require("here")){install.packages("here");  library(here)}
+if(!require("tidyverse")){install.packages("tidyverse");  library(tidyverse)}
+if(!require("knitr")){install.packages("knitr");  library(knitr)}
+if(!require("magick")){install.packages("magick");  library(magick)}
+if(!require("readxl")){install.packages("readxl");  library(readxl)}
+if(!require("utf8")){install.packages("utf8");  library(utf8)}
+
+```
+
+```{r swe_load_data}
+
+ds <- read_dta('C:\\Users/svein/Documents/norkomdata/s5_sohlberg.dta') 
+
+ds <- ds %>% select(-(starts_with('t_q')))
+```
+
+```{r swe_codebook, cache=TRUE}
+codebook(ds)
+```
