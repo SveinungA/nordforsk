@@ -131,6 +131,135 @@ kable(motivation, booktabs = T, linesep = "", escape = F, caption = "Panel varia
  footnote(general = "Variable names. Iceland = motivasjon, Norway =  r15pad_terror1_ran8, Sweden = q269_motiv")
 
 ```
-### NORDFORSK1_DV
+### NORDFORSK1_DV_A
 
+> Would you classify this incident as an act of terrorism?
+
+```{r conjoint_dv_a}
+Source <- c('Yes, this is terrorism', 'No, this is not terrorism', NA)
+Iceland <- count(di, as_label(sp3))
+Norway <- count(dn, as_label(r15pad_terror1_a)) %>% filter(`as_label(r15pad_terror1_a)` != 'Ikke spurt')
+Sweden <- count(ds, as_label(q270))
+post <- bind_cols(Source, Iceland, Norway, Sweden)
+
+kable(post, booktabs = T, linesep = "", escape = F, caption = "Panel variable names and values",  col.names = linebreak(c("Source Questionnaire", "Iceland", 'n', "Norway", 'n', "Sweden", 'n'))) %>%
+ footnote(general = "Variable names. Iceland = sp3, Norway =  r15pad_terror1_a, Sweden = q270")
+```
+
+### NORDFORSK1_DV_B
+
+> Imagine that the authorities suspected that this incident was imminent. To what extent do you agree or disagree that the
+authorities should have the right to:
+
+#### NORDFORSK1_DV_B_1
+
+> Hold people in custody as long as they want without charging them
+
+```{r conjoint_dv_b_1}
+
+Source <- c('Strongly agree', 'Agree', 'Agree somewhat', 'Neither agree nor disagree', 'Disagree somewhat', 'Disagree', 'Strongly disagree', NA)
+Iceland <- count(di, as_label(sp4_1))
+Norway <- count(dn, as_label(r15pad_terror1_b_1)) %>% filter(`as_label(r15pad_terror1_b_1)` != 'Ikke spurt')
+Sweden <- count(ds, as_label(q272_1))
+post <- bind_cols(Source, Iceland, Norway, Sweden)
+
+kable(post, booktabs = T, linesep = "", escape = F, caption = "Panel variable names and values",  col.names = linebreak(c("Source Questionnaire", "Iceland", 'n', "Norway", 'n', "Sweden", 'n'))) %>%
+ footnote(general = "Variable names. Iceland = sp4_1, Norway =  r15pad_terror1_b_1, Sweden = q272_1")
+```
+
+#### NORDFORSK1_DV_B_2
+
+> Listen in on people's telephone conversations
+
+```{r conjoint_dv2_b_2}
+
+Source <- c('Strongly agree', 'Agree', 'Agree somewhat', 'Neither agree nor disagree', 'Disagree somewhat', 'Disagree', 'Strongly disagree', NA)
+Iceland <- count(di, as_label(sp4_2))
+Norway <- count(dn, as_label(r15pad_terror1_b_2)) %>% filter(`as_label(r15pad_terror1_b_2)` != 'Ikke spurt')
+Sweden <- count(ds, as_label(q272_2))
+post <- bind_cols(Source, Iceland, Norway, Sweden)
+
+kable(post, booktabs = T, linesep = "", escape = F, caption = "Panel variable names and values",  col.names = linebreak(c("Source Questionnaire", "Iceland", 'n', "Norway", 'n', "Sweden", 'n'))) %>%
+ footnote(general = "Variable names. Iceland = sp4_2, Norway =  r15pad_terror1_b_2, Sweden = q272_2")
+```
+
+#### NORDFORSK1_DV_B_3
+
+> Randomly stop and search people on the street
+
+```{r conjoint_dv2_b_3}
+
+Source <- c('Strongly agree', 'Agree', 'Agree somewhat', 'Neither agree nor disagree', 'Disagree somewhat', 'Disagree', 'Strongly disagree', NA)
+Iceland <- count(di, as_label(sp4_3))
+Norway <- count(dn, as_label(r15pad_terror1_b_3)) %>% filter(`as_label(r15pad_terror1_b_3)` != 'Ikke spurt')
+Sweden <- count(ds, as_label(q272_3))
+post <- bind_cols(Source, Iceland, Norway, Sweden)
+
+kable(post, booktabs = T, linesep = "", escape = F, caption = "Panel variable names and values",  col.names = linebreak(c("Source Questionnaire", "Iceland", 'n', "Norway", 'n', "Sweden", 'n'))) %>%
+ footnote(general = "Variable names. Iceland = sp4_3, Norway =  r15pad_terror1_b_3, Sweden = q272_3")
+```
+
+#### NORDFORSK1_DV_B_4
+
+> Conduct surveillance of people's Email and Internet communications
+
+```{r conjoint_dv2_b_4}
+
+Source <- c('Strongly agree', 'Agree', 'Agree somewhat', 'Neither agree nor disagree', 'Disagree somewhat', 'Disagree', 'Strongly disagree', NA)
+Iceland <- count(di, as_label(sp4_4))
+Norway <- count(dn, as_label(r15pad_terror1_b_4)) %>% filter(`as_label(r15pad_terror1_b_4)` != 'Ikke spurt')
+Sweden <- count(ds, as_label(q272_4))
+post <- bind_cols(Source, Iceland, Norway, Sweden)
+
+kable(post, booktabs = T, linesep = "", escape = F, caption = "Panel variable names and values",  col.names = linebreak(c("Source Questionnaire", "Iceland", 'n', "Norway", 'n', "Sweden", 'n'))) %>%
+ footnote(general = "Variable names. Iceland = sp4_4, Norway =  r15pad_terror1_b_4, Sweden = q272_4")
+```
+
+#### NORDFORSK1_DV_B_5
+
+> Conduct surveillance/wire tapping of rooms
+
+```{r conjoint_dv2_b_5}
+
+Source <- c('Strongly agree', 'Agree', 'Agree somewhat', 'Neither agree nor disagree', 'Disagree somewhat', 'Disagree', 'Strongly disagree', NA)
+Iceland <- count(di, as_label(sp4_5))
+Norway <- count(dn, as_label(r15pad_terror1_b_5)) %>% filter(`as_label(r15pad_terror1_b_5)` != 'Ikke spurt')
+Sweden <- count(ds, as_label(q272_5))
+post <- bind_cols(Source, Iceland, Norway, Sweden)
+
+kable(post, booktabs = T, linesep = "", escape = F, caption = "Panel variable names and values",  col.names = linebreak(c("Source Questionnaire", "Iceland", 'n', "Norway", 'n', "Sweden", 'n'))) %>%
+ footnote(general = "Variable names. Iceland = sp4_5, Norway =  r15pad_terror1_b_5, Sweden = q272_5")
+```
+
+#### NORDFORSK1_DV_B_6
+
+> Cordon off parts of the city
+
+```{r conjoint_dv2_b_6}
+
+Source <- c('Strongly agree', 'Agree', 'Agree somewhat', 'Neither agree nor disagree', 'Disagree somewhat', 'Disagree', 'Strongly disagree', NA)
+Iceland <- count(di, as_label(sp4_6))
+Norway <- count(dn, as_label(r15pad_terror1_b_6)) %>% filter(`as_label(r15pad_terror1_b_6)` != 'Ikke spurt')
+Sweden <- count(ds, as_label(q272_6))
+post <- bind_cols(Source, Iceland, Norway, Sweden)
+
+kable(post, booktabs = T, linesep = "", escape = F, caption = "Panel variable names and values",  col.names = linebreak(c("Source Questionnaire", "Iceland", 'n', "Norway", 'n', "Sweden", 'n'))) %>%
+ footnote(general = "Variable names. Iceland = sp4_6, Norway =  r15pad_terror1_b_6, Sweden = q272_6")
+```
+
+#### NORDFORSK1_DV_B_7
+
+> Let armed police or the army patrol the streets
+
+```{r conjoint_dv2_b_7}
+
+Source <- c('Strongly agree', 'Agree', 'Agree somewhat', 'Neither agree nor disagree', 'Disagree somewhat', 'Disagree', 'Strongly disagree', NA)
+Iceland <- count(di, as_label(sp4_7))
+Norway <- count(dn, as_label(r15pad_terror1_b_7)) %>% filter(`as_label(r15pad_terror1_b_7)` != 'Ikke spurt')
+Sweden <- count(ds, as_label(q272_7))
+post <- bind_cols(Source, Iceland, Norway, Sweden)
+
+kable(post, booktabs = T, linesep = "", escape = F, caption = "Panel variable names and values",  col.names = linebreak(c("Source Questionnaire", "Iceland", 'n', "Norway", 'n', "Sweden", 'n'))) %>%
+ footnote(general = "Variable names. Iceland = sp4_7, Norway =  r15pad_terror1_b_7, Sweden = q272_7")
+```
 
