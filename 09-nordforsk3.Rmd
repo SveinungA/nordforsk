@@ -1,6 +1,6 @@
 # NORDFORSK3
 
-```{r nordforsk2_setup, include=FALSE, echo=FALSE}
+```{r nordforsk3_setup, include=FALSE, echo=FALSE}
 if(!require("gt")){install.packages("gt");  library(gt)}
 if(!require("haven")){install.packages("haven");  library(haven)}
 if(!require("here")){install.packages("here");  library(here)}
