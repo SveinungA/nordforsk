@@ -15,10 +15,10 @@ opts_chunk
 
 ```{r ice_load_data}
 
-di <- read_sav('C:\\Users/svein/Documents/norkomdata/Terrorism_Iceland.sav') 
+di <- read_sav('C:\\Users/svein/Documents/nordforskdata/Terrorism_Iceland.sav') 
 
 ```
 
 ```{r ice_codebook, cache=TRUE}
-codebook(di)
+#codebook(di)
 ```

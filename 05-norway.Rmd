@@ -14,10 +14,13 @@ if(!require("utf8")){install.packages("utf8");  library(utf8)}
 
 ```{r nor_load_data}
 
-dn <- read_sav('C:\\Users/svein/Documents/norkomdata/Norwegian Citizen Panel - wave 15 - EN.sav') 
+de <- read_sav('C:\\Users/svein/Documents/nordforskdata/Norwegian Citizen Panel - wave 15 - EN.sav') 
+de <- de %>% select(starts_with('r15pad_terror'))
+
+dn <- read_sav('C:\\Users/svein/Documents/nordforskdata/Norwegian Citizen Panel - wave 15 - NO.sav') 
 dn <- dn %>% select(starts_with('r15pad_terror'))
 ```
 
 ```{r nor_codebook, cache=TRUE}
-codebook(dn)
+#codebook(dn)
 ```

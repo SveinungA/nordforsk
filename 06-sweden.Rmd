@@ -14,11 +14,11 @@ if(!require("utf8")){install.packages("utf8");  library(utf8)}
 
 ```{r swe_load_data}
 
-ds <- read_dta('C:\\Users/svein/Documents/norkomdata/s5_sohlberg.dta') 
+ds <- read_dta('C:\\Users/svein/Documents/nordforskdata/s5_sohlberg.dta') 
 
 ds <- ds %>% select(-(starts_with('t_q')))
 ```
 
 ```{r swe_codebook, cache=TRUE}
-codebook(ds)
+#codebook(ds)
 ```
