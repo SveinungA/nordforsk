@@ -30,7 +30,7 @@ Hvor stor trussel er terror for [NORDFORSK2_OBJECT] [NORDFORSK_TENSE].
 Swedish  
 I allmänhet, hur allvarligt hot uppfattar du att terrorism är för x? ">I allmänhet, hur allvarligt hot uppfattar du att terrorism är för [NORDFORSK2_OBJECT] [NORDFORSK_TENSE]?
 
-### NORDFORSK2_OBJECT
+## NORDFORSK2_OBJECT
 
 ```{r nordforsk2_object}
 Source = c('today', 'in the future', NA)
@@ -43,7 +43,7 @@ kable(object, booktabs = T, linesep = "", escape = F, caption = "Panel variable 
   footnote(general = "Variable names. Iceland = terror_2a, Norway =  r15pad_terror2_ran1, Sweden = q274_hot")
 ```
 
-### NORDFORSK_TENSE
+## NORDFORSK_TENSE
 
 ```{r nordforsk2_tense}
 Source = c('today', 'in the future')
@@ -56,7 +56,7 @@ kable(tense, booktabs = T, linesep = "", escape = F, caption = "Panel variable n
   footnote(general = "Variable names. Iceland = terror_2b, Norway =  r15pad_terror2_ran2, Sweden = q274_tempus")
 ```
 
-### NORDFORSK_DV
+## NORDFORSK_DV
 
 ```{r nordforsk2_dv}
 Source = c('Very serious', 'Serious', 'Somewhat serious', 'Not very serious', 'Not a threat', NA)

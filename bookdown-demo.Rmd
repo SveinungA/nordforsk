@@ -1,0 +1,542 @@
+--- 
+title: "A Minimal Book Example"
+author: "Yihui Xie"
+date: "`r Sys.Date()`"
+site: bookdown::bookdown_site
+output: bookdown::gitbook
+documentclass: book
+bibliography: [book.bib, packages.bib]
+biblio-style: apalike
+link-citations: yes
+github-repo: rstudio/bookdown-demo
+description: "This is a minimal example of using the bookdown package to write a book. The output format for this example is bookdown::gitbook."
+---
+
+# Prerequisites
+
+This is a _sample_ book written in **Markdown**. You can use anything that Pandoc's Markdown supports, e.g., a math equation $a^2 + b^2 = c^2$.
+
+The **bookdown** package can be installed from CRAN or Github:
+
+```{r eval=FALSE}
+install.packages("bookdown")
+# or the development version
+# devtools::install_github("rstudio/bookdown")
+```
+
+Remember each Rmd file contains one and only one chapter, and a chapter is defined by the first-level heading `#`.
+
+To compile this example to PDF, you need XeLaTeX. You are recommended to install TinyTeX (which includes XeLaTeX): <https://yihui.name/tinytex/>.
+
+```{r include=FALSE}
+# automatically create a bib database for R packages
+knitr::write_bib(c(
+  .packages(), 'bookdown', 'knitr', 'rmarkdown'
+), 'packages.bib')
+```
+
+<!--chapter:end:index.Rmd-->
+
+# Introduction {#intro}
+
+You can label chapter and section titles using `{#label}` after them, e.g., we can reference Chapter \@ref(intro). If you do not manually label them, there will be automatic labels anyway, e.g., Chapter \@ref(methods).
+
+Figures and tables with captions will be placed in `figure` and `table` environments, respectively.
+
+```{r nice-fig, fig.cap='Here is a nice figure!', out.width='80%', fig.asp=.75, fig.align='center'}
+par(mar = c(4, 4, .1, .1))
+plot(pressure, type = 'b', pch = 19)
+```
+
+Reference a figure by its code chunk label with the `fig:` prefix, e.g., see Figure \@ref(fig:nice-fig). Similarly, you can reference tables generated from `knitr::kable()`, e.g., see Table \@ref(tab:nice-tab).
+
+```{r nice-tab, tidy=FALSE}
+knitr::kable(
+  head(iris, 20), caption = 'Here is a nice table!',
+  booktabs = TRUE
+)
+```
+
+You can write citations, too. For example, we are using the **bookdown** package [@R-bookdown] in this sample book, which was built on top of R Markdown and **knitr** [@xie2015].
+
+<!--chapter:end:01-intro.Rmd-->
+
+# The Individual panels
+
+## Iceland
+
+## Norway 
+
+## Sweden
+
+<!--chapter:end:02-panels.Rmd-->
+
+# Iceland
+
+```{r ice_setup, include=FALSE, echo=FALSE}
+if(!require("codebook")){install.packages("codebook");  library(codebook)}
+if(!require("haven")){install.packages("haven");  library(haven)}
+if(!require("here")){install.packages("here");  library(here)}
+if(!require("tidyverse")){install.packages("tidyverse");  library(tidyverse)}
+if(!require("knitr")){install.packages("knitr");  library(knitr)}
+if(!require("magick")){install.packages("magick");  library(magick)}
+if(!require("utf8")){install.packages("utf8");  library(utf8)}
+
+opts_chunk
+
+```
+
+```{r ice_load_data}
+
+di <- read_sav('C:\\Users/svein/Documents/nordforskdata/Terrorism_Iceland.sav') 
+
+```
+
+```{r ice_codebook, cache=TRUE}
+#codebook(di)
+```
+
+<!--chapter:end:04-iceland.Rmd-->
+
+# Norwegian data
+
+```{r nor_setup, include=FALSE, echo=FALSE}
+if(!require("codebook")){install.packages("codebook");  library(codebook)}
+if(!require("haven")){install.packages("haven");  library(haven)}
+if(!require("here")){install.packages("here");  library(here)}
+if(!require("tidyverse")){install.packages("tidyverse");  library(tidyverse)}
+if(!require("knitr")){install.packages("knitr");  library(knitr)}
+if(!require("magick")){install.packages("magick");  library(magick)}
+if(!require("readxl")){install.packages("readxl");  library(readxl)}
+if(!require("utf8")){install.packages("utf8");  library(utf8)}
+
+```
+
+```{r nor_load_data}
+
+de <- read_sav('C:\\Users/svein/Documents/nordforskdata/Norwegian Citizen Panel - wave 15 - EN.sav') 
+de <- de %>% select(starts_with('r15pad_terror'))
+
+dn <- read_sav('C:\\Users/svein/Documents/nordforskdata/Norwegian Citizen Panel - wave 15 - NO.sav') 
+dn <- dn %>% select(starts_with('r15pad_terror'))
+```
+
+```{r nor_codebook, cache=TRUE}
+#codebook(dn)
+```
+
+<!--chapter:end:05-norway.Rmd-->
+
+`r if (knitr:::is_html_output()) '
+# References {-}
+'`
+
+<!--chapter:end:06-references.Rmd-->
+
+# Final Words
+
+```{r swe_setup, include=FALSE, echo=FALSE}
+if(!require("codebook")){install.packages("codebook");  library(codebook)}
+if(!require("haven")){install.packages("haven");  library(haven)}
+if(!require("here")){install.packages("here");  library(here)}
+if(!require("tidyverse")){install.packages("tidyverse");  library(tidyverse)}
+if(!require("knitr")){install.packages("knitr");  library(knitr)}
+if(!require("magick")){install.packages("magick");  library(magick)}
+if(!require("readxl")){install.packages("readxl");  library(readxl)}
+if(!require("utf8")){install.packages("utf8");  library(utf8)}
+
+```
+
+```{r swe_load_data}
+
+ds <- read_dta('C:\\Users/svein/Documents/nordforskdata/s5_sohlberg.dta') 
+
+ds <- ds %>% select(-(starts_with('t_q')))
+```
+
+```{r swe_codebook, cache=TRUE}
+#codebook(ds)
+```
+
+<!--chapter:end:06-sweden.Rmd-->
+
+# NORDFORSK1
+
+```{r setup, include=FALSE, echo=FALSE}
+if(!require("gt")){install.packages("gt");  library(gt)}
+if(!require("haven")){install.packages("haven");  library(haven)}
+if(!require("here")){install.packages("here");  library(here)}
+if(!require("kableExtra")){install.packages("kableExtra");  library(kableExtra)}
+if(!require("knitr")){install.packages("knitr");  library(knitr)}
+if(!require("magick")){install.packages("magick");  library(magick)}
+if(!require("openxlsx")){install.packages("openxlsx");  library(openxlsx)}
+if(!require("readxl")){install.packages("readxl");  library(readxl)}
+if(!require("sjlabelled")){install.packages("sjlabelled");  library(sjlabelled)}
+if(!require("tidyverse")){install.packages("tidyverse");  library(tidyverse)}
+if(!require("utf8")){install.packages("utf8");  library(utf8)}
+if(!require("webshot")){install.packages("webshot");  library(webshot)}
+
+knitr::opts_chunk$set(echo = FALSE, knitr.kable.NA = "", cache = FALSE, message = FALSE )
+```
+
+This chapter displays tables with distributions for each variable included the conjoint experiment, labelled NORDFORSK 1, as well as question wordings and values for each individual panel.
+
+
+>Could you please now imagine that an incident has taken place in the Nordic region and then consider some questions about the incident below.
+The incident involves a [NORDFORSK1_TACTIC1] that targeted [NORDFORSK1_TARGET] [on Iceland / in Norway / in Sweden]. 
+[NORDFORSK1_CASUALTIES] were killed in [NORDFORSK1_TACTIC2], which was performed by [NORDFORSK1_ADJECTIVE] [NORDFORSK1_SUBJECTIVE]. 
+News coverage suggests [NORDFORSK1_MOTIVATION].
+
+**Translations**
+Icelandic
+
+Norwegian  
+Vi ber deg nå se for deg en tenkt hendelse i Norden, og ta stilling til noen spørsmål vi stiller om hendelsen under.
+Hendelsen gjelder en  [NORDFORSK1_TACTIC1] som fant sted [NORDFORSK1_TARGET] i Norge. 
+[NORDFORSK1_CASUALTIES] ble drept i [NORDFORSK1_TACTIC2], som ble utført av [NORDFORSK1_ADJECTIVE] [NORDFORSK1_SUBJECTIVE].
+Nyhetsdekningen tyder på [NORDFORSK1_MOTIVATION].
+
+Swedish  
+
+## NORDFORSK1_TACTIC1
+```{r conjoint_tactic1}
+Source = c('protest', 'sabotage', 'hostage taking', 'shooting', 'bombing')
+Iceland <- count(di, taktikk1)  
+Norway <- count(dn, as_label(r15pad_terror1_ran1)) %>% filter(!is.na(`as_label(r15pad_terror1_ran1)`))
+Sweden <- count(ds, q269_incidenttyp) %>% filter(n > 10)
+tactic1 <- bind_cols(Source, Iceland, Norway, Sweden)
+
+kable(tactic1, booktabs = T, linesep = "", escape = F, caption = "Panel variable names and values",  col.names = linebreak(c("Source Questionnaire", "Iceland", 'n', "Norway", 'n', "Sweden", 'n'))) %>%
+  footnote(general = "Variable names. Iceland = taktikk1, Norway =  r15pad_terror1_ran1, Sweden = q269_incidenttyp")
+```
+
+## NORDFORSK1_TARGET
+```{r conjoint_target}
+Source = c('a military facility', 'a police station', 'a school', 'a church', 'a mosque', 'a synagogue')
+Iceland <- count(di, mal)  
+Norway <- count(dn, as_label(r15pad_terror1_ran3)) %>% filter(!is.na(`as_label(r15pad_terror1_ran3)`))
+Sweden <- count(ds, q269_plats) %>% filter(n > 10)
+target <- bind_cols(Source, Iceland, Norway, Sweden)
+
+kable(target, booktabs = T, linesep = "", escape = F, caption = "Panel variable names and values",  col.names = linebreak(c("Source Questionnaire", "Iceland", 'n', "Norway", 'n', "Sweden", 'n'))) %>%
+ footnote(general = "Variable names. Iceland = mal, Norway =  r15pad_terror1_ran3, Sweden = q269_plats")
+```
+
+## NORDFORSK1_CASUALTIES
+```{r conjoint_casualties}                  
+Source <-  c('No one', 'One person', 'Two people', 'Ten people')
+Iceland <- count(di, personer)  
+Norway <- count(dn, as_label(r15pad_terror1_ran4)) %>% filter(!is.na(`as_label(r15pad_terror1_ran4)`))
+Sweden <- count(ds, q269_omkomna) %>% filter(n > 10)
+casualties <- bind_cols(Source, Iceland, Norway, Sweden)
+
+kable(casualties, booktabs = T, linesep = "", escape = F, caption = "Panel variable names and values",  col.names = linebreak(c("Source Questionnaire", "Iceland", 'n', "Norway", 'n', "Sweden", 'n'))) %>%
+ footnote(general = "Variable names. Iceland = personer, Norway =  r15pad_terror1_ran4, Sweden = q269_omkomna")
+```
+
+## NORDFORSK1_TACTIC2
+```{r conjoint_tactic2}                
+Source <- c('the protest', 'the sabotage', 'the hostage taking', 'the shooting', 'the bombing')
+Iceland <- count(di, taktikk2)  
+Norway <- count(dn, as_label(r15pad_terror1_ran5)) %>% filter(!is.na(`as_label(r15pad_terror1_ran5)`))
+Sweden <- count(ds, q269_incidenten) %>% filter(n > 10)
+tactic2 <- bind_cols(Source, Iceland, Norway, Sweden)
+
+kable(tactic2, booktabs = T, linesep = "", escape = F, caption = "Panel variable names and values",  col.names = linebreak(c("Source Questionnaire", "Iceland", 'n', "Norway", 'n', "Sweden", 'n'))) %>%
+ footnote(general = "Variable names. Iceland = taktikk2, Norway =  r15pad_terror1_ran5, Sweden = q269_incidenten")
+```
+
+## NORDFORSK1_ADJECTIVE
+```{r conjoint_adjective}
+
+Source = tibble(c('one', 'one Christian', 'one Muslim', 'one left-wing extremist', 'one right-wing extremist'))
+Iceland <- count(di, adjektiv)  
+Norway <- count(dn, as_label(r15pad_terror1_ran6)) %>% filter(!is.na(`as_label(r15pad_terror1_ran6)`))
+Sweden <- count(ds, q269_ideologi) %>% filter(n > 10)
+adjective <- bind_cols(Source, Iceland, Norway, Sweden)
+
+kable(adjective, booktabs = T, linesep = "", escape = F, caption = "Panel variable names and values",  col.names = linebreak(c("Source Questionnaire", "Iceland", 'n', "Norway", 'n', "Sweden", 'n'))) %>%
+ footnote(general = "Variable names. Iceland = adjektiv, Norway =  r15pad_terror1_ran6, Sweden = q269_ideologi")
+
+#adjective <- left_join(adjective_src, adjective_ice, adjective_no, adjective_swe)
+
+``````                      
+     
+## NORDFORSK1_SUBJECTIVE                     
+```{r conjoint_subject}                      
+Source = c('organisation', 'group', 'individual', 'individual of unsound mind')
+Iceland <- count(di, subjekt)  
+Norway <- count(dn, as_label(r15pad_terror1_ran7)) %>% filter(!is.na(`as_label(r15pad_terror1_ran7)`))
+Sweden <- count(ds, q269_subjekt) %>% filter(n > 10)
+subject <- bind_cols(Source, Iceland, Norway, Sweden)
+
+kable(subject, booktabs = T, linesep = "", escape = F, caption = "Panel variable names and values",  col.names = linebreak(c("Source Questionnaire", "Iceland", 'n', "Norway", 'n', "Sweden", 'n'))) %>%
+ footnote(general = "Variable names. Iceland = subjekt, Norway =  r15pad_terror1_ran7, Sweden = q269_subjekt")
+```               
+
+## NORDFORSK1_MOTIVATION
+```{r conjoint_motivation}               
+Source <- c('there was no clear motivation behind the incident', 'the incident was carried out with the aim of changing government policy', 'the motivation behind the incident came from a hatred towards the target')
+Iceland <- count(di, motivasjon)  
+Norway <- count(dn, as_label(r15pad_terror1_ran8)) %>% filter(!is.na(`as_label(r15pad_terror1_ran8)`))
+Sweden <- count(ds, q269_motiv) %>% filter(n > 10)
+motivation <- bind_cols(Source, Iceland, Norway, Sweden)
+
+kable(motivation, booktabs = T, linesep = "", escape = F, caption = "Panel variable names and values",  col.names = linebreak(c("Source Questionnaire", "Iceland", 'n', "Norway", 'n', "Sweden", 'n'))) %>%
+ footnote(general = "Variable names. Iceland = motivasjon, Norway =  r15pad_terror1_ran8, Sweden = q269_motiv")
+
+```
+## NORDFORSK1_DV_A
+
+> Would you classify this incident as an act of terrorism?
+
+```{r conjoint_dv_a}
+Source <- c('Yes, this is terrorism', 'No, this is not terrorism', NA)
+Iceland <- count(di, as_label(sp3))
+Norway <- count(dn, as_label(r15pad_terror1_a)) %>% filter(`as_label(r15pad_terror1_a)` != 'Ikke spurt')
+Sweden <- count(ds, as_label(q270))
+post <- bind_cols(Source, Iceland, Norway, Sweden)
+
+kable(post, booktabs = T, linesep = "", escape = F, caption = "Panel variable names and values",  col.names = linebreak(c("Source Questionnaire", "Iceland", 'n', "Norway", 'n', "Sweden", 'n'))) %>%
+ footnote(general = "Variable names. Iceland = sp3, Norway =  r15pad_terror1_a, Sweden = q270")
+```
+
+## NORDFORSK1_DV_B
+
+> Imagine that the authorities suspected that this incident was imminent. To what extent do you agree or disagree that the
+authorities should have the right to:
+
+### NORDFORSK1_DV_B_1
+
+> Hold people in custody as long as they want without charging them
+
+```{r conjoint_dv_b_1}
+
+Source <- c('Strongly agree', 'Agree', 'Agree somewhat', 'Neither agree nor disagree', 'Disagree somewhat', 'Disagree', 'Strongly disagree', NA)
+Iceland <- count(di, as_label(sp4_1))
+Norway <- count(dn, as_label(r15pad_terror1_b_1)) %>% filter(`as_label(r15pad_terror1_b_1)` != 'Ikke spurt')
+Sweden <- count(ds, as_label(q272_1))
+post <- bind_cols(Source, Iceland, Norway, Sweden)
+
+kable(post, booktabs = T, linesep = "", escape = F, caption = "Panel variable names and values",  col.names = linebreak(c("Source Questionnaire", "Iceland", 'n', "Norway", 'n', "Sweden", 'n'))) %>%
+ footnote(general = "Variable names. Iceland = sp4_1, Norway =  r15pad_terror1_b_1, Sweden = q272_1")
+```
+
+### NORDFORSK1_DV_B_2
+
+> Listen in on people's telephone conversations
+
+```{r conjoint_dv2_b_2}
+
+Source <- c('Strongly agree', 'Agree', 'Agree somewhat', 'Neither agree nor disagree', 'Disagree somewhat', 'Disagree', 'Strongly disagree', NA)
+Iceland <- count(di, as_label(sp4_2))
+Norway <- count(dn, as_label(r15pad_terror1_b_2)) %>% filter(`as_label(r15pad_terror1_b_2)` != 'Ikke spurt')
+Sweden <- count(ds, as_label(q272_2))
+post <- bind_cols(Source, Iceland, Norway, Sweden)
+
+kable(post, booktabs = T, linesep = "", escape = F, caption = "Panel variable names and values",  col.names = linebreak(c("Source Questionnaire", "Iceland", 'n', "Norway", 'n', "Sweden", 'n'))) %>%
+ footnote(general = "Variable names. Iceland = sp4_2, Norway =  r15pad_terror1_b_2, Sweden = q272_2")
+```
+
+### NORDFORSK1_DV_B_3
+
+> Randomly stop and search people on the street
+
+```{r conjoint_dv2_b_3}
+
+Source <- c('Strongly agree', 'Agree', 'Agree somewhat', 'Neither agree nor disagree', 'Disagree somewhat', 'Disagree', 'Strongly disagree', NA)
+Iceland <- count(di, as_label(sp4_3))
+Norway <- count(dn, as_label(r15pad_terror1_b_3)) %>% filter(`as_label(r15pad_terror1_b_3)` != 'Ikke spurt')
+Sweden <- count(ds, as_label(q272_3))
+post <- bind_cols(Source, Iceland, Norway, Sweden)
+
+kable(post, booktabs = T, linesep = "", escape = F, caption = "Panel variable names and values",  col.names = linebreak(c("Source Questionnaire", "Iceland", 'n', "Norway", 'n', "Sweden", 'n'))) %>%
+ footnote(general = "Variable names. Iceland = sp4_3, Norway =  r15pad_terror1_b_3, Sweden = q272_3")
+```
+
+### NORDFORSK1_DV_B_4
+
+> Conduct surveillance of people's Email and Internet communications
+
+```{r conjoint_dv2_b_4}
+
+Source <- c('Strongly agree', 'Agree', 'Agree somewhat', 'Neither agree nor disagree', 'Disagree somewhat', 'Disagree', 'Strongly disagree', NA)
+Iceland <- count(di, as_label(sp4_4))
+Norway <- count(dn, as_label(r15pad_terror1_b_4)) %>% filter(`as_label(r15pad_terror1_b_4)` != 'Ikke spurt')
+Sweden <- count(ds, as_label(q272_4))
+post <- bind_cols(Source, Iceland, Norway, Sweden)
+
+kable(post, booktabs = T, linesep = "", escape = F, caption = "Panel variable names and values",  col.names = linebreak(c("Source Questionnaire", "Iceland", 'n', "Norway", 'n', "Sweden", 'n'))) %>%
+ footnote(general = "Variable names. Iceland = sp4_4, Norway =  r15pad_terror1_b_4, Sweden = q272_4")
+```
+
+### NORDFORSK1_DV_B_5
+
+> Conduct surveillance/wire tapping of rooms
+
+```{r conjoint_dv2_b_5}
+
+Source <- c('Strongly agree', 'Agree', 'Agree somewhat', 'Neither agree nor disagree', 'Disagree somewhat', 'Disagree', 'Strongly disagree', NA)
+Iceland <- count(di, as_label(sp4_5))
+Norway <- count(dn, as_label(r15pad_terror1_b_5)) %>% filter(`as_label(r15pad_terror1_b_5)` != 'Ikke spurt')
+Sweden <- count(ds, as_label(q272_5))
+post <- bind_cols(Source, Iceland, Norway, Sweden)
+
+kable(post, booktabs = T, linesep = "", escape = F, caption = "Panel variable names and values",  col.names = linebreak(c("Source Questionnaire", "Iceland", 'n', "Norway", 'n', "Sweden", 'n'))) %>%
+ footnote(general = "Variable names. Iceland = sp4_5, Norway =  r15pad_terror1_b_5, Sweden = q272_5")
+```
+
+### NORDFORSK1_DV_B_6
+
+> Cordon off parts of the city
+
+```{r conjoint_dv2_b_6}
+
+Source <- c('Strongly agree', 'Agree', 'Agree somewhat', 'Neither agree nor disagree', 'Disagree somewhat', 'Disagree', 'Strongly disagree', NA)
+Iceland <- count(di, as_label(sp4_6))
+Norway <- count(dn, as_label(r15pad_terror1_b_6)) %>% filter(`as_label(r15pad_terror1_b_6)` != 'Ikke spurt')
+Sweden <- count(ds, as_label(q272_6))
+post <- bind_cols(Source, Iceland, Norway, Sweden)
+
+kable(post, booktabs = T, linesep = "", escape = F, caption = "Panel variable names and values",  col.names = linebreak(c("Source Questionnaire", "Iceland", 'n', "Norway", 'n', "Sweden", 'n'))) %>%
+ footnote(general = "Variable names. Iceland = sp4_6, Norway =  r15pad_terror1_b_6, Sweden = q272_6")
+```
+
+### NORDFORSK1_DV_B_7
+
+> Let armed police or the army patrol the streets
+
+```{r conjoint_dv2_b_7}
+
+Source <- c('Strongly agree', 'Agree', 'Agree somewhat', 'Neither agree nor disagree', 'Disagree somewhat', 'Disagree', 'Strongly disagree', NA)
+Iceland <- count(di, as_label(sp4_7))
+Norway <- count(dn, as_label(r15pad_terror1_b_7)) %>% filter(`as_label(r15pad_terror1_b_7)` != 'Ikke spurt')
+Sweden <- count(ds, as_label(q272_7))
+post <- bind_cols(Source, Iceland, Norway, Sweden)
+
+kable(post, booktabs = T, linesep = "", escape = F, caption = "Panel variable names and values",  col.names = linebreak(c("Source Questionnaire", "Iceland", 'n', "Norway", 'n', "Sweden", 'n'))) %>%
+ footnote(general = "Variable names. Iceland = sp4_7, Norway =  r15pad_terror1_b_7, Sweden = q272_7")
+```
+
+
+<!--chapter:end:07-variables.Rmd-->
+
+# NORDFORSK2
+
+```{r nordforsk2_setup, include=FALSE, echo=FALSE}
+if(!require("gt")){install.packages("gt");  library(gt)}
+if(!require("haven")){install.packages("haven");  library(haven)}
+if(!require("here")){install.packages("here");  library(here)}
+if(!require("kableExtra")){install.packages("kableExtra");  library(kableExtra)}
+if(!require("knitr")){install.packages("knitr");  library(knitr)}
+if(!require("magick")){install.packages("magick");  library(magick)}
+if(!require("openxlsx")){install.packages("openxlsx");  library(openxlsx)}
+if(!require("readxl")){install.packages("readxl");  library(readxl)}
+if(!require("sjlabelled")){install.packages("sjlabelled");  library(sjlabelled)}
+if(!require("tidyverse")){install.packages("tidyverse");  library(tidyverse)}
+if(!require("utf8")){install.packages("utf8");  library(utf8)}
+if(!require("webshot")){install.packages("webshot");  library(webshot)}
+
+knitr::opts_chunk$set(echo = FALSE, knitr.kable.NA = "", cache = FALSE, message = FALSE )
+```
+
+> Overall, how serious a threat do you perceive terrorism to be for [NORDFORSK2_OBJECT] [NORDFORSK_TENSE]?
+
+*Translations*
+
+Icelandic  
+Þegar á heildina er litið, hversu alvarlega ógn telur þú hryðjuverk vera fyrir [NORDFORSK2_OBJECT] [NORDFORSK_TENSE]?
+
+Norwegian  
+Hvor stor trussel er terror for [NORDFORSK2_OBJECT] [NORDFORSK_TENSE].
+
+Swedish  
+I allmänhet, hur allvarligt hot uppfattar du att terrorism är för x? ">I allmänhet, hur allvarligt hot uppfattar du att terrorism är för [NORDFORSK2_OBJECT] [NORDFORSK_TENSE]?
+
+## NORDFORSK2_OBJECT
+
+```{r nordforsk2_object}
+Source = c('today', 'in the future', NA)
+Iceland <- count(di, terror_2a)  
+Norway <- count(dn, as_label(r15pad_terror2_ran1)) %>% filter(!is.na(`as_label(r15pad_terror2_ran1)`))
+Sweden <- count(ds, q274_hot) %>% filter(n > 10)
+object <- bind_cols(Source, Iceland, Norway, Sweden)
+
+kable(object, booktabs = T, linesep = "", escape = F, caption = "Panel variable names and values",  col.names = linebreak(c("Source Questionnaire", "Iceland", 'n', "Norway", 'n', "Sweden", 'n'))) %>%
+  footnote(general = "Variable names. Iceland = terror_2a, Norway =  r15pad_terror2_ran1, Sweden = q274_hot")
+```
+
+## NORDFORSK_TENSE
+
+```{r nordforsk2_tense}
+Source = c('today', 'in the future')
+Iceland <- count(di, terror_2b)  
+Norway <- count(dn, as_label(r15pad_terror2_ran2)) %>% filter(!is.na(`as_label(r15pad_terror2_ran2)`))
+Sweden <- count(ds, q274_tempus) %>% filter(n > 10)
+tense <- bind_cols(Source, Iceland, Norway, Sweden)
+
+kable(tense, booktabs = T, linesep = "", escape = F, caption = "Panel variable names and values",  col.names = linebreak(c("Source Questionnaire", "Iceland", 'n', "Norway", 'n', "Sweden", 'n'))) %>%
+  footnote(general = "Variable names. Iceland = terror_2b, Norway =  r15pad_terror2_ran2, Sweden = q274_tempus")
+```
+
+## NORDFORSK_DV
+
+```{r nordforsk2_dv}
+Source = c('Very serious', 'Serious', 'Somewhat serious', 'Not very serious', 'Not a threat', NA)
+Iceland <- count(di, sp5)  
+Norway <- count(dn, as_label(r15pad_terror2)) %>% filter(`as_label(r15pad_terror2)` != 'Ikke spurt')
+Sweden <- count(ds, q274) 
+post <- bind_cols(Source, Iceland, Norway, Sweden)
+
+kable(post, booktabs = T, linesep = "", escape = F, caption = "Panel variable names and values",  col.names = linebreak(c("Source Questionnaire", "Iceland", 'n', "Norway", 'n', "Sweden", 'n'))) %>%
+  footnote(general = "Variable names. Iceland = sp5, Norway =  r15pad_terror2, Sweden = q274")
+```
+
+<!--chapter:end:08-nordforsk2.Rmd-->
+
+# NORDFORSK3
+
+```{r nordforsk2_setup, include=FALSE, echo=FALSE}
+if(!require("gt")){install.packages("gt");  library(gt)}
+if(!require("haven")){install.packages("haven");  library(haven)}
+if(!require("here")){install.packages("here");  library(here)}
+if(!require("kableExtra")){install.packages("kableExtra");  library(kableExtra)}
+if(!require("knitr")){install.packages("knitr");  library(knitr)}
+if(!require("magick")){install.packages("magick");  library(magick)}
+if(!require("openxlsx")){install.packages("openxlsx");  library(openxlsx)}
+if(!require("readxl")){install.packages("readxl");  library(readxl)}
+if(!require("sjlabelled")){install.packages("sjlabelled");  library(sjlabelled)}
+if(!require("tidyverse")){install.packages("tidyverse");  library(tidyverse)}
+if(!require("utf8")){install.packages("utf8");  library(utf8)}
+if(!require("webshot")){install.packages("webshot");  library(webshot)}
+
+knitr::opts_chunk$set(echo = FALSE, knitr.kable.NA = "", cache = FALSE, message = FALSE )
+```
+
+> To what extent do you agree that the safeguarding of society's security should be at the expense of individuals' freedom (such
+as protection of privacy and the right to privacy)?
+
+*Translations*
+
+Icelandic  
+Hversu sammála ert þú að verndun öryggis í samfélaginu ætti að vera á kostnað einstaklingsfrelsis (til dæmis persónuverndar og réttinum til einkalífs)?
+
+Norway  
+Ivaretakelse av sikkerhet bør gå på bekostning av enkeltindividers frihet.
+
+Sweden  
+I vilken utsträckning samhällets säkerhet på bekostnad av individers frihet?
+
+```{r nordforsk3}
+Source = c('Strongly agree', 'Agree', 'Agree somewhat', 'Neither agree nor disagree', 'Disagree somewhat', 'Disagree', 'Strongly disagree', NA)
+Iceland <- count(di, sp6)  
+Norway <- count(dn, as_label(r15pad_terror3)) %>% filter(`as_label(r15pad_terror3)` != 'Ikke svart')
+Sweden <- count(ds, q276) %>% filter(n > 10)
+nordforsk3 <- bind_cols(Source, Iceland, Norway, Sweden)
+
+kable(nordforsk3, booktabs = T, linesep = "", escape = F, caption = "Panel variable names and values",  col.names = linebreak(c("Source Questionnaire", "Iceland", 'n', "Norway", 'n', "Sweden", 'n'))) %>%
+  footnote(general = "Variable names. Iceland = sp6, Norway =  r15pad_terror3, Sweden = q276")
+```
+
+<!--chapter:end:09-nordforsk3.Rmd-->
+
