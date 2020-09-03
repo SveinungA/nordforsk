@@ -1,6 +1,6 @@
 # NORDFORSK2
 
-```{r setup, include=FALSE, echo=FALSE}
+```{r nordforsk2_setup, include=FALSE, echo=FALSE}
 if(!require("gt")){install.packages("gt");  library(gt)}
 if(!require("haven")){install.packages("haven");  library(haven)}
 if(!require("here")){install.packages("here");  library(here)}
@@ -17,36 +17,54 @@ if(!require("webshot")){install.packages("webshot");  library(webshot)}
 knitr::opts_chunk$set(echo = FALSE, knitr.kable.NA = "", cache = FALSE, message = FALSE )
 ```
 
+> Overall, how serious a threat do you perceive terrorism to be for [NORDFORSK2_OBJECT] [NORDFORSK_TENSE]?
 
-This chapter displays tables with distributions for each variable included the, labelled NORDFORSK 1, as well as question wordings and values for each individual panel.
+*Translations*
 
-## NORDFORSK2
-
->Could you please now imagine that an incident has taken place in the Nordic region and then consider some questions about the incident below.
-The incident involves a [Tactic 1] that targeted [Target] [on Iceland / in Norway / in Sweden]. 
-[Casualties] were killed in [Tactic 2], which was performed by [Adjective] [Subjective]. 
-News coverage suggests [Motivation].
-
-**Translations**
-Icelandic
+Icelandic  
+Þegar á heildina er litið, hversu alvarlega ógn telur þú hryðjuverk vera fyrir [NORDFORSK2_OBJECT] [NORDFORSK_TENSE]?
 
 Norwegian  
-Vi ber deg nå se for deg en tenkt hendelse i Norden, og ta stilling til noen spørsmål vi stiller om hendelsen under.
-Hendelsen gjelder en  [Tactic 1] som fant sted [Target] i Norge. 
-[Casualties] ble drept i [Tactic2], som ble utført av [Adjective] [Subjective].
-Nyhetsdekningen tyder på [Motivation].
+Hvor stor trussel er terror for [NORDFORSK2_OBJECT] [NORDFORSK_TENSE].
 
 Swedish  
+I allmänhet, hur allvarligt hot uppfattar du att terrorism är för x? ">I allmänhet, hur allvarligt hot uppfattar du att terrorism är för [NORDFORSK2_OBJECT] [NORDFORSK_TENSE]?
 
-### NORDFORSK2_A
+### NORDFORSK2_OBJECT
 
-```{r conjoint_tactic1}
-Source = c('protest', 'sabotage', 'hostage taking', 'shooting', 'bombing')
-Iceland <- count(di, taktikk1)  
-Norway <- count(dn, as_label(r15pad_terror1_ran1)) %>% filter(!is.na(`as_label(r15pad_terror1_ran1)`))
-Sweden <- count(ds, q269_incidenttyp) %>% filter(n > 10)
-tactic1 <- bind_cols(Source, Iceland, Norway, Sweden)
+```{r nordforsk2_object}
+Source = c('today', 'in the future', NA)
+Iceland <- count(di, terror_2a)  
+Norway <- count(dn, as_label(r15pad_terror2_ran1)) %>% filter(!is.na(`as_label(r15pad_terror2_ran1)`))
+Sweden <- count(ds, q274_hot) %>% filter(n > 10)
+object <- bind_cols(Source, Iceland, Norway, Sweden)
 
-kable(tactic1, booktabs = T, linesep = "", escape = F, caption = "Panel variable names and values",  col.names = linebreak(c("Source Questionnaire", "Iceland", 'n', "Norway", 'n', "Sweden", 'n'))) %>%
-  footnote(general = "Variable names. Iceland = taktikk1, Norway =  r15pad_terror1_ran1, Sweden = q269_incidenttyp")
+kable(object, booktabs = T, linesep = "", escape = F, caption = "Panel variable names and values",  col.names = linebreak(c("Source Questionnaire", "Iceland", 'n', "Norway", 'n', "Sweden", 'n'))) %>%
+  footnote(general = "Variable names. Iceland = terror_2a, Norway =  r15pad_terror2_ran1, Sweden = q274_hot")
+```
+
+### NORDFORSK_TENSE
+
+```{r nordforsk2_tense}
+Source = c('today', 'in the future')
+Iceland <- count(di, terror_2b)  
+Norway <- count(dn, as_label(r15pad_terror2_ran2)) %>% filter(!is.na(`as_label(r15pad_terror2_ran2)`))
+Sweden <- count(ds, q274_tempus) %>% filter(n > 10)
+tense <- bind_cols(Source, Iceland, Norway, Sweden)
+
+kable(tense, booktabs = T, linesep = "", escape = F, caption = "Panel variable names and values",  col.names = linebreak(c("Source Questionnaire", "Iceland", 'n', "Norway", 'n', "Sweden", 'n'))) %>%
+  footnote(general = "Variable names. Iceland = terror_2b, Norway =  r15pad_terror2_ran2, Sweden = q274_tempus")
+```
+
+### NORDFORSK_DV
+
+```{r nordforsk2_dv}
+Source = c('Very serious', 'Serious', 'Somewhat serious', 'Not very serious', 'Not a threat', NA)
+Iceland <- count(di, sp5)  
+Norway <- count(dn, as_label(r15pad_terror2)) %>% filter(`as_label(r15pad_terror2)` != 'Ikke spurt')
+Sweden <- count(ds, q274) 
+post <- bind_cols(Source, Iceland, Norway, Sweden)
+
+kable(post, booktabs = T, linesep = "", escape = F, caption = "Panel variable names and values",  col.names = linebreak(c("Source Questionnaire", "Iceland", 'n', "Norway", 'n', "Sweden", 'n'))) %>%
+  footnote(general = "Variable names. Iceland = sp5, Norway =  r15pad_terror2, Sweden = q274")
 ```

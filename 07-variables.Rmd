@@ -1,9 +1,4 @@
----
-output:
-  word_document: default
-  html_document: default
----
-# EIPS variables: Formulations and distributions {#variables}
+# NORDFORSK1
 
 ```{r setup, include=FALSE, echo=FALSE}
 if(!require("gt")){install.packages("gt");  library(gt)}
@@ -22,28 +17,26 @@ if(!require("webshot")){install.packages("webshot");  library(webshot)}
 knitr::opts_chunk$set(echo = FALSE, knitr.kable.NA = "", cache = FALSE, message = FALSE )
 ```
 
+This chapter displays tables with distributions for each variable included the conjoint experiment, labelled NORDFORSK 1, as well as question wordings and values for each individual panel.
 
-This chapter displays tables with distributions for each variable included in the survey, as well as question wordings and values for each individual panel.
-
-## NORDFORSK1
 
 >Could you please now imagine that an incident has taken place in the Nordic region and then consider some questions about the incident below.
-The incident involves a [Tactic 1] that targeted [Target] [on Iceland / in Norway / in Sweden]. 
-[Casualties] were killed in [Tactic 2], which was performed by [Adjective] [Subjective]. 
-News coverage suggests [Motivation].
+The incident involves a [NORDFORSK1_TACTIC1] that targeted [NORDFORSK1_TARGET] [on Iceland / in Norway / in Sweden]. 
+[NORDFORSK1_CASUALTIES] were killed in [NORDFORSK1_TACTIC2], which was performed by [NORDFORSK1_ADJECTIVE] [NORDFORSK1_SUBJECTIVE]. 
+News coverage suggests [NORDFORSK1_MOTIVATION].
 
 **Translations**
 Icelandic
 
 Norwegian  
 Vi ber deg nå se for deg en tenkt hendelse i Norden, og ta stilling til noen spørsmål vi stiller om hendelsen under.
-Hendelsen gjelder en  [Tactic 1] som fant sted [Target] i Norge. 
-[Casualties] ble drept i [Tactic2], som ble utført av [Adjective] [Subjective].
-Nyhetsdekningen tyder på [Motivation].
+Hendelsen gjelder en  [NORDFORSK1_TACTIC1] som fant sted [NORDFORSK1_TARGET] i Norge. 
+[NORDFORSK1_CASUALTIES] ble drept i [NORDFORSK1_TACTIC2], som ble utført av [NORDFORSK1_ADJECTIVE] [NORDFORSK1_SUBJECTIVE].
+Nyhetsdekningen tyder på [NORDFORSK1_MOTIVATION].
 
 Swedish  
 
-### NORDFORSK1_TACTIC1
+## NORDFORSK1_TACTIC1
 ```{r conjoint_tactic1}
 Source = c('protest', 'sabotage', 'hostage taking', 'shooting', 'bombing')
 Iceland <- count(di, taktikk1)  
@@ -55,7 +48,7 @@ kable(tactic1, booktabs = T, linesep = "", escape = F, caption = "Panel variable
   footnote(general = "Variable names. Iceland = taktikk1, Norway =  r15pad_terror1_ran1, Sweden = q269_incidenttyp")
 ```
 
-### NORDFORSK1_TARGET
+## NORDFORSK1_TARGET
 ```{r conjoint_target}
 Source = c('a military facility', 'a police station', 'a school', 'a church', 'a mosque', 'a synagogue')
 Iceland <- count(di, mal)  
@@ -67,7 +60,7 @@ kable(target, booktabs = T, linesep = "", escape = F, caption = "Panel variable 
  footnote(general = "Variable names. Iceland = mal, Norway =  r15pad_terror1_ran3, Sweden = q269_plats")
 ```
 
-### NORDFORSK1_CASUALTIES
+## NORDFORSK1_CASUALTIES
 ```{r conjoint_casualties}                  
 Source <-  c('No one', 'One person', 'Two people', 'Ten people')
 Iceland <- count(di, personer)  
@@ -79,7 +72,7 @@ kable(casualties, booktabs = T, linesep = "", escape = F, caption = "Panel varia
  footnote(general = "Variable names. Iceland = personer, Norway =  r15pad_terror1_ran4, Sweden = q269_omkomna")
 ```
 
-### NORDFORSK1_TACTIC2
+## NORDFORSK1_TACTIC2
 ```{r conjoint_tactic2}                
 Source <- c('the protest', 'the sabotage', 'the hostage taking', 'the shooting', 'the bombing')
 Iceland <- count(di, taktikk2)  
@@ -91,7 +84,7 @@ kable(tactic2, booktabs = T, linesep = "", escape = F, caption = "Panel variable
  footnote(general = "Variable names. Iceland = taktikk2, Norway =  r15pad_terror1_ran5, Sweden = q269_incidenten")
 ```
 
-### NORDFORSK1_ADJECTIVE
+## NORDFORSK1_ADJECTIVE
 ```{r conjoint_adjective}
 
 Source = tibble(c('one', 'one Christian', 'one Muslim', 'one left-wing extremist', 'one right-wing extremist'))
@@ -107,7 +100,7 @@ kable(adjective, booktabs = T, linesep = "", escape = F, caption = "Panel variab
 
 ``````                      
      
-### NORDFORSK1_MOTIVATION                      
+## NORDFORSK1_SUBJECTIVE                     
 ```{r conjoint_subject}                      
 Source = c('organisation', 'group', 'individual', 'individual of unsound mind')
 Iceland <- count(di, subjekt)  
@@ -119,7 +112,7 @@ kable(subject, booktabs = T, linesep = "", escape = F, caption = "Panel variable
  footnote(general = "Variable names. Iceland = subjekt, Norway =  r15pad_terror1_ran7, Sweden = q269_subjekt")
 ```               
 
-### NORDFORSK1_MOTIVATION
+## NORDFORSK1_MOTIVATION
 ```{r conjoint_motivation}               
 Source <- c('there was no clear motivation behind the incident', 'the incident was carried out with the aim of changing government policy', 'the motivation behind the incident came from a hatred towards the target')
 Iceland <- count(di, motivasjon)  
@@ -131,7 +124,7 @@ kable(motivation, booktabs = T, linesep = "", escape = F, caption = "Panel varia
  footnote(general = "Variable names. Iceland = motivasjon, Norway =  r15pad_terror1_ran8, Sweden = q269_motiv")
 
 ```
-### NORDFORSK1_DV_A
+## NORDFORSK1_DV_A
 
 > Would you classify this incident as an act of terrorism?
 
@@ -146,12 +139,12 @@ kable(post, booktabs = T, linesep = "", escape = F, caption = "Panel variable na
  footnote(general = "Variable names. Iceland = sp3, Norway =  r15pad_terror1_a, Sweden = q270")
 ```
 
-### NORDFORSK1_DV_B
+## NORDFORSK1_DV_B
 
 > Imagine that the authorities suspected that this incident was imminent. To what extent do you agree or disagree that the
 authorities should have the right to:
 
-#### NORDFORSK1_DV_B_1
+### NORDFORSK1_DV_B_1
 
 > Hold people in custody as long as they want without charging them
 
@@ -167,7 +160,7 @@ kable(post, booktabs = T, linesep = "", escape = F, caption = "Panel variable na
  footnote(general = "Variable names. Iceland = sp4_1, Norway =  r15pad_terror1_b_1, Sweden = q272_1")
 ```
 
-#### NORDFORSK1_DV_B_2
+### NORDFORSK1_DV_B_2
 
 > Listen in on people's telephone conversations
 
@@ -183,7 +176,7 @@ kable(post, booktabs = T, linesep = "", escape = F, caption = "Panel variable na
  footnote(general = "Variable names. Iceland = sp4_2, Norway =  r15pad_terror1_b_2, Sweden = q272_2")
 ```
 
-#### NORDFORSK1_DV_B_3
+### NORDFORSK1_DV_B_3
 
 > Randomly stop and search people on the street
 
@@ -199,7 +192,7 @@ kable(post, booktabs = T, linesep = "", escape = F, caption = "Panel variable na
  footnote(general = "Variable names. Iceland = sp4_3, Norway =  r15pad_terror1_b_3, Sweden = q272_3")
 ```
 
-#### NORDFORSK1_DV_B_4
+### NORDFORSK1_DV_B_4
 
 > Conduct surveillance of people's Email and Internet communications
 
@@ -215,7 +208,7 @@ kable(post, booktabs = T, linesep = "", escape = F, caption = "Panel variable na
  footnote(general = "Variable names. Iceland = sp4_4, Norway =  r15pad_terror1_b_4, Sweden = q272_4")
 ```
 
-#### NORDFORSK1_DV_B_5
+### NORDFORSK1_DV_B_5
 
 > Conduct surveillance/wire tapping of rooms
 
@@ -231,7 +224,7 @@ kable(post, booktabs = T, linesep = "", escape = F, caption = "Panel variable na
  footnote(general = "Variable names. Iceland = sp4_5, Norway =  r15pad_terror1_b_5, Sweden = q272_5")
 ```
 
-#### NORDFORSK1_DV_B_6
+### NORDFORSK1_DV_B_6
 
 > Cordon off parts of the city
 
@@ -247,7 +240,7 @@ kable(post, booktabs = T, linesep = "", escape = F, caption = "Panel variable na
  footnote(general = "Variable names. Iceland = sp4_6, Norway =  r15pad_terror1_b_6, Sweden = q272_6")
 ```
 
-#### NORDFORSK1_DV_B_7
+### NORDFORSK1_DV_B_7
 
 > Let armed police or the army patrol the streets
 
