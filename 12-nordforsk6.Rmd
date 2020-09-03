@@ -143,11 +143,12 @@ Frivilligorganisationer
 Source <- c('Extremely good', 'Very good', 'Somewhat good', 'Neither good nor bad', 'Somewhat bad', 'Very bad', 'Extremely bad', NA)
 Iceland <- count(di, as_label(sp9_5)) 
 Norway <- count(dn, as_label(r15pad_terror8_5)) %>% filter(`as_label(r15pad_terror8_5)` != 'Ikke spurt')
-Sweden <- count(ds, as_label(q282_5))
+Sweden <- count(ds, as_label(q282_5)) %>% add_row(`as_label(q282_5)`=NA, n= NA, .before=1)
 nordforsk6_5 <- bind_cols(Source, Iceland, Norway, Sweden)
 
 kable(nordforsk6_5, booktabs = T, linesep = "", escape = F, caption = "Panel variable names and values",  col.names = linebreak(c("Source Questionnaire", "Iceland", 'n', "Norway", 'n', "Sweden", 'n'))) %>%
-  footnote(general = "Variable names. Iceland = sp9_5, Norway =  r15pad_terror8_5, Sweden = q282_5")
+  footnote(general = "Variable names. Iceland = sp9_5, Norway =  r15pad_terror8_5, Sweden = q282_5") %>% 
+  footnote(general = 'Obs! Value *Extremt bra* appears to be missing in the data set')
 ```
 
 ## NORDFORSK6_6
@@ -155,7 +156,6 @@ kable(nordforsk6_5, booktabs = T, linesep = "", escape = F, caption = "Panel var
 > NGOs
 
 Individual citizens
-
 
 Iceland  
 Almennir borgarar
@@ -170,7 +170,7 @@ Den enskilde invånaren
 Source <- c('Extremely good', 'Very good', 'Somewhat good', 'Neither good nor bad', 'Somewhat bad', 'Very bad', 'Extremely bad', NA)
 Iceland <- count(di, as_label(sp9_6)) 
 Norway <- count(dn, as_label(r15pad_terror8_6)) %>% filter(`as_label(r15pad_terror8_6)` != 'Ikke spurt')
-Sweden <- count(ds, as_label(q282_6))
+Sweden <- count(ds, as_label(q282_6)) %>% add_row(`as_label(q282_6)`=NA, n=NA, .before = 1)
 nordforsk6_6 <- bind_cols(Source, Iceland, Norway, Sweden)
 
 kable(nordforsk6_6, booktabs = T, linesep = "", escape = F, caption = "Panel variable names and values",  col.names = linebreak(c("Source Questionnaire", "Iceland", 'n', "Norway", 'n', "Sweden", 'n'))) %>%
