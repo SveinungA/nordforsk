@@ -1,0 +1,178 @@
+# NORDFORSK6
+
+```{r nordforsk6_setup, include=FALSE, echo=FALSE}
+if(!require("gt")){install.packages("gt");  library(gt)}
+if(!require("haven")){install.packages("haven");  library(haven)}
+if(!require("here")){install.packages("here");  library(here)}
+if(!require("kableExtra")){install.packages("kableExtra");  library(kableExtra)}
+if(!require("knitr")){install.packages("knitr");  library(knitr)}
+if(!require("magick")){install.packages("magick");  library(magick)}
+if(!require("openxlsx")){install.packages("openxlsx");  library(openxlsx)}
+if(!require("readxl")){install.packages("readxl");  library(readxl)}
+if(!require("sjlabelled")){install.packages("sjlabelled");  library(sjlabelled)}
+if(!require("tidyverse")){install.packages("tidyverse");  library(tidyverse)}
+if(!require("utf8")){install.packages("utf8");  library(utf8)}
+if(!require("webshot")){install.packages("webshot");  library(webshot)}
+
+knitr::opts_chunk$set(echo = FALSE, knitr.kable.NA = "", cache = FALSE, message = FALSE )
+```
+
+> In your opinion, how good or bad are the following actors [on Iceland / in Norway / in Sweden] regarding their ability to deal with the risk of terrorist attacks?
+
+*Translations*
+
+Iceland  
+Hversu vel eða illa telur þú að eftirfarandi aðilar á Íslandi séu í stakk búnir til að bregðast við hættunni sem stafar af hryðjuverkaárásum? 
+
+Norway  
+Hvor godt i stand til å håndtere terrorangrep: 
+
+Sweden 
+Hantera risk terrorattacker: 
+
+## NORDFORSK6_1
+
+> International organizations
+
+Iceland  
+Alþjóðastofnanir
+
+Norway  
+Internasjonale organisasjoner
+
+Sweden  
+Internationella organisationer
+
+```{r nordforsk6_1}
+Source <- c('Extremely good', 'Very good', 'Somewhat good', 'Neither good nor bad', 'Somewhat bad', 'Very bad', 'Extremely bad', NA)
+Iceland <- count(di, as_label(sp9_1))
+Norway <- count(dn, as_label(r15pad_terror8_1)) %>% filter(`as_label(r15pad_terror8_1)` != 'Ikke spurt')
+Sweden <- count(ds, as_label(q282_1))
+nordforsk6_1 <- bind_cols(Source, Iceland, Norway, Sweden)
+
+kable(nordforsk6_1, booktabs = T, linesep = "", escape = F, caption = "Panel variable names and values",  col.names = linebreak(c("Source Questionnaire", "Iceland", 'n', "Norway", 'n', "Sweden", 'n'))) %>%
+  footnote(general = "Variable names. Iceland = sp9_1, Norway =  r15pad_terror8_1, Sweden = q282_1")
+```
+
+## NORDFORSK6_2
+
+> National authorities
+
+Iceland  
+Ríkisstjórnin
+
+Norway  
+Nasjonale myndigheter
+
+Sweden  
+Nationella myndigheter
+
+```{r nordforsk6_2}
+Source <- c('Extremely good', 'Very good', 'Somewhat good', 'Neither good nor bad', 'Somewhat bad', 'Very bad', 'Extremely bad', NA)
+Iceland <- count(di, as_label(sp9_2)) 
+Norway <- count(dn, as_label(r15pad_terror8_2)) %>% filter(`as_label(r15pad_terror8_2)` != 'Ikke spurt')
+Sweden <- count(ds, as_label(q282_2))
+nordforsk6_2 <- bind_cols(Source, Iceland, Norway, Sweden)
+
+kable(nordforsk6_2, booktabs = T, linesep = "", escape = F, caption = "Panel variable names and values",  col.names = linebreak(c("Source Questionnaire", "Iceland", 'n', "Norway", 'n', "Sweden", 'n'))) %>%
+  footnote(general = "Variable names. Iceland = sp9_2, Norway =  r15pad_terror8_2, Sweden = q282_2")
+```
+
+## NORDFORSK6_3
+
+> Local authorities
+
+Iceland  
+Sveitarstjórnir
+
+Norway  
+Lokale myndigheter
+
+Sweden  
+Lokala myndigheter
+
+```{r nordforsk6_3}
+Source <- c('Extremely good', 'Very good', 'Somewhat good', 'Neither good nor bad', 'Somewhat bad', 'Very bad', 'Extremely bad', NA)
+Iceland <- count(di, as_label(sp9_3)) 
+Norway <- count(dn, as_label(r15pad_terror8_3)) %>% filter(`as_label(r15pad_terror8_3)` != 'Ikke spurt')
+Sweden <- count(ds, as_label(q282_3))
+nordforsk6_3 <- bind_cols(Source, Iceland, Norway, Sweden)
+
+kable(nordforsk6_3, booktabs = T, linesep = "", escape = F, caption = "Panel variable names and values",  col.names = linebreak(c("Source Questionnaire", "Iceland", 'n', "Norway", 'n', "Sweden", 'n'))) %>%
+  footnote(general = "Variable names. Iceland = sp9_3, Norway =  r15pad_terror8_3, Sweden = q282_3")
+```
+
+## NORDFORSK6_4
+
+> The police
+
+Iceland  
+Lögreglan
+
+Norway  
+Politiet
+
+Sweden  
+Polisen   
+
+```{r nordforsk6_4}
+Source <- c('Extremely good', 'Very good', 'Somewhat good', 'Neither good nor bad', 'Somewhat bad', 'Very bad', 'Extremely bad', NA)
+Iceland <- count(di, as_label(sp9_4)) 
+Norway <- count(dn, as_label(r15pad_terror8_4)) %>% filter(`as_label(r15pad_terror8_4)` != 'Ikke spurt')
+Sweden <- count(ds, as_label(q282_4))
+nordforsk6_4 <- bind_cols(Source, Iceland, Norway, Sweden)
+
+kable(nordforsk6_4, booktabs = T, linesep = "", escape = F, caption = "Panel variable names and values",  col.names = linebreak(c("Source Questionnaire", "Iceland", 'n', "Norway", 'n', "Sweden", 'n'))) %>%
+  footnote(general = "Variable names. Iceland = sp9_4, Norway =  r15pad_terror8_4, Sweden = q282_4")
+```
+
+## NORDFORSK6_5
+
+> NGOs
+
+Iceland  
+Frjáls félagasamtök
+
+Norway  
+Frivillige organisasjoner
+
+Sweden  
+Frivilligorganisationer
+
+```{r nordforsk6_5}
+Source <- c('Extremely good', 'Very good', 'Somewhat good', 'Neither good nor bad', 'Somewhat bad', 'Very bad', 'Extremely bad', NA)
+Iceland <- count(di, as_label(sp9_5)) 
+Norway <- count(dn, as_label(r15pad_terror8_5)) %>% filter(`as_label(r15pad_terror8_5)` != 'Ikke spurt')
+Sweden <- count(ds, as_label(q282_5))
+nordforsk6_5 <- bind_cols(Source, Iceland, Norway, Sweden)
+
+kable(nordforsk6_5, booktabs = T, linesep = "", escape = F, caption = "Panel variable names and values",  col.names = linebreak(c("Source Questionnaire", "Iceland", 'n', "Norway", 'n', "Sweden", 'n'))) %>%
+  footnote(general = "Variable names. Iceland = sp9_5, Norway =  r15pad_terror8_5, Sweden = q282_5")
+```
+
+## NORDFORSK6_6
+
+> NGOs
+
+Individual citizens
+
+
+Iceland  
+Almennir borgarar
+
+Norway  
+Den enkelte innbygger
+
+Sweden  
+Den enskilde invånaren
+
+```{r nordforsk6_6}
+Source <- c('Extremely good', 'Very good', 'Somewhat good', 'Neither good nor bad', 'Somewhat bad', 'Very bad', 'Extremely bad', NA)
+Iceland <- count(di, as_label(sp9_6)) 
+Norway <- count(dn, as_label(r15pad_terror8_6)) %>% filter(`as_label(r15pad_terror8_6)` != 'Ikke spurt')
+Sweden <- count(ds, as_label(q282_6))
+nordforsk6_6 <- bind_cols(Source, Iceland, Norway, Sweden)
+
+kable(nordforsk6_6, booktabs = T, linesep = "", escape = F, caption = "Panel variable names and values",  col.names = linebreak(c("Source Questionnaire", "Iceland", 'n', "Norway", 'n', "Sweden", 'n'))) %>%
+  footnote(general = "Variable names. Iceland = sp9_6, Norway =  r15pad_terror8_6, Sweden = q282_6")
+```

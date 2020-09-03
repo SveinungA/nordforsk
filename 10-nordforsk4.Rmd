@@ -33,11 +33,11 @@ Hur viktiga är åtgärder mot terrorism för dig personligen?
 
 ```{r nordforsk4}
 Source = c('Very important', 'Important', 'Somewhat important', 'Slightly important', 'Not important at all', NA)
-Iceland <- count(di, sp7)  
+Iceland <- count(di, as_label(sp7))  
 Norway <- count(dn, as_label(r15pad_terror5)) %>% filter(`as_label(r15pad_terror5)` != 'Ikke spurt')
-Sweden <- count(ds, q278) %>% filter(n > 10)
-nordforsk3 <- bind_cols(Source, Iceland, Norway, Sweden)
+Sweden <- count(ds, as_label(q278)) %>% filter(n > 10)
+nordforsk4 <- bind_cols(Source, Iceland, Norway, Sweden)
 
-kable(nordforsk3, booktabs = T, linesep = "", escape = F, caption = "Panel variable names and values",  col.names = linebreak(c("Source Questionnaire", "Iceland", 'n', "Norway", 'n', "Sweden", 'n'))) %>%
+kable(nordforsk4, booktabs = T, linesep = "", escape = F, caption = "Panel variable names and values",  col.names = linebreak(c("Source Questionnaire", "Iceland", 'n', "Norway", 'n', "Sweden", 'n'))) %>%
   footnote(general = "Variable names. Iceland = sp7, Norway =  r15pad_terror5, Sweden = q278")
 ```
