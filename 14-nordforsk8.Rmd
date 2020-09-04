@@ -44,7 +44,7 @@ Sweden
 NA
 
 
-## NORDFORSK7
+## NORDFORSK8_PRE
 
 >  During the period of 1995-2015, how do you think increased immigration from Muslim-majority countries influenced
 recipient countries?
@@ -61,7 +61,7 @@ I løpet av perioden 1995-2015, hvordan tror du økt innvandring fra muslimske m
 Sweden  
 NA
 
-```{r NORDFORSK8}
+```{r NORDFORSK8_PRE}
 Source <- c('It led to a lot more terrorism', 'It led to somewhat more terrorism', 'It did not lead to any more or any less terrorism', 'It led to less terrorism', 'It led to a lot less terrorism', NA)
 Iceland <- count(di, as_label(sp12))
 Norway <- count(dn, as_label(r15pad_terror11pre)) %>% filter(`as_label(r15pad_terror11pre)` != 'Ikke spurt')
@@ -71,3 +71,115 @@ NORDFORSK8 <- bind_cols(Source, Iceland, Norway, Sweden)
 kable(NORDFORSK8, booktabs = T, linesep = "", escape = F, caption = "Panel variable names and values",  col.names = linebreak(c("Source Questionnaire", "Iceland", 'n', "Norway", 'n', "Sweden", 'n'))) %>%
   footnote(general = "Variable names. Iceland = sp12, Norway =  r15pad_terror11pre, Sweden = q286")
 ```
+
+## NORDFORSK8_TREAT
+
+Note that the Iceland responses were split into two variables, where sp13 refers to the variable name of the treatment group and sp14 refers to the control group.
+The original sp13 and sp14 Icelandic data set has been pivoted long 'nordforsk8_treat' lists the random assignment to treatment groups and 'nordforsk8_dv' refers to the respondents' responses:
+```{r NORDFORSK8_pivot, echo = TRUE}
+#ddi <- di %>% mutate(temp = case_when(is.na(sp13)) ~ 99) 
+ddi <- pivot_longer(di, sp13:sp14, names_to = 'ice_nordforsk8_treat', values_to = 'ice_nordforsk8_dv', values_drop_na = TRUE)
+```
+
+```{r NORDFORSK8_TREAT}
+
+
+Source <- c('For your information, the researchers who analysed the correlation between immigration from Muslim countries and terrorist attacks in recipient countries, found that increased Muslim immigration had no impact on terrorism in recipient countries.', " ")
+Iceland <- count(ddi, as_label(ice_nordforsk8_treat))
+Norway <- count(dn, as_label(r15pad_terror11_ran)) %>% filter(!is.na(`as_label(r15pad_terror11_ran)`))
+Sweden <- count(ds, as_label(q288)) %>% filter(n>10)
+NORDFORSK8_TREAT <- bind_cols(Source, Iceland, Norway, Sweden)
+
+kable(NORDFORSK8_TREAT, booktabs = T, linesep = "", escape = F, caption = "Panel variable names and values",  col.names = linebreak(c("Source Questionnaire", "Iceland", 'n', "Norway", 'n', "Sweden", 'n'))) %>%
+  footnote(general = "Variable names. Iceland = sp13 and sp14, Norway =  r15pad_terror11pre, Sweden = q286. Note that the Iceland responses were split into two variables, where sp13 refers to the variable name of the treatment group and sp14 refers to the control group.")
+
+```
+
+## NORDFORSK8_DV_1
+
+
+*Transalations*
+
+Iceland  
+
+Telur þú að hryðjuverkaógnin á Íslandi muni aukast á næstu tíu árum ef við tökum á móti fleiri innflytjendum frá múslimskum löndum í Afríku, Asíu og Miðausturlöndum?
+
+Norway  
+I løpet av de neste ti årene, tror du terrorfaren i Norge vil øke hvis vi velger å ta imot flere innvandrere fra muslimske land i Afrika, Asia og Midtøsten? Terrorfaren vil...
+
+Sweden  
+
+NA
+
+```{r NORDFORSK8_DV_1}
+
+Source <- c('Increase greatly', 'Increase', 'Increase somewhat', 'Neither increase nor decrease', 'Decrease somewhat', 'Decrease', 'Decrease greatly', NA)
+Iceland <- count(ddi, as_label(ice_nordforsk8_dv)) %>% add_row(`as_label(ice_nordforsk8_dv)`= NA, n = NA)
+Norway <- count(dn, as_label(r15pad_terror11posta)) %>% filter(`as_label(r15pad_terror11posta)` != 'Ikke spurt')
+Sweden <- count(ds, as_label(q290)) %>% add_row(`as_label(q290)` = NA, n = NA, .before = 7)
+NORDFORSK8_DV_1 <- bind_cols(Source, Iceland, Norway, Sweden)
+
+kable(NORDFORSK8_DV_1, booktabs = T, linesep = "", escape = F, caption = "Panel variable names and values",  col.names = linebreak(c("Source Questionnaire", "Iceland", 'n', "Norway", 'n', "Sweden", 'n'))) %>%
+  footnote(general = "Variable names. Iceland = sp13 and sp14, Norway =  r15pad_terror11posta, Sweden = q290. Note that the Iceland responses were split into two variables, where sp13 refers to the variable name of the treatment group and sp14 refers to the control group.")
+
+```
+
+
+## NORDFORSK8_DV_2
+
+>There is an ongoing debate in Norway about how many refugees we should receive. 
+Do you think Norway should receive more or fewer refugees than it does today?
+
+*Transalations*
+
+Iceland  
+Nú stendur yfir umræða á Íslandi um hversu mörgum flóttamönnum við eigum að taka á móti. Telur þú að Ísland eigi að taka á móti fleiri eða færri flóttamönnum en gert er í dag?
+
+Norway  
+Det er en pågående debatt i Norge om hvor mange flyktninger vi bør ta imot. Synes du Norge bør ta imot flere eller færre flyktninger enn i dag?
+
+Sweden  
+Tycker du att Sverige bör ta emot fler eller färre flyktingar än idag? ">Tycker du att Sverige bör ta emot fler eller färre flyktingar än idag?
+
+```{r NORDFORSK8_DV_2}
+
+Source <- c('Receive many more', 'Receive more', 'Receive a few more', 'Neither receive any more nor any less', 'Receive a few less', 'Receive fewer', 'Receive many fewer', NA)
+Iceland <- count(di, as_label(sp15))
+Norway <- count(dn, as_label(r15pad_terror11postb)) %>% filter(`as_label(r15pad_terror11postb)` != 'Ikke spurt')
+Sweden <- count(ds, as_label(q292)) 
+NORDFORSK8_DV_2 <- bind_cols(Source, Iceland, Norway, Sweden)
+
+kable(NORDFORSK8_DV_2, booktabs = T, linesep = "", escape = F, caption = "Panel variable names and values",  col.names = linebreak(c("Source Questionnaire", "Iceland", 'n', "Norway", 'n', "Sweden", 'n'))) %>%
+  footnote(general = "Variable names. Iceland = sp15, Norway =  r15pad_terror11postb, Sweden = q292.")
+```
+
+## NORDFORSK8_DV_3
+
+> To what extent do you agree or disagree that Norway should reduce the proportion of refugees with Muslim backgrounds?
+
+*Transalations*
+
+Iceland  
+
+Hversu sammála eða ósammála ert þú að Ísland eigi að reyna að lækka hlutfall flóttamanna sem eru múslimar?
+
+Norway  
+Noen mener Norge bør redusere andelen muslimske flyktninger vi tar imot.
+Hvor enig eller uenig er du i at Norge bør redusere andelen flyktninger med muslimsk bakgrunn?
+
+Sweden  
+Hur för eller emot Sverige  minska andelen flyktingar med muslimsk bakgrund?
+
+```{r NORDFORSK8_DV_3}
+
+Source <- c('Strongly agree', 'Agree', 'Agree somewhat', 'Neither agree nor disagree', 'Disagree somewhat', 'Disagree', 'Strongly disagree', NA)
+Iceland <- count(di, as_label(sp16))
+Norway <- count(dn, as_label(r15pad_terror11postc)) %>% filter(`as_label(r15pad_terror11postc)` != 'Ikke spurt')
+Sweden <- count(ds, as_label(q294)) 
+NORDFORSK8_DV_3 <- bind_cols(Source, Iceland, Norway, Sweden)
+
+kable(NORDFORSK8_DV_3, booktabs = T, linesep = "", escape = F, caption = "Panel variable names and values",  col.names = linebreak(c("Source Questionnaire", "Iceland", 'n', "Norway", 'n', "Sweden", 'n'))) %>%
+  footnote(general = "Variable names. Iceland = sp16, Norway =  r15pad_terror11postc, Sweden = q294.")
+```
+
+
