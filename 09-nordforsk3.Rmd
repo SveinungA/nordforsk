@@ -33,9 +33,9 @@ I vilken utsträckning samhällets säkerhet på bekostnad av individers frihet?
 
 ```{r nordforsk3}
 Source = c('Strongly agree', 'Agree', 'Agree somewhat', 'Neither agree nor disagree', 'Disagree somewhat', 'Disagree', 'Strongly disagree', NA)
-Iceland <- count(di, sp6)  
+Iceland <- count(di, as_label(sp6))  
 Norway <- count(dn, as_label(r15pad_terror3)) %>% filter(`as_label(r15pad_terror3)` != 'Ikke spurt')
-Sweden <- count(ds, q276) %>% filter(n > 10)
+Sweden <- count(ds, as_label(q276)) %>% filter(n > 10)
 nordforsk3 <- bind_cols(Source, Iceland, Norway, Sweden)
 
 kable(nordforsk3, booktabs = T, linesep = "", escape = F, caption = "Panel variable names and values",  col.names = linebreak(c("Source Questionnaire", "Iceland", 'n', "Norway", 'n', "Sweden", 'n'))) %>%

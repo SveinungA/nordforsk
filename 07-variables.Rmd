@@ -157,15 +157,15 @@ To what extent do you agree or disagree that the authorities should have the rig
 *Translations*
 
 Iceland  
-NA
+Ímyndum okkur að yfirvöld hefðu grun um að þetta atvik væri yfirvofandi. 
+Hversu sammála eða ósammála ert þú því að yfirvöld ættu að hafa réttinn til að gera eftirfarandi?
 
 Norway  
 Tenk deg at myndighetene hadde mistanke om at denne hendelsen var nært forestående. Hvor enig eller uenig er du i at
 myndighetene burde har rett til å:
 
 Sweden  
-Ímyndum okkur að yfirvöld hefðu grun um að þetta atvik væri yfirvofandi. 
-Hversu sammála eða ósammála ert þú því að yfirvöld ættu að hafa réttinn til að gera eftirfarandi?
+NA
 
 ### NORDFORSK1_DV_B_1
 
