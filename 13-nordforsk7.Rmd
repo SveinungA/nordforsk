@@ -1,0 +1,74 @@
+# NORDFORSK7
+
+```{r NORDFORSK7_setup, include=FALSE, echo=FALSE}
+if(!require("gt")){install.packages("gt");  library(gt)}
+if(!require("haven")){install.packages("haven");  library(haven)}
+if(!require("here")){install.packages("here");  library(here)}
+if(!require("kableExtra")){install.packages("kableExtra");  library(kableExtra)}
+if(!require("knitr")){install.packages("knitr");  library(knitr)}
+if(!require("magick")){install.packages("magick");  library(magick)}
+if(!require("openxlsx")){install.packages("openxlsx");  library(openxlsx)}
+if(!require("readxl")){install.packages("readxl");  library(readxl)}
+if(!require("sjlabelled")){install.packages("sjlabelled");  library(sjlabelled)}
+if(!require("tidyverse")){install.packages("tidyverse");  library(tidyverse)}
+if(!require("utf8")){install.packages("utf8");  library(utf8)}
+if(!require("webshot")){install.packages("webshot");  library(webshot)}
+
+knitr::opts_chunk$set(echo = FALSE, knitr.kable.NA = "", cache = FALSE, message = FALSE )
+```
+
+
+> Presently, there is great deal of attention focused on [NORDFORSK7_EVENT]. 
+The state can put various measures in place to reduce the risk of [NORDFORSK7_EVENT], but there is controversy over how much money the state should prioritize to spend on such measures.
+
+*Translations*
+
+Iceland  
+NA 
+
+Norway  
+I disse dager er det stor oppmerksomhet rundt [NORDFORSK7_EVENT]. 
+Staten kan sette inn ulike tiltak for å redusere faren for [NORDFORSK7_EVENT], men det er uenighet om hvor mye penger staten bør prioritere å bruke på slike tiltak.
+
+Sweden 
+NA
+
+## NORDFORSK7_EVENT
+
+```{r NORDFORSK7_EVENT}
+Source <- c('natural disasters', 'terrorist attacks')
+Iceland <- count(di, as_label(terror10_a))
+Norway <- count(dn, as_label(r15pad_terror10_ran)) %>% filter(!is.na(`as_label(r15pad_terror10_ran)`))
+Sweden <- count(ds, as_label(q284_kristyp)) %>% filter(n>10)
+NORDFORSK7_EVENT <- bind_cols(Source, Iceland, Norway, Sweden)
+
+kable(NORDFORSK7_EVENT, booktabs = T, linesep = "", escape = F, caption = "Panel variable names and values",  col.names = linebreak(c("Source Questionnaire", "Iceland", 'n', "Norway", 'n', "Sweden", 'n'))) %>%
+  footnote(general = "Variable names. Iceland = terror10_a, Norway =  r15pad_terror10_ran, Sweden = q284_kristyp") %>% 
+  footnote(general = 'Due to language grammar, the Icelandic data set has three versions of what is the same random assignment of treatment variable NORDFORSK_EVENT). These have variable names terror10_b and terror10_c in the original data set, and are not included in the pooled data set.')
+```
+
+## NORDFORSK7_DV
+> If the state can expect to save one human life by spending NOK 100 million on measures to reduce the risk of [NORDFORSK7_EVENT], do you think the state should prioritize these measures? These measures should be carried out if they have to be funded through increased taxes among the population?
+
+*Translations*
+
+Iceland
+NA
+
+Norway  
+Hvis staten kan regne med å redde ett menneskeliv ved å bruke 100 millioner kroner på tiltak for å redusere faren
+[NORDFORSK7_EVENT], synes du staten bør prioritere disse tiltakene?
+
+Sweden  
+NA
+
+```{r NORDFORSK7_DV}
+Source <- c('I support it very strongly', 'I support it strongly', 'I support it somewhat', 'I neither support it nor oppose it', 'I oppose it somewhat', 'I oppose it strongly', 'I support it very strongly', NA)
+Iceland <- count(di, as_label(sp10))
+Norway <- count(dn, as_label(r15pad_terror10)) %>% filter(`as_label(r15pad_terror10)` != 'Ikke spurt')
+Sweden <- count(ds, as_label(q284)) 
+NORDFORSK7_DV <- bind_cols(Source, Iceland, Norway, Sweden)
+
+kable(NORDFORSK7_DV, booktabs = T, linesep = "", escape = F, caption = "Panel variable names and values",  col.names = linebreak(c("Source Questionnaire", "Iceland", 'n', "Norway", 'n', "Sweden", 'n'))) %>%
+  footnote(general = "Variable names. Iceland = sp10, Norway =  r15pad_terror10, Sweden = q284")
+```

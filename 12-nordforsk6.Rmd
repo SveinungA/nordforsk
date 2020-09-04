@@ -153,9 +153,7 @@ kable(nordforsk6_5, booktabs = T, linesep = "", escape = F, caption = "Panel var
 
 ## NORDFORSK6_6
 
-> NGOs
-
-Individual citizens
+> Individual citizens
 
 Iceland  
 Almennir borgarar
@@ -174,5 +172,6 @@ Sweden <- count(ds, as_label(q282_6)) %>% add_row(`as_label(q282_6)`=NA, n=NA, .
 nordforsk6_6 <- bind_cols(Source, Iceland, Norway, Sweden)
 
 kable(nordforsk6_6, booktabs = T, linesep = "", escape = F, caption = "Panel variable names and values",  col.names = linebreak(c("Source Questionnaire", "Iceland", 'n', "Norway", 'n', "Sweden", 'n'))) %>%
-  footnote(general = "Variable names. Iceland = sp9_6, Norway =  r15pad_terror8_6, Sweden = q282_6")
+  footnote(general = "Variable names. Iceland = sp9_6, Norway =  r15pad_terror8_6, Sweden = q282_6") %>% 
+  footnote(general = 'Obs! Value *Extremt bra* appears to be missing in the data set')
 ```

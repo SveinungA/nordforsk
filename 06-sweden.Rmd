@@ -19,6 +19,9 @@ ds <- read_dta('C:\\Users/svein/Documents/nordforskdata/s5_sohlberg.dta')
 ds <- ds %>% select(-(starts_with('t_q')))
 ```
 
-```{r swe_codebook, cache=TRUE}
-#codebook(ds)
-```
+NOTES TO SWEDEN:
+
+- FOR [NORDFORSK6_5] AND [NORDFORSK 6_6], THE VALUE 'EXTREMELY GOOD' IS MISSING FROM THE DATA. PLEASE CHECK AND CORRECT IF POSSIBLE.
+
+- FOR ALL RANDOMIZED EXPERIMENTAL VARIABLES THERE IS CONSISTENTLY AN EMPTY VALUE " " WHICH HAS A FREQUENCY OF 4. I HAVE DELETED THESE RESPONDENTS FROM THE DATA SET.
+
