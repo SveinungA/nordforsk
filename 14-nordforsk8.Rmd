@@ -1,0 +1,73 @@
+# NORDFORSK8
+
+```{r NORDFORSK7_setup, include=FALSE, echo=FALSE}
+if(!require("gt")){install.packages("gt");  library(gt)}
+if(!require("haven")){install.packages("haven");  library(haven)}
+if(!require("here")){install.packages("here");  library(here)}
+if(!require("kableExtra")){install.packages("kableExtra");  library(kableExtra)}
+if(!require("knitr")){install.packages("knitr");  library(knitr)}
+if(!require("magick")){install.packages("magick");  library(magick)}
+if(!require("openxlsx")){install.packages("openxlsx");  library(openxlsx)}
+if(!require("readxl")){install.packages("readxl");  library(readxl)}
+if(!require("sjlabelled")){install.packages("sjlabelled");  library(sjlabelled)}
+if(!require("tidyverse")){install.packages("tidyverse");  library(tidyverse)}
+if(!require("utf8")){install.packages("utf8");  library(utf8)}
+if(!require("webshot")){install.packages("webshot");  library(webshot)}
+
+knitr::opts_chunk$set(echo = FALSE, knitr.kable.NA = "", cache = FALSE, message = FALSE )
+```
+
+
+> Over the past twenty years, there have been high levels of immigration from Muslim countries in Africa, Asia and the Middle
+East to Europe.
+There are differences in how strict certain countries are regarding their immigration policies. There are also differences
+regarding which countries Muslims typically prefer to emigrate to. By gathering large amounts of data, researchers can use
+these differences to study the correlation between Muslim immigration and terrorism.
+A US research team recently used data from 174 countries during the period of 1995-2015 to study how the probability of
+terrorism changed as a result of increased immigration from Muslim countries.
+
+
+*Translations*
+
+Iceland  
+NA 
+
+Norway  
+I løpet av de siste tjue årene har det vært høy innvandring fra muslimske land i Afrika, Asia og Midtøsten til Europa.
+Det er variasjon i hvor streng innvandringspolitikk som praktiseres mellom land. Det er også variasjon med tanke på hvilke
+land muslimer typisk foretrekker å emigrere til. Ved å samle store mengder data kan forskere bruke denne variasjonen til å
+studere sammenhengen mellom muslimsk innvandring og terrorisme.
+Et forskerteam fra USA brukte nylig data fra 174 land i perioden 1995-2015 til å studere hvordan sannsynligheten for
+terrorisme endret seg som følge av økt innvandring fra muslimske land.
+
+Sweden 
+NA
+
+
+## NORDFORSK7
+
+>  During the period of 1995-2015, how do you think increased immigration from Muslim-majority countries influenced
+recipient countries?
+
+
+*Translations*
+
+Iceland
+Hvaða áhrif telur þú að aukinn fjöldi innflytjenda frá löndum þar sem múslimar eru í meirihluta hafi haft á móttökulöndin á árunum 1995 til 2015?
+
+Norway  
+I løpet av perioden 1995-2015, hvordan tror du økt innvandring fra muslimske majoritetsland påvirket mottakerlandene?
+
+Sweden  
+NA
+
+```{r NORDFORSK8}
+Source <- c('It led to a lot more terrorism', 'It led to somewhat more terrorism', 'It did not lead to any more or any less terrorism', 'It led to less terrorism', 'It led to a lot less terrorism', NA)
+Iceland <- count(di, as_label(sp12))
+Norway <- count(dn, as_label(r15pad_terror11pre)) %>% filter(`as_label(r15pad_terror11pre)` != 'Ikke spurt')
+Sweden <- count(ds, as_label(q286)) %>% add_row(`as_label(q286)` = NA, n=NA, .before = 5)
+NORDFORSK8 <- bind_cols(Source, Iceland, Norway, Sweden)
+
+kable(NORDFORSK8, booktabs = T, linesep = "", escape = F, caption = "Panel variable names and values",  col.names = linebreak(c("Source Questionnaire", "Iceland", 'n', "Norway", 'n', "Sweden", 'n'))) %>%
+  footnote(general = "Variable names. Iceland = sp12, Norway =  r15pad_terror11pre, Sweden = q286")
+```
