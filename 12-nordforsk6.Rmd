@@ -25,10 +25,10 @@ Iceland
 Hversu vel eða illa telur þú að eftirfarandi aðilar á Íslandi séu í stakk búnir til að bregðast við hættunni sem stafar af hryðjuverkaárásum? 
 
 Norway  
-Hvor godt i stand til å håndtere terrorangrep: 
+Hvor godt eller dårlig vil du si at følgende aktører i Norge er i stand til å håndtere faren for terrorangrep? 
 
 Sweden 
-Hantera risk terrorattacker: 
+NA
 
 ## NORDFORSK6_1
 

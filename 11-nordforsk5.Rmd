@@ -21,15 +21,13 @@ knitr::opts_chunk$set(echo = FALSE, knitr.kable.NA = "", cache = FALSE, message 
 
 *Translations*
 
-Iceland
-
+Iceland  
 Hvaða stjórnmálaflokkur telur þú að hafi bestu stefnu til að sporna við hryðjuverkum á Íslandi?
 
 Norway  
 Hvilket parti har den beste antiterrorpolitikken.
 
-Sweden 
-
+Sweden  
 Bästa part för bekämpa terrorism?
 
 ```{r nordforsk5}

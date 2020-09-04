@@ -21,8 +21,7 @@ knitr::opts_chunk$set(echo = FALSE, knitr.kable.NA = "", cache = FALSE, message 
 
 *Translations*
 
-Iceland
-
+Iceland  
 Hversu mikilvægar finnst þér aðgerðir gegn hryðjuverkum vera?
 
 Norway  
