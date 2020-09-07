@@ -42,7 +42,7 @@ Norway <- count(dn, as_label(r15pad_terror10_ran)) %>% filter(!is.na(`as_label(r
 Sweden <- count(ds, as_label(q284_kristyp)) %>% filter(n>10)
 NORDFORSK7_EVENT <- bind_cols(Source, Iceland, Norway, Sweden)
 
-kable(NORDFORSK7_EVENT, booktabs = T, linesep = "", escape = F, caption = "Panel variable names and values",  col.names = linebreak(c("Source Questionnaire", "Iceland", 'n', "Norway", 'n', "Sweden", 'n'))) %>%
+kable(NORDFORSK7_EVENT, booktabs = T, linesep = "", escape = F, caption = "Panel variable names and values",  col.names = linebreak(c("Pooled", "Iceland", 'n', "Norway", 'n', "Sweden", 'n'))) %>%
   footnote(general = "Variable names. Iceland = terror10_a, Norway =  r15pad_terror10_ran, Sweden = q284_kristyp") %>% 
   footnote(general = 'Due to language grammar, the Icelandic data set has three versions of what is the same random assignment of treatment variable NORDFORSK_EVENT). These have variable names terror10_b and terror10_c in the original data set, and are not included in the pooled data set.')
 ```
@@ -69,6 +69,6 @@ Norway <- count(dn, as_label(r15pad_terror10)) %>% filter(`as_label(r15pad_terro
 Sweden <- count(ds, as_label(q284)) 
 NORDFORSK7_DV <- bind_cols(Source, Iceland, Norway, Sweden)
 
-kable(NORDFORSK7_DV, booktabs = T, linesep = "", escape = F, caption = "Panel variable names and values",  col.names = linebreak(c("Source Questionnaire", "Iceland", 'n', "Norway", 'n', "Sweden", 'n'))) %>%
+kable(NORDFORSK7_DV, booktabs = T, linesep = "", escape = F, caption = "Panel variable names and values",  col.names = linebreak(c("Pooled", "Iceland", 'n', "Norway", 'n', "Sweden", 'n'))) %>%
   footnote(general = "Variable names. Iceland = sp10, Norway =  r15pad_terror10, Sweden = q284")
 ```

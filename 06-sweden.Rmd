@@ -46,7 +46,7 @@ The project group will together determine which variables ought to be pooled acr
 
 ```{r swe_other}
 
-other <- ds %>% select(lrpown_mp36, edu_gammal, lrpown_gammal)
+other <- ds %>% select(lrpown_mp36, s5, edu_gammal, lrpown_gammal)
 
 codebook(other, detailed_variables = FALSE, detailed_scales = FALSE, missingness_report = FALSE)
-
+```

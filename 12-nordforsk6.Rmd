@@ -50,7 +50,7 @@ Norway <- count(dn, as_label(r15pad_terror8_1)) %>% filter(`as_label(r15pad_terr
 Sweden <- count(ds, as_label(q282_1))
 nordforsk6_1 <- bind_cols(Source, Iceland, Norway, Sweden)
 
-kable(nordforsk6_1, booktabs = T, linesep = "", escape = F, caption = "Panel variable names and values",  col.names = linebreak(c("Source Questionnaire", "Iceland", 'n', "Norway", 'n', "Sweden", 'n'))) %>%
+kable(nordforsk6_1, booktabs = T, linesep = "", escape = F, caption = "Panel variable names and values",  col.names = linebreak(c("Pooled", "Iceland", 'n', "Norway", 'n', "Sweden", 'n'))) %>%
   footnote(general = "Variable names. Iceland = sp9_1, Norway =  r15pad_terror8_1, Sweden = q282_1")
 ```
 
@@ -74,7 +74,7 @@ Norway <- count(dn, as_label(r15pad_terror8_2)) %>% filter(`as_label(r15pad_terr
 Sweden <- count(ds, as_label(q282_2))
 nordforsk6_2 <- bind_cols(Source, Iceland, Norway, Sweden)
 
-kable(nordforsk6_2, booktabs = T, linesep = "", escape = F, caption = "Panel variable names and values",  col.names = linebreak(c("Source Questionnaire", "Iceland", 'n', "Norway", 'n', "Sweden", 'n'))) %>%
+kable(nordforsk6_2, booktabs = T, linesep = "", escape = F, caption = "Panel variable names and values",  col.names = linebreak(c("Pooled", "Iceland", 'n', "Norway", 'n', "Sweden", 'n'))) %>%
   footnote(general = "Variable names. Iceland = sp9_2, Norway =  r15pad_terror8_2, Sweden = q282_2")
 ```
 
@@ -98,7 +98,7 @@ Norway <- count(dn, as_label(r15pad_terror8_3)) %>% filter(`as_label(r15pad_terr
 Sweden <- count(ds, as_label(q282_3))
 nordforsk6_3 <- bind_cols(Source, Iceland, Norway, Sweden)
 
-kable(nordforsk6_3, booktabs = T, linesep = "", escape = F, caption = "Panel variable names and values",  col.names = linebreak(c("Source Questionnaire", "Iceland", 'n', "Norway", 'n', "Sweden", 'n'))) %>%
+kable(nordforsk6_3, booktabs = T, linesep = "", escape = F, caption = "Panel variable names and values",  col.names = linebreak(c("Pooled", "Iceland", 'n', "Norway", 'n', "Sweden", 'n'))) %>%
   footnote(general = "Variable names. Iceland = sp9_3, Norway =  r15pad_terror8_3, Sweden = q282_3")
 ```
 
@@ -122,7 +122,7 @@ Norway <- count(dn, as_label(r15pad_terror8_4)) %>% filter(`as_label(r15pad_terr
 Sweden <- count(ds, as_label(q282_4))
 nordforsk6_4 <- bind_cols(Source, Iceland, Norway, Sweden)
 
-kable(nordforsk6_4, booktabs = T, linesep = "", escape = F, caption = "Panel variable names and values",  col.names = linebreak(c("Source Questionnaire", "Iceland", 'n', "Norway", 'n', "Sweden", 'n'))) %>%
+kable(nordforsk6_4, booktabs = T, linesep = "", escape = F, caption = "Panel variable names and values",  col.names = linebreak(c("Pooled", "Iceland", 'n', "Norway", 'n', "Sweden", 'n'))) %>%
   footnote(general = "Variable names. Iceland = sp9_4, Norway =  r15pad_terror8_4, Sweden = q282_4")
 ```
 
@@ -146,7 +146,7 @@ Norway <- count(dn, as_label(r15pad_terror8_5)) %>% filter(`as_label(r15pad_terr
 Sweden <- count(ds, as_label(q282_5)) %>% add_row(`as_label(q282_5)`=NA, n= NA, .before=1)
 nordforsk6_5 <- bind_cols(Source, Iceland, Norway, Sweden)
 
-kable(nordforsk6_5, booktabs = T, linesep = "", escape = F, caption = "Panel variable names and values",  col.names = linebreak(c("Source Questionnaire", "Iceland", 'n', "Norway", 'n', "Sweden", 'n'))) %>%
+kable(nordforsk6_5, booktabs = T, linesep = "", escape = F, caption = "Panel variable names and values",  col.names = linebreak(c("Pooled", "Iceland", 'n', "Norway", 'n', "Sweden", 'n'))) %>%
   footnote(general = "Variable names. Iceland = sp9_5, Norway =  r15pad_terror8_5, Sweden = q282_5") %>% 
   footnote(general = 'Obs! Value *Extremt bra* appears to be missing in the data set')
 ```
@@ -171,7 +171,7 @@ Norway <- count(dn, as_label(r15pad_terror8_6)) %>% filter(`as_label(r15pad_terr
 Sweden <- count(ds, as_label(q282_6)) %>% add_row(`as_label(q282_6)`=NA, n=NA, .before = 1)
 nordforsk6_6 <- bind_cols(Source, Iceland, Norway, Sweden)
 
-kable(nordforsk6_6, booktabs = T, linesep = "", escape = F, caption = "Panel variable names and values",  col.names = linebreak(c("Source Questionnaire", "Iceland", 'n', "Norway", 'n', "Sweden", 'n'))) %>%
+kable(nordforsk6_6, booktabs = T, linesep = "", escape = F, caption = "Panel variable names and values",  col.names = linebreak(c("Pooled", "Iceland", 'n', "Norway", 'n', "Sweden", 'n'))) %>%
   footnote(general = "Variable names. Iceland = sp9_6, Norway =  r15pad_terror8_6, Sweden = q282_6") %>% 
   footnote(general = 'Obs! Value *Extremt bra* appears to be missing in the data set')
 ```

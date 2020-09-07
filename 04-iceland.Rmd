@@ -1,7 +1,4 @@
 # Iceland
-
-> Here follows some information about the ISSR, and the people involved in the project.
-
 ```{r ice_setup, include=FALSE, echo=FALSE}
 if(!require("codebook")){install.packages("codebook");  library(codebook)}
 if(!require("haven")){install.packages("haven");  library(haven)}

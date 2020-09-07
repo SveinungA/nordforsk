@@ -37,6 +37,6 @@ Norway <- count(dn, as_label(r15pad_terror6)) %>% filter(`as_label(r15pad_terror
 Sweden <- count(ds, as_label(q280)) %>% add_row(`as_label(q280)`= NA, n = NA)
 nordforsk5 <- bind_cols(Source, Iceland, Norway, Sweden)
 
-kable(nordforsk5, booktabs = T, linesep = "", escape = F, caption = "Panel variable names and values",  col.names = linebreak(c("Source Questionnaire", "Iceland", 'n', "Norway", 'n', "Sweden", 'n'))) %>%
+kable(nordforsk5, booktabs = T, linesep = "", escape = F, caption = "Panel variable names and values",  col.names = linebreak(c("Pooled", "Iceland", 'n', "Norway", 'n', "Sweden", 'n'))) %>%
   footnote(general = "Variable names. Iceland = sp8, Norway =  r15pad_terror6, Sweden = q280")
 ```
