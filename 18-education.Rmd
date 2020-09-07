@@ -1,0 +1,36 @@
+# EDUCATION
+
+
+
+```{r EDUCATION_setup, include=FALSE, echo=FALSE}
+if(!require("gt")){install.packages("gt");  library(gt)}
+if(!require("haven")){install.packages("haven");  library(haven)}
+if(!require("here")){install.packages("here");  library(here)}
+if(!require("kableExtra")){install.packages("kableExtra");  library(kableExtra)}
+if(!require("knitr")){install.packages("knitr");  library(knitr)}
+if(!require("magick")){install.packages("magick");  library(magick)}
+if(!require("openxlsx")){install.packages("openxlsx");  library(openxlsx)}
+if(!require("readxl")){install.packages("readxl");  library(readxl)}
+if(!require("sjlabelled")){install.packages("sjlabelled");  library(sjlabelled)}
+if(!require("tidyverse")){install.packages("tidyverse");  library(tidyverse)}
+if(!require("utf8")){install.packages("utf8");  library(utf8)}
+if(!require("webshot")){install.packages("webshot");  library(webshot)}
+
+knitr::opts_chunk$set(echo = FALSE, knitr.kable.NA = "", cache = FALSE, message = FALSE )
+```
+
+
+```{r EDUCATION_PRE}
+Pooled <- rep(1:13)
+Iceland <- count(di, as_label(menntun)) %>% add_row(`as_label(menntun)` = NA, n=NA) %>% add_row(`as_label(menntun)` = NA, n=NA) %>% add_row(`as_label(menntun)` = NA, n=NA) %>% add_row(`as_label(menntun)` = NA, n=NA)
+Norway <- count(dn, as_label(r15P4_2)) %>% filter(`as_label(r15P4_2)` != 'Ikke spurt')
+Sweden <- count(ds, as_label(edu_mp36)) %>% add_row(`as_label(edu_mp36)` = NA, n=NA) %>% add_row(`as_label(edu_mp36)` = NA, n=NA) %>% add_row(`as_label(edu_mp36)` = NA, n=NA)
+EDUCATION <- bind_cols(Pooled, Iceland, Norway, Sweden)
+
+kable(EDUCATION, booktabs = T, linesep = "", escape = F, caption = "Panel variable names and values",  col.names = linebreak(c("Pooled", "Iceland", 'n', "Norway", 'n', "Sweden", 'n'))) %>%
+  footnote(general = "Variable names. Iceland = menntun, Norway =  r15P4_2, Sweden = edu_mp36")
+```
+
+How to pool the education variable depends upon the research need of the project members.
+The preliminary recoding (which will stand unless someone suggests another one) proposes to recode into a binary variable with high/low education levels.
+The proposed cutoff for higher education levels in Iceland is 5 and higher, in Norway 6 and higher, and in Sweden 7 and higher.

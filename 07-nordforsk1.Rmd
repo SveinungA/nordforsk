@@ -208,7 +208,7 @@ Norway
 Avlytte folks telefonsamtaler
 
 Sweden  
-Avlyssna människors telefonsamtal">Myndigheter rätt till att: Avlyssna människors telefonsamtal
+Avlyssna människors telefonsamtal
 
 
 ```{r conjoint_dv2_b_2}

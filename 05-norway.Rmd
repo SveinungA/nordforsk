@@ -1,4 +1,4 @@
-# Norwegian data
+# Norway
 
 ```{r nor_setup, include=FALSE, echo=FALSE}
 if(!require("codebook")){install.packages("codebook");  library(codebook)}
@@ -10,6 +10,7 @@ if(!require("magick")){install.packages("magick");  library(magick)}
 if(!require("readxl")){install.packages("readxl");  library(readxl)}
 if(!require("utf8")){install.packages("utf8");  library(utf8)}
 
+knitr::opts_chunk$set(echo = FALSE, knitr.kable.NA = "", cache = FALSE, message = FALSE )
 ```
 
 ```{r nor_load_data}
@@ -18,9 +19,10 @@ de <- read_sav('C:\\Users/svein/Documents/nordforskdata/Norwegian Citizen Panel 
 de <- de %>% select(starts_with('r15pad_terror'))
 
 dn <- read_sav('C:\\Users/svein/Documents/nordforskdata/Norwegian Citizen Panel - wave 15 - NO.sav') 
-dn <- dn %>% select(starts_with('r15pad_terror'))
+dn <- dn %>% select(starts_with('r15pad_terror'), r15P1, r15P4_2, r15P5_1) %>% filter(!is.na(r15pad_terror1_ran1))
 ```
 
-```{r nor_codebook, cache=TRUE}
-#codebook(dn)
-```
+## Additional variables 
+
+A specific data set is not created for this project, but relevant variables can be selected from the full panel data set.
+The project group will together determine which variables ought to be pooled across the three countries.

@@ -95,7 +95,7 @@ kable(NORDFORSK8_TREAT, booktabs = T, linesep = "", escape = F, caption = "Panel
 
 ```
 
-## NORDFORSK8_DV_1
+## NORDFORSK8_DV_A
 
 
 *Transalations*
@@ -111,21 +111,21 @@ Sweden
 
 NA
 
-```{r NORDFORSK8_DV_1}
+```{r NORDFORSK8_DV_A}
 
 Source <- c('Increase greatly', 'Increase', 'Increase somewhat', 'Neither increase nor decrease', 'Decrease somewhat', 'Decrease', 'Decrease greatly', NA)
 Iceland <- count(ddi, as_label(ice_nordforsk8_dv)) %>% add_row(`as_label(ice_nordforsk8_dv)`= NA, n = NA)
 Norway <- count(dn, as_label(r15pad_terror11posta)) %>% filter(`as_label(r15pad_terror11posta)` != 'Ikke spurt')
 Sweden <- count(ds, as_label(q290)) %>% add_row(`as_label(q290)` = NA, n = NA, .before = 7)
-NORDFORSK8_DV_1 <- bind_cols(Source, Iceland, Norway, Sweden)
+NORDFORSK8_DV_A <- bind_cols(Source, Iceland, Norway, Sweden)
 
-kable(NORDFORSK8_DV_1, booktabs = T, linesep = "", escape = F, caption = "Panel variable names and values",  col.names = linebreak(c("Source Questionnaire", "Iceland", 'n', "Norway", 'n', "Sweden", 'n'))) %>%
+kable(NORDFORSK8_DV_A, booktabs = T, linesep = "", escape = F, caption = "Panel variable names and values",  col.names = linebreak(c("Source Questionnaire", "Iceland", 'n', "Norway", 'n', "Sweden", 'n'))) %>%
   footnote(general = "Variable names. Iceland = sp13 and sp14, Norway =  r15pad_terror11posta, Sweden = q290. Note that the Iceland responses were split into two variables, where sp13 refers to the variable name of the treatment group and sp14 refers to the control group.")
 
 ```
 
 
-## NORDFORSK8_DV_2
+## NORDFORSK8_DV_B
 
 >There is an ongoing debate in Norway about how many refugees we should receive. 
 Do you think Norway should receive more or fewer refugees than it does today?
@@ -141,19 +141,19 @@ Det er en pågående debatt i Norge om hvor mange flyktninger vi bør ta imot. S
 Sweden  
 Tycker du att Sverige bör ta emot fler eller färre flyktingar än idag? ">Tycker du att Sverige bör ta emot fler eller färre flyktingar än idag?
 
-```{r NORDFORSK8_DV_2}
+```{r NORDFORSK8_DV_B}
 
 Source <- c('Receive many more', 'Receive more', 'Receive a few more', 'Neither receive any more nor any less', 'Receive a few less', 'Receive fewer', 'Receive many fewer', NA)
 Iceland <- count(di, as_label(sp15))
 Norway <- count(dn, as_label(r15pad_terror11postb)) %>% filter(`as_label(r15pad_terror11postb)` != 'Ikke spurt')
 Sweden <- count(ds, as_label(q292)) 
-NORDFORSK8_DV_2 <- bind_cols(Source, Iceland, Norway, Sweden)
+NORDFORSK8_DV_B <- bind_cols(Source, Iceland, Norway, Sweden)
 
-kable(NORDFORSK8_DV_2, booktabs = T, linesep = "", escape = F, caption = "Panel variable names and values",  col.names = linebreak(c("Source Questionnaire", "Iceland", 'n', "Norway", 'n', "Sweden", 'n'))) %>%
+kable(NORDFORSK8_DV_B, booktabs = T, linesep = "", escape = F, caption = "Panel variable names and values",  col.names = linebreak(c("Source Questionnaire", "Iceland", 'n', "Norway", 'n', "Sweden", 'n'))) %>%
   footnote(general = "Variable names. Iceland = sp15, Norway =  r15pad_terror11postb, Sweden = q292.")
 ```
 
-## NORDFORSK8_DV_3
+## NORDFORSK8_DV_C
 
 > To what extent do you agree or disagree that Norway should reduce the proportion of refugees with Muslim backgrounds?
 
@@ -170,16 +170,15 @@ Hvor enig eller uenig er du i at Norge bør redusere andelen flyktninger med mus
 Sweden  
 Hur för eller emot Sverige  minska andelen flyktingar med muslimsk bakgrund?
 
-```{r NORDFORSK8_DV_3}
+```{r NORDFORSK8_DV_C}
 
 Source <- c('Strongly agree', 'Agree', 'Agree somewhat', 'Neither agree nor disagree', 'Disagree somewhat', 'Disagree', 'Strongly disagree', NA)
 Iceland <- count(di, as_label(sp16))
 Norway <- count(dn, as_label(r15pad_terror11postc)) %>% filter(`as_label(r15pad_terror11postc)` != 'Ikke spurt')
 Sweden <- count(ds, as_label(q294)) 
-NORDFORSK8_DV_3 <- bind_cols(Source, Iceland, Norway, Sweden)
+NORDFORSK8_DV_C <- bind_cols(Source, Iceland, Norway, Sweden)
 
-kable(NORDFORSK8_DV_3, booktabs = T, linesep = "", escape = F, caption = "Panel variable names and values",  col.names = linebreak(c("Source Questionnaire", "Iceland", 'n', "Norway", 'n', "Sweden", 'n'))) %>%
+kable(NORDFORSK8_DV_C, booktabs = T, linesep = "", escape = F, caption = "Panel variable names and values",  col.names = linebreak(c("Source Questionnaire", "Iceland", 'n', "Norway", 'n', "Sweden", 'n'))) %>%
   footnote(general = "Variable names. Iceland = sp16, Norway =  r15pad_terror11postc, Sweden = q294.")
 ```
-
 

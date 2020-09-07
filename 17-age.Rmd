@@ -1,0 +1,36 @@
+# AGE
+ 
+ 
+
+```{r AGE_setup, include=FALSE, echo=FALSE}
+if(!require("gt")){install.packages("gt");  library(gt)}
+if(!require("haven")){install.packages("haven");  library(haven)}
+if(!require("here")){install.packages("here");  library(here)}
+if(!require("kableExtra")){install.packages("kableExtra");  library(kableExtra)}
+if(!require("knitr")){install.packages("knitr");  library(knitr)}
+if(!require("magick")){install.packages("magick");  library(magick)}
+if(!require("openxlsx")){install.packages("openxlsx");  library(openxlsx)}
+if(!require("readxl")){install.packages("readxl");  library(readxl)}
+if(!require("sjlabelled")){install.packages("sjlabelled");  library(sjlabelled)}
+if(!require("tidyverse")){install.packages("tidyverse");  library(tidyverse)}
+if(!require("utf8")){install.packages("utf8");  library(utf8)}
+if(!require("webshot")){install.packages("webshot");  library(webshot)}
+
+knitr::opts_chunk$set(echo = FALSE, knitr.kable.NA = "", cache = FALSE, message = FALSE )
+```
+
+
+```{r AGE}
+Pooled <- c('Under 30', '30-39', '40-49', '50-59', '60-69', '70 and older', NA)
+# Iceland <- count(di, as_label(aldur))
+Norway <- count(dn, as_label(r15P5_1))
+Norway <- Norway[nrow(Norway):1, ]
+Sweden <- count(ds, as_label(age6)) %>% add_row(`as_label(age6)` = NA, n=NA)
+AGE <- bind_cols(Pooled, Norway, Sweden)
+
+kable(AGE, booktabs = T, linesep = "", escape = F, caption = "Panel variable names and values",  col.names = linebreak(c("Pooled", "Norway", 'n', "Sweden", 'n'))) %>%
+  footnote(general = "Variable names. Iceland = aldur, Norway = r15P5_1, Sweden = age6")
+```
+How to pool the education variable depends upon the research need of the project members.
+The proposed harmonization is to create six values with the respondents' age in 2019.
+Iceland has a continous age variable, and is for practical purposes left out of the table.

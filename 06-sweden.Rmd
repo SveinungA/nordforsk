@@ -1,4 +1,6 @@
-# Final Words
+# Sweden
+
+> Here follows some information about the Swedish Citizen Panel, and the people involved in the project.
 
 ```{r swe_setup, include=FALSE, echo=FALSE}
 if(!require("codebook")){install.packages("codebook");  library(codebook)}
@@ -10,6 +12,7 @@ if(!require("magick")){install.packages("magick");  library(magick)}
 if(!require("readxl")){install.packages("readxl");  library(readxl)}
 if(!require("utf8")){install.packages("utf8");  library(utf8)}
 
+knitr::opts_chunk$set(echo = FALSE, knitr.kable.NA = "", cache = FALSE, message = FALSE )
 ```
 
 ```{r swe_load_data}
@@ -34,4 +37,16 @@ PLEASE CHECK AND CORRECT IF POSSIBLE.
 - SOME TRANSLATIONS OF INTRODUCTION TEXTS ARE MISSING: [NORDFORSK1] [NORDFORSK1_DV_B] [NORDFORSK6] [NORDFORSK7_EVENT], [NORDFORSK7_DV] 
 COULD YOU RETRIEVE THESE, IF POSSIBLE?
 
+
+## Additional variables 
+
+Below is an overview of the additional variables in the data set that have not yet been pooled. 
+(A set of time stamp variables are not displayed below, but available.)
+The project group will together determine which variables ought to be pooled across the three countries.
+
+```{r swe_other}
+
+other <- ds %>% select(lrpown_mp36, edu_gammal, lrpown_gammal)
+
+codebook(other, detailed_variables = FALSE, detailed_scales = FALSE, missingness_report = FALSE)
 
