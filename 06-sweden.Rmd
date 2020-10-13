@@ -22,20 +22,8 @@ ds <- read_dta('C:\\Users/svein/Documents/nordforskdata/s5_sohlberg.dta')
 ds <- ds %>% select(-(starts_with('t_q')))
 ```
 
-NOTES TO SWEDEN:
-
-- FOR [NORDFORSK6_5] AND [NORDFORSK 6_6], THE VALUE 'EXTREMELY GOOD' IS MISSING FROM THE DATA, IT APPEARS. 
-PLEASE CHECK AND CORRECT IF POSSIBLE.
-
-- FOR [NORDFORSK8], THE VALUE 'IT LED TO A LOT LESS TERRORISM' IS MISSING FROM THE DATA, IT APPEARS. 
-PLEASE CHECK AND CORRECT IF POSSIBLE.	
-
-- FOR [NORDFORSK8_DV_1], THE VALUE 'DECREASE GREATLY' IS MISSING FROM THE DATA, IT APPEARS.
-
-- FOR ALL RANDOMIZED EXPERIMENTAL VARIABLES THERE IS CONSISTENTLY AN EMPTY VALUE " " WHICH HAS A FREQUENCY OF 4. I HAVE DELETED THESE RESPONDENTS FROM THE DATA SET.
-
-- SOME TRANSLATIONS OF INTRODUCTION TEXTS ARE MISSING: [NORDFORSK1] [NORDFORSK1_DV_B] [NORDFORSK6] [NORDFORSK7_EVENT], [NORDFORSK7_DV] 
-COULD YOU RETRIEVE THESE, IF POSSIBLE?
+> Note on the Swedish data set:
+For all randomized experimental variables, there is consistently an empty value " ", which has a frequency of 4. These are respondents who dropped out of the survey earlier, and have been deleted from the data set.
 
 
 ## Additional variables 

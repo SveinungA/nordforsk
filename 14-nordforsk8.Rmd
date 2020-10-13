@@ -41,7 +41,12 @@ Et forskerteam fra USA brukte nylig data fra 174 land i perioden 1995-2015 til �
 terrorisme endret seg som følge av økt innvandring fra muslimske land.
 
 Sweden 
-NA
+Under de senaste tjugo åren har det varit hög invandring från muslimska länder i Afrika,
+Asien och Mellanöstern till Europa.
+Det finns skillnader i hur strikt invandringspolitik olika länder har.
+Det finns också skillnader gällande vilka länder muslimer vanligtvis föredrar att emigrera till.
+Genom att samla in stora mängder data kan forskare använda dessa skillnader till att studera förhållandet mellan muslimsk invandring och terrorism.
+Ett amerikanskt forskarteam använde nyligen data från 174 länder under perioden 1995-2015 för att studera hur sannolikheten för terrorism förändrades till följd av ökad invandring från muslimska länder.
 
 
 ## NORDFORSK8_PRE
@@ -59,7 +64,8 @@ Norway
 I løpet av perioden 1995-2015, hvordan tror du økt innvandring fra muslimske majoritetsland påvirket mottakerlandene?
 
 Sweden  
-NA
+Under perioden 1995-2015, hur tror du att ökad invandring från muslimska majoritetsländer har
+påverkat mottagarländerna?
 
 ```{r NORDFORSK8_PRE}
 Source <- c('It led to a lot more terrorism', 'It led to somewhat more terrorism', 'It did not lead to any more or any less terrorism', 'It led to less terrorism', 'It led to a lot less terrorism', NA)
@@ -69,7 +75,8 @@ Sweden <- count(ds, as_label(q286)) %>% add_row(`as_label(q286)` = NA, n=NA, .be
 NORDFORSK8 <- bind_cols(Source, Iceland, Norway, Sweden)
 
 kable(NORDFORSK8, booktabs = T, linesep = "", escape = F, caption = "Panel variable names and values",  col.names = linebreak(c("Pooled", "Iceland", 'n', "Norway", 'n', "Sweden", 'n'))) %>%
-  footnote(general = "Variable names. Iceland = sp12, Norway =  r15pad_terror11pre, Sweden = q286")
+  footnote(general = "Variable names. Iceland = sp12, Norway =  r15pad_terror11pre, Sweden = q286") %>% 
+  footnote(general = "Value *Det ledde till mindre terrorism* appears to be missing in the data set. The reason is that no answer was recorded for this value. The respondents did have that response option available when answering the survey.")
 ```
 
 ## NORDFORSK8_TREAT
@@ -109,7 +116,7 @@ I løpet av de neste ti årene, tror du terrorfaren i Norge vil øke hvis vi vel
 
 Sweden  
 
-NA
+Inom de kommande tio åren, tror du att risken för terrorattacker i Sverige kommer att öka om vi väljer att ta emot fler invandrare från muslimska länder i Afrika, Asien och Mellanöstern? Risken för terrorattacker kommer att…
 
 ```{r NORDFORSK8_DV_A}
 
@@ -120,7 +127,8 @@ Sweden <- count(ds, as_label(q290)) %>% add_row(`as_label(q290)` = NA, n = NA, .
 NORDFORSK8_DV_A <- bind_cols(Source, Iceland, Norway, Sweden)
 
 kable(NORDFORSK8_DV_A, booktabs = T, linesep = "", escape = F, caption = "Panel variable names and values",  col.names = linebreak(c("Pooled", "Iceland", 'n', "Norway", 'n', "Sweden", 'n'))) %>%
-  footnote(general = "Variable names. Iceland = sp13 and sp14, Norway =  r15pad_terror11posta, Sweden = q290. Note that the Iceland responses were split into two variables, where sp13 refers to the variable name of the treatment group and sp14 refers to the control group.")
+  footnote(general = "Variable names. Iceland = sp13 and sp14, Norway =  r15pad_terror11posta, Sweden = q290. Note that the Iceland responses were split into two variables, where sp13 refers to the variable name of the treatment group and sp14 refers to the control group.") %>% 
+  footnote(general = "Value *Minska kraftigt* appears to be missing in the data set. The reason is that no answer was recorded for this value. The respondents did have that response option available when answering the survey.")
 
 ```
 
@@ -139,7 +147,7 @@ Norway
 Det er en pågående debatt i Norge om hvor mange flyktninger vi bør ta imot. Synes du Norge bør ta imot flere eller færre flyktninger enn i dag?
 
 Sweden  
-Tycker du att Sverige bör ta emot fler eller färre flyktingar än idag? ">Tycker du att Sverige bör ta emot fler eller färre flyktingar än idag?
+Tycker du att Sverige bör ta emot fler eller färre flyktingar än idag? 
 
 ```{r NORDFORSK8_DV_B}
 

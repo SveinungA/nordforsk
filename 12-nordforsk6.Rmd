@@ -28,7 +28,8 @@ Norway
 Hvor godt eller dårlig vil du si at følgende aktører i Norge er i stand til å håndtere faren for terrorangrep? 
 
 Sweden 
-NA
+Hur bra eller dåliga skulle du säga att följande aktörer i Sverige är på att hantera risken för
+terrorattacker?
 
 ## NORDFORSK6_1
 
@@ -148,7 +149,7 @@ nordforsk6_5 <- bind_cols(Source, Iceland, Norway, Sweden)
 
 kable(nordforsk6_5, booktabs = T, linesep = "", escape = F, caption = "Panel variable names and values",  col.names = linebreak(c("Pooled", "Iceland", 'n', "Norway", 'n', "Sweden", 'n'))) %>%
   footnote(general = "Variable names. Iceland = sp9_5, Norway =  r15pad_terror8_5, Sweden = q282_5") %>% 
-  footnote(general = 'Obs! Value *Extremt bra* appears to be missing in the data set')
+  footnote(general = 'Value *Extremt bra* appears to be missing in the data set. The reason is that no answer was recorded for this value. The respondents did have that response option available when answering the survey.')
 ```
 
 ## NORDFORSK6_6
@@ -173,5 +174,5 @@ nordforsk6_6 <- bind_cols(Source, Iceland, Norway, Sweden)
 
 kable(nordforsk6_6, booktabs = T, linesep = "", escape = F, caption = "Panel variable names and values",  col.names = linebreak(c("Pooled", "Iceland", 'n', "Norway", 'n', "Sweden", 'n'))) %>%
   footnote(general = "Variable names. Iceland = sp9_6, Norway =  r15pad_terror8_6, Sweden = q282_6") %>% 
-  footnote(general = 'Obs! Value *Extremt bra* appears to be missing in the data set')
+  footnote(general = 'Value *Extremt bra* appears to be missing in the data set. The reason is that no answer was recorded for this value. The respondents did have that response option available when answering the survey.')
 ```

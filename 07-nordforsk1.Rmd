@@ -36,7 +36,8 @@ Hendelsen gjelder en  [NORDFORSK1_TACTIC1] som fant sted [NORDFORSK1_TARGET] i N
 Nyhetsdekningen tyder på [NORDFORSK1_MOTIVATION].
 
 Swedish  
-NA
+Vi ber dig nu att föreställa dig en påhittad händelse i Norden och svara på några frågor om
+händelsen. 
 
 ## NORDFORSK1_TACTIC1
 ```{r conjoint_tactic1}
@@ -161,11 +162,12 @@ Iceland
 Hversu sammála eða ósammála ert þú því að yfirvöld ættu að hafa réttinn til að gera eftirfarandi?
 
 Norway  
-Tenk deg at myndighetene hadde mistanke om at denne hendelsen var nært forestående. Hvor enig eller uenig er du i at
-myndighetene burde har rett til å:
+Tenk deg at myndighetene hadde mistanke om at denne hendelsen var nært forestående. Hvor enig eller uenig er du i at myndighetene burde har rett til å:
 
 Sweden  
-NA
+Föreställ dig att myndigheterna misstänkte att denna händelse var nära förestående. Hur
+för eller emot är du att myndigheterna borde ha rätt till att:
+
 
 ### NORDFORSK1_DV_B_1
 
