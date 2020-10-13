@@ -30,7 +30,7 @@ Norway
 I disse dager er det stor oppmerksomhet rundt [NORDFORSK7_EVENT]. 
 Staten kan sette inn ulike tiltak for å redusere faren for [NORDFORSK7_EVENT], men det er uenighet om hvor mye penger staten bør prioritere å bruke på slike tiltak.
 
-Sweden 
+Sweden  
 För närvarande är det mycket uppmärksamhet kring [NORDFORSK7_EVENT]. Staten kan
 vidta olika åtgärder för att minska risken för [NORDFORSK7_EVENT], men det råder oenighet om hur mycket pengar staten bör prioritera att spendera på sådana åtgärder.
  

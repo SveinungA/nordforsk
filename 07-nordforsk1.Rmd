@@ -38,6 +38,9 @@ Nyhetsdekningen tyder på [NORDFORSK1_MOTIVATION].
 Swedish  
 Vi ber dig nu att föreställa dig en påhittad händelse i Norden och svara på några frågor om
 händelsen. 
+[NORDFORSK1_TACTIC1] inträffade [NORDFORSK1_TARGET] i Sverige. [NORDFORSK1_CASUALTIES]
+dödades i [NORDFORSK1_TACTIC2] som utfördes av [NORDFORSK1_ADJECTIVE]
+[NORDFORSK1_SUBJECTIVE]. Nyhetsrapporteringen tyder på [NORDFORSK1_MOTIVATION].
 
 ## NORDFORSK1_TACTIC1
 ```{r conjoint_tactic1}
