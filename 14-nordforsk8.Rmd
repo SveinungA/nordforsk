@@ -40,7 +40,7 @@ studere sammenhengen mellom muslimsk innvandring og terrorisme.
 Et forskerteam fra USA brukte nylig data fra 174 land i perioden 1995-2015 til å studere hvordan sannsynligheten for
 terrorisme endret seg som følge av økt innvandring fra muslimske land.
 
-Sweden 
+Sweden  
 Under de senaste tjugo åren har det varit hög invandring från muslimska länder i Afrika,
 Asien och Mellanöstern till Europa.
 Det finns skillnader i hur strikt invandringspolitik olika länder har.
@@ -115,7 +115,6 @@ Norway
 I løpet av de neste ti årene, tror du terrorfaren i Norge vil øke hvis vi velger å ta imot flere innvandrere fra muslimske land i Afrika, Asia og Midtøsten? Terrorfaren vil...
 
 Sweden  
-
 Inom de kommande tio åren, tror du att risken för terrorattacker i Sverige kommer att öka om vi väljer att ta emot fler invandrare från muslimska länder i Afrika, Asien och Mellanöstern? Risken för terrorattacker kommer att…
 
 ```{r NORDFORSK8_DV_A}
