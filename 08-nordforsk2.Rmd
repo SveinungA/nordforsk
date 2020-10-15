@@ -2,6 +2,7 @@
 
 ```{r nordforsk2_setup, include=FALSE, echo=FALSE}
 if(!require("gt")){install.packages("gt");  library(gt)}
+if(!require("forcats")){install.packages("forcats");  library(forcats)}
 if(!require("haven")){install.packages("haven");  library(haven)}
 if(!require("here")){install.packages("here");  library(here)}
 if(!require("kableExtra")){install.packages("kableExtra");  library(kableExtra)}
@@ -33,10 +34,12 @@ I allmänhet, hur allvarligt hot uppfattar du att terrorism är för x? ">I allm
 ## NORDFORSK2_OBJECT
 
 ```{r nordforsk2_object}
-Source = c('today', 'in the future', NA)
-Iceland <- count(di, terror_2a)  
+Source = c('you personally', '[country]', 'Europe')
+Iceland <- count(di, terror_2a) 
+Iceland <- Iceland %>% arrange(factor(terror_2a, levels = LETTERS[c(3, 1, 2)]), desc(terror_2a))
 Norway <- count(dn, as_label(r15pad_terror2_ran1)) %>% filter(!is.na(`as_label(r15pad_terror2_ran1)`))
 Sweden <- count(ds, q274_hot) %>% filter(n > 10)
+Sweden <- Sweden %>% arrange(factor(q274_hot, levels = c('dig personligen', 'Sverige', 'Europa')), q274_hot)
 object <- bind_cols(Source, Iceland, Norway, Sweden)
 
 kable(object, booktabs = T, linesep = "", escape = F, caption = "Panel variable names and values",  col.names = linebreak(c("Pooled", "Iceland", 'n', "Norway", 'n', "Sweden", 'n'))) %>%
@@ -50,6 +53,7 @@ Source = c('today', 'in the future')
 Iceland <- count(di, terror_2b)  
 Norway <- count(dn, as_label(r15pad_terror2_ran2)) %>% filter(!is.na(`as_label(r15pad_terror2_ran2)`))
 Sweden <- count(ds, q274_tempus) %>% filter(n > 10)
+Sweden <- Sweden %>% arrange(factor(q274_tempus, levels = c('idag', 'i framtiden')), q274_tempus)
 tense <- bind_cols(Source, Iceland, Norway, Sweden)
 
 kable(tense, booktabs = T, linesep = "", escape = F, caption = "Panel variable names and values",  col.names = linebreak(c("Pooled", "Iceland", 'n', "Norway", 'n', "Sweden", 'n'))) %>%
