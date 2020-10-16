@@ -1,0 +1,239 @@
+--- 
+title: "Survey Guide: The Challenge from Terrorism in the Nordic Countries"
+author: ""
+date: "`r Sys.Date()`"
+site: bookdown::bookdown_site
+output: bookdown::gitbook
+documentclass: book
+bibliography: [book.bib, packages.bib]
+biblio-style: apalike
+link-citations: yes
+github-repo: rstudio/bookdown-demo
+description: "This is the guide to the survey on the challenge from terrorism in the Nordic countries, conducted in Iceland, Norway, and Sweden in 2018-2019. "
+---
+--- 
+title: "Survey Guide: The Challenge from Terrorism in the Nordic Countries"
+author: ""
+date: "`r Sys.Date()`"
+site: bookdown::bookdown_site
+output: bookdown::gitbook
+documentclass: book
+bibliography: [book.bib, packages.bib]
+biblio-style: apalike
+link-citations: yes
+github-repo: rstudio/bookdown-demo
+description: "This is the guide to the survey on the challenge from terrorism in the Nordic countries, conducted in Iceland, Norway, and Sweden in 2018-2019. "
+---
+
+# About 
+
+This document is a guide to the survey of the research project *The challenge from terrorism in the Nordic countries*.
+The project is a collaboration between Iceland, Norway, and Sweden, and funded by the Nordic Research Council (NORDFORSK).
+
+
+<!--chapter:end:index.Rmd-->
+
+
+# Iceland
+
+Placeholder
+
+
+## Additional variables 
+
+<!--chapter:end:03-iceland.Rmd-->
+
+# Norway
+
+```{r nor_setup, include=FALSE, echo=FALSE}
+if(!require("codebook")){install.packages("codebook");  library(codebook)}
+if(!require("haven")){install.packages("haven");  library(haven)}
+if(!require("here")){install.packages("here");  library(here)}
+if(!require("tidyverse")){install.packages("tidyverse");  library(tidyverse)}
+if(!require("knitr")){install.packages("knitr");  library(knitr)}
+if(!require("magick")){install.packages("magick");  library(magick)}
+if(!require("readxl")){install.packages("readxl");  library(readxl)}
+if(!require("utf8")){install.packages("utf8");  library(utf8)}
+
+knitr::opts_chunk$set(echo = FALSE, knitr.kable.NA = "", cache = FALSE, message = FALSE )
+```
+
+```{r nor_load_data}
+
+de <- read_sav('C:\\Users/svein/Documents/nordforskdata/Norwegian Citizen Panel - wave 15 - EN.sav') 
+de <- de %>% select(starts_with('r15pad_terror'))
+
+dn <- read_sav('C:\\Users/svein/Documents/nordforskdata/Norwegian Citizen Panel - wave 15 - NO.sav') 
+dn <- dn %>% select(starts_with('r15pad_terror'), r15P1, r15P4_2, r15P5_1) %>% filter(!is.na(r15pad_terror1_ran1))
+```
+
+## Additional variables 
+
+A specific data set is not created for this project, but relevant variables can be selected from the full panel data set.
+The project group will together determine which variables ought to be pooled across the three countries.
+
+<!--chapter:end:04-norway.Rmd-->
+
+
+# Sweden
+
+Placeholder
+
+
+## Additional variables 
+
+<!--chapter:end:05-sweden.Rmd-->
+
+# POOL DATASETS
+
+```{r POOL_setup, include=FALSE, echo=FALSE}
+if(!require("gt")){install.packages("gt");  library(gt)}
+if(!require("haven")){install.packages("haven");  library(haven)}
+if(!require("here")){install.packages("here");  library(here)}
+if(!require("kableExtra")){install.packages("kableExtra");  library(kableExtra)}
+if(!require("knitr")){install.packages("knitr");  library(knitr)}
+if(!require("magick")){install.packages("magick");  library(magick)}
+if(!require("openxlsx")){install.packages("openxlsx");  library(openxlsx)}
+if(!require("readxl")){install.packages("readxl");  library(readxl)}
+if(!require("sjlabelled")){install.packages("sjlabelled");  library(sjlabelled)}
+if(!require("tidyverse")){install.packages("tidyverse");  library(tidyverse)}
+if(!require("utf8")){install.packages("utf8");  library(utf8)}
+if(!require("webshot")){install.packages("webshot");  library(webshot)}
+
+knitr::opts_chunk$set(echo = FALSE, knitr.kable.NA = "", cache = FALSE, message = FALSE )
+```
+
+
+<!--chapter:end:06-pool.Rmd-->
+
+
+# NORDFORSK1
+
+Placeholder
+
+
+## NORDFORSK1_TACTIC1
+## NORDFORSK1_TARGET
+## NORDFORSK1_CASUALTIES
+## NORDFORSK1_TACTIC2
+## NORDFORSK1_ADJECTIVE
+## NORDFORSK1_SUBJECTIVE                     
+## NORDFORSK1_MOTIVATION
+## NORDFORSK1_DV_A
+## NORDFORSK1_DV_B
+### NORDFORSK1_DV_B_1
+### NORDFORSK1_DV_B_2
+### NORDFORSK1_DV_B_3
+### NORDFORSK1_DV_B_4
+### NORDFORSK1_DV_B_5
+### NORDFORSK1_DV_B_6
+### NORDFORSK1_DV_B_7
+
+<!--chapter:end:07-nordforsk1.Rmd-->
+
+
+# NORDFORSK2
+
+Placeholder
+
+
+## NORDFORSK2_OBJECT
+## NORDFORSK_TENSE
+## NORDFORSK_DV
+
+<!--chapter:end:08-nordforsk2.Rmd-->
+
+
+# NORDFORSK3
+
+Placeholder
+
+
+
+<!--chapter:end:09-nordforsk3.Rmd-->
+
+
+# NORDFORSK4
+
+Placeholder
+
+
+
+<!--chapter:end:10-nordforsk4.Rmd-->
+
+
+# NORDFORSK5
+
+Placeholder
+
+
+
+<!--chapter:end:11-nordforsk5.Rmd-->
+
+
+# NORDFORSK6
+
+Placeholder
+
+
+## NORDFORSK6_1
+## NORDFORSK6_2
+## NORDFORSK6_3
+## NORDFORSK6_4
+## NORDFORSK6_5
+## NORDFORSK6_6
+
+<!--chapter:end:12-nordforsk6.Rmd-->
+
+
+# NORDFORSK7
+
+Placeholder
+
+
+## NORDFORSK7_EVENT
+## NORDFORSK7_DV
+
+<!--chapter:end:13-nordforsk7.Rmd-->
+
+
+# NORDFORSK8
+
+Placeholder
+
+
+## NORDFORSK8_PRE
+## NORDFORSK8_TREAT
+## NORDFORSK8_DV_A
+## NORDFORSK8_DV_B
+## NORDFORSK8_DV_C
+
+<!--chapter:end:14-nordforsk8.Rmd-->
+
+
+# GENDER
+
+Placeholder
+
+
+
+<!--chapter:end:16-gender.Rmd-->
+
+
+# AGE
+
+Placeholder
+
+
+
+<!--chapter:end:17-age.Rmd-->
+
+
+# EDUCATION
+
+Placeholder
+
+
+
+<!--chapter:end:18-education.Rmd-->
+

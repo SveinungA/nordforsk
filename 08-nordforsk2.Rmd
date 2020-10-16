@@ -46,7 +46,7 @@ kable(object, booktabs = T, linesep = "", escape = F, caption = "Panel variable 
   footnote(general = "Variable names. Iceland = terror_2a, Norway =  r15pad_terror2_ran1, Sweden = q274_hot")
 ```
 
-## NORDFORSK_TENSE
+## NORDFORSK2_TENSE
 
 ```{r nordforsk2_tense}
 Source = c('today', 'in the future')
@@ -60,7 +60,7 @@ kable(tense, booktabs = T, linesep = "", escape = F, caption = "Panel variable n
   footnote(general = "Variable names. Iceland = terror_2b, Norway =  r15pad_terror2_ran2, Sweden = q274_tempus")
 ```
 
-## NORDFORSK_DV
+## NORDFORSK2_DV
 
 ```{r nordforsk2_dv}
 Source = c('Very serious', 'Serious', 'Somewhat serious', 'Not very serious', 'Not a threat', NA)
