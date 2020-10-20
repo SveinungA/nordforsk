@@ -83,22 +83,23 @@ kable(NORDFORSK8, booktabs = T, linesep = "", escape = F, caption = "Panel varia
 
 Note that the Iceland responses were split into two variables, where sp13 refers to the variable name of the treatment group and sp14 refers to the control group.
 The original sp13 and sp14 Icelandic data set has been pivoted long 'nordforsk8_treat' lists the random assignment to treatment groups and 'nordforsk8_dv' refers to the respondents' responses:
-```{r NORDFORSK8_pivot, echo = TRUE}
+```{r NORDFORSK8_pivot}
 #ddi <- di %>% mutate(temp = case_when(is.na(sp13)) ~ 99) 
 ddi <- pivot_longer(di, sp13:sp14, names_to = 'ice_nordforsk8_treat', values_to = 'ice_nordforsk8_dv', values_drop_na = TRUE)
 ```
 
 ```{r NORDFORSK8_TREAT}
 
-
 Source <- c('For your information, the researchers who analysed the correlation between immigration from Muslim countries and terrorist attacks in recipient countries, found that increased Muslim immigration had no impact on terrorism in recipient countries.', " ")
 Iceland <- count(ddi, as_label(ice_nordforsk8_treat))
 Norway <- count(dn, as_label(r15pad_terror11_ran)) %>% filter(!is.na(`as_label(r15pad_terror11_ran)`))
+ds <- ds  %>% set_labels(q288, labels = c('För din kännedom, forskarna som analyserade sambandet mellan invandring från muslimska länder och terroristattacker i värdländerna fann ingen påverkan från ökad muslimsk invandring på terrorism i mottagarländerna.' = 1,
+                                        ' ' = 0))
 Sweden <- count(ds, as_label(q288)) %>% filter(n>10)
 NORDFORSK8_TREAT <- bind_cols(Source, Iceland, Norway, Sweden)
 
 kable(NORDFORSK8_TREAT, booktabs = T, linesep = "", escape = F, caption = "Panel variable names and values",  col.names = linebreak(c("Pooled", "Iceland", 'n', "Norway", 'n', "Sweden", 'n'))) %>%
-  footnote(general = "Variable names. Iceland = sp13 and sp14, Norway =  r15pad_terror11pre, Sweden = q286. Note that the Iceland responses were split into two variables, where sp13 refers to the variable name of the treatment group and sp14 refers to the control group.")
+  footnote(general = "Variable names. Iceland = sp13 and sp14, Norway =  r15pad_terror11_ran, Sweden = q286. Note that the Iceland responses were split into two variables, where sp13 refers to the variable name of the treatment group and sp14 refers to the control group.")
 
 ```
 

@@ -17,7 +17,12 @@ if(!require("webshot")){install.packages("webshot");  library(webshot)}
 knitr::opts_chunk$set(echo = FALSE, knitr.kable.NA = "", cache = FALSE, message = FALSE )
 ```
 
-di_pool <- di %>% select(c(ResponseId = ResponseId,
+```{r pool_load}
+#Iceland
+##Load data
+di_pool <- read_sav('C:\\Users/svein/Documents/nordforskdata/Terrorism_Iceland_EnglishLabels.sav')
+
+di_pool <- di_pool %>% select(c(as.character(ResponseId) = ResponseId,
 NORDFORSK1_TACTIC1 = taktikk1,
 NORDFORSK1_TARGET = mal,
 NORDFORSK1_CASULATIES = personer,
@@ -51,12 +56,18 @@ NORDFORSK8_PRE = sp12,
 sp13, sp14,
 NORDFORSK8_DV_B = sp15,
 NORDFORSK8_DV_C = sp16,
-GENDER = kyn,
-AGE = aldur,
-EDUCATION = menntun)
+GENDER = Gender,
+AGE = Age_groups,
+EDUCATION = Educ)
 )
 
-dn_pool <- dn %>% select(c(ResponseId = responseid,
+###ddi <- di %>% mutate(temp = case_when(is.na(sp13)) ~ 99) 
+di_pool <- pivot_longer(di_pool, sp13:sp14, names_to = 'NORDFORSK8_TREAT', values_to = 'NORDFORSK8_DV', values_drop_na = TRUE)
+
+#Norway
+dn_pool <- read_sav('C:\\Users/svein/Documents/nordforskdata/Norwegian Citizen Panel - wave 15 - EN.sav')
+
+dn_pool <- dn_pool %>% select(c(ResponseId = responseid),
 NORDFORSK1_TACTIC1 = r15pad_terror1_ran1,
 NORDFORSK1_TARGET = r15pad_terror1_ran3,
 NORDFORSK1_CASULATIES = r15pad_terror1_ran4,
@@ -87,15 +98,29 @@ NORDFORSK6_6 = r15pad_terror8_6,
 NORDFORSK7_EVENT = r15pad_terror10_ran,
 NORDFORSK7_DV = r15pad_terror10,
 NORDFORSK8_PRE = r15pad_terror11pre,
-NORDFORSK8_TREAT = r15pad_terror11pre, #FEIL VARIABELNAVN? SAMME SOM NORDFORSK8_PRE
+NORDFORSK8_TREAT = r15pad_terror11_ran, 
 NORDFORSK8_DV_A =  r15pad_terror11posta,
 NORDFORSK8_DV_B =  r15pad_terror11postb,
 NORDFORSK8_DV_C = r15pad_terror11postc,
 GENDER = r15P1,
 AGE = r15P5_1,
-EDUCATION = r15P4_2)
-)
+EDUCATION = r15P4_2) %>% 
+  mutate(ResponseId = as.character(ResponseId),
+         NORDFORSK1_TACTIC1 = as.character(NORDFORSK1_TACTIC1),
+         NORDFORSK1_TARGET = as.character(NORDFORSK1_TARGET),
+         NORDFORSK1_CASULATIES = as.character(NORDFORSK1_CASULATIES),
+         NORDFORSK1_TACTIC2 = as.character(NORDFORSK1_TACTIC2),
+         NORDFORSK1_ADJECTIVE = as.character(NORDFORSK1_ADJECTIVE),
+         NORDFORSK1_SUBJECTIVE = as.character(NORDFORSK1_SUBJECTIVE),
+         NORDFORSk1_MOTIVATION = as.character(NORDFORSk1_MOTIVATION),
+         NORDFORSK2_OBJEKT = as.character(NORDFORSK2_OBJEKT),
+         NORDFORSK2_TENSE = as.character(NORDFORSK2_TENSE),
+         NORDFORSK7_EVENT = as.character(NORDFORSK7_EVENT),
+         NORDFORSK8_TREAT = as.character(NORDFORSK8_TREAT)
+  )
+        
 
+#Sweden
 ds_pool <- ds %>% select(c(#ResponseId = responseid,
 NORDFORSK1_TACTIC1 = q269_incidenttyp,
 NORDFORSK1_TARGET = q269_plats,
@@ -127,11 +152,16 @@ NORDFORSK6_6 = q282_6,
 NORDFORSK7_EVENT = q284_kristyp,
 NORDFORSK7_DV = q284,
 NORDFORSK8_PRE = q286,
-NORDFORSK8_TREAT = q286, #FEIL VARIABELNAVN? SAMME SOM NORDFORSK8_PRE
+NORDFORSK8_TREAT = q288,
 NORDFORSK8_DV_A =  q290,
 NORDFORSK8_DV_B =  q292,
 NORDFORSK8_DV_C = q294,
-GENDER = r15P1,
-AGE = r15P5_1,
-EDUCATION = r15P4_2)
+GENDER = sex,
+AGE = age6,
+EDUCATION = edu_mp36)
 )
+
+d_pool <- bind_rows(di_pool, dn_pool)
+```
+
+

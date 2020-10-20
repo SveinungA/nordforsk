@@ -15,8 +15,6 @@ knitr::opts_chunk$set(echo = FALSE, knitr.kable.NA = "", cache = FALSE, message 
 
 ```{r nor_load_data}
 
-de <- read_sav('C:\\Users/svein/Documents/nordforskdata/Norwegian Citizen Panel - wave 15 - EN.sav') 
-de <- de %>% select(starts_with('r15pad_terror'), responseid)
 
 dn <- read_sav('C:\\Users/svein/Documents/nordforskdata/Norwegian Citizen Panel - wave 15 - NO.sav') 
 dn <- dn %>% select(starts_with('r15pad_terror'), responseid, r15P1, r15P4_2, r15P5_1) %>% filter(!is.na(r15pad_terror1_ran1))
