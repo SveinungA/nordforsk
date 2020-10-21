@@ -20,16 +20,17 @@ knitr::opts_chunk$set(echo = FALSE, knitr.kable.NA = "", cache = FALSE, message 
 ```{r pool_load}
 #Iceland
 ##Load data
-di_pool <- read_sav('C:\\Users/svein/Documents/nordforskdata/Terrorism_Iceland_EnglishLabels.sav')
+di_pool <- read_sav('C:\\Users/svein/Documents/NORDFORSKdata/Terrorism_Iceland_EnglishLabels.sav')
 
-di_pool <- di_pool %>% select(c(as.character(ResponseId) = ResponseId,
+## Select variables and rename to harmonized variable names
+di_pool <- di_pool %>% select(ResponseId = ResponseId,
 NORDFORSK1_TACTIC1 = taktikk1,
 NORDFORSK1_TARGET = mal,
-NORDFORSK1_CASULATIES = personer,
+NORDFORSK1_CASUALTIES = personer,
 NORDFORSK1_TACTIC2 = taktikk2,
 NORDFORSK1_ADJECTIVE = adjektiv,
 NORDFORSK1_SUBJECTIVE = subjekt,
-NORDFORSk1_MOTIVATION = motivasjon,
+NORDFORSK1_MOTIVATION = motivasjon,
 NORDFORSK1_DV_A = sp3,
 NORDFORSK1_DV_B_1 = sp4_1,
 NORDFORSK1_DV_B_2 = sp4_2,
@@ -38,7 +39,7 @@ NORDFORSK1_DV_B_4 = sp4_4,
 NORDFORSK1_DV_B_5 = sp4_5,
 NORDFORSK1_DV_B_6 = sp4_6,
 NORDFORSK1_DV_B_7 = sp4_7,
-NORDFORSK2_OBJEKT = terror_2a,
+NORDFORSK2_OBJECT = terror_2a,
 NORDFORSK2_TENSE = terror_2b,
 NORDFORSK2_DV = sp5,
 NORDFORSK3 = sp6,
@@ -58,23 +59,28 @@ NORDFORSK8_DV_B = sp15,
 NORDFORSK8_DV_C = sp16,
 GENDER = Gender,
 AGE = Age_groups,
-EDUCATION = Educ)
+EDUCATION = Educ
 )
 
-###ddi <- di %>% mutate(temp = case_when(is.na(sp13)) ~ 99) 
+## Standardize sp13 and sp14 variables to harmonized format, separating the random assignment of treatment from post measure response
+### ddi <- di %>% mutate(temp = case_when(is.na(sp13)) ~ 99) 
 di_pool <- pivot_longer(di_pool, sp13:sp14, names_to = 'NORDFORSK8_TREAT', values_to = 'NORDFORSK8_DV', values_drop_na = TRUE)
 
 #Norway
+## Load data
 dn_pool <- read_sav('C:\\Users/svein/Documents/nordforskdata/Norwegian Citizen Panel - wave 15 - EN.sav')
+dn_pool <- dn_pool %>% select(starts_with('r15pad_terror'), responseid, r15P1, r15P4_2, r15P5_1) %>% filter(!is.na(r15pad_terror1_ran1))
 
-dn_pool <- dn_pool %>% select(c(ResponseId = responseid),
+
+## Select variables and rename to harmonized variable names
+dn_pool <- dn_pool %>% select(ResponseId = responseid,
 NORDFORSK1_TACTIC1 = r15pad_terror1_ran1,
 NORDFORSK1_TARGET = r15pad_terror1_ran3,
-NORDFORSK1_CASULATIES = r15pad_terror1_ran4,
+NORDFORSK1_CASUALTIES = r15pad_terror1_ran4,
 NORDFORSK1_TACTIC2 = r15pad_terror1_ran5,
 NORDFORSK1_ADJECTIVE = r15pad_terror1_ran6,
 NORDFORSK1_SUBJECTIVE = r15pad_terror1_ran7,
-NORDFORSk1_MOTIVATION = r15pad_terror1_ran8,
+NORDFORSK1_MOTIVATION = r15pad_terror1_ran8,
 NORDFORSK1_DV_A = r15pad_terror1_a,
 NORDFORSK1_DV_B_1 = r15pad_terror1_b_1,
 NORDFORSK1_DV_B_2 = r15pad_terror1_b_2,
@@ -83,7 +89,7 @@ NORDFORSK1_DV_B_4 = r15pad_terror1_b_4,
 NORDFORSK1_DV_B_5 = r15pad_terror1_b_5,
 NORDFORSK1_DV_B_6 = r15pad_terror1_b_6,
 NORDFORSK1_DV_B_7 = r15pad_terror1_b_7,
-NORDFORSK2_OBJEKT = r15pad_terror2_ran1,
+NORDFORSK2_OBJECT = r15pad_terror2_ran1,
 NORDFORSK2_TENSE = r15pad_terror2_ran2,
 NORDFORSK2_DV = r15pad_terror2,
 NORDFORSK3 = r15pad_terror3,
@@ -108,12 +114,12 @@ EDUCATION = r15P4_2) %>%
   mutate(ResponseId = as.character(ResponseId),
          NORDFORSK1_TACTIC1 = as.character(NORDFORSK1_TACTIC1),
          NORDFORSK1_TARGET = as.character(NORDFORSK1_TARGET),
-         NORDFORSK1_CASULATIES = as.character(NORDFORSK1_CASULATIES),
+         NORDFORSK1_CASUALTIES = as.character(NORDFORSK1_CASUALTIES),
          NORDFORSK1_TACTIC2 = as.character(NORDFORSK1_TACTIC2),
          NORDFORSK1_ADJECTIVE = as.character(NORDFORSK1_ADJECTIVE),
          NORDFORSK1_SUBJECTIVE = as.character(NORDFORSK1_SUBJECTIVE),
-         NORDFORSk1_MOTIVATION = as.character(NORDFORSk1_MOTIVATION),
-         NORDFORSK2_OBJEKT = as.character(NORDFORSK2_OBJEKT),
+         NORDFORSK1_MOTIVATION = as.character(NORDFORSK1_MOTIVATION),
+         NORDFORSK2_OBJECT = as.character(NORDFORSK2_OBJECT),
          NORDFORSK2_TENSE = as.character(NORDFORSK2_TENSE),
          NORDFORSK7_EVENT = as.character(NORDFORSK7_EVENT),
          NORDFORSK8_TREAT = as.character(NORDFORSK8_TREAT)
@@ -121,14 +127,18 @@ EDUCATION = r15P4_2) %>%
         
 
 #Sweden
+## Load data
+ds <- read_dta('C:\\Users/svein/Documents/nordforskdata/s5_sohlberg.dta') 
+
+## Select variables and rename to harmonized variable names
 ds_pool <- ds %>% select(c(#ResponseId = responseid,
 NORDFORSK1_TACTIC1 = q269_incidenttyp,
 NORDFORSK1_TARGET = q269_plats,
-NORDFORSK1_CASULATIES = q269_omkomna,
+NORDFORSK1_CASUALTIES = q269_omkomna,
 NORDFORSK1_TACTIC2 = q269_incidenten,
 NORDFORSK1_ADJECTIVE = q269_ideologi,
 NORDFORSK1_SUBJECTIVE = q269_subjekt,
-NORDFORSk1_MOTIVATION = q269_motiv,
+NORDFORSK1_MOTIVATION = q269_motiv,
 NORDFORSK1_DV_A = q270,
 NORDFORSK1_DV_B_1 = q272_1,
 NORDFORSK1_DV_B_2 = q272_2,
@@ -137,7 +147,7 @@ NORDFORSK1_DV_B_4 = q272_4,
 NORDFORSK1_DV_B_5 = q272_5,
 NORDFORSK1_DV_B_6 = q272_6,
 NORDFORSK1_DV_B_7 = q272_7,
-NORDFORSK2_OBJEKT = q274_hot,
+NORDFORSK2_OBJECT = q274_hot,
 NORDFORSK2_TENSE = q274_tempus,
 NORDFORSK2_DV = q274,
 NORDFORSK3 = q276,
@@ -160,8 +170,95 @@ GENDER = sex,
 AGE = age6,
 EDUCATION = edu_mp36)
 )
+```
 
+```{r pool_bind}
+#Merge data sets from Iceland, Norway, and Sweden
 d_pool <- bind_rows(di_pool, dn_pool)
+```
+
+```{r pool_eng_labels}
+# Translate to values to English
+d_pool <- d_pool %>% mutate(NORDFORSK1_TACTIC1 = case_when(NORDFORSK1_TACTIC1 == 1 ~ 'protest',
+                                                           NORDFORSK1_TACTIC1 == 'Protest' ~ 'protest',
+                                                NORDFORSK1_TACTIC1 == 2 ~ 'sabotage',
+                                                NORDFORSK1_TACTIC1 == 'Sabotage' ~ 'sabotage',
+                                                NORDFORSK1_TACTIC1 == 3 ~ 'hostage taking',
+                                                NORDFORSK1_TACTIC1 == 'Hostage taking' ~ 'hostage taking',
+                                                NORDFORSK1_TACTIC1 == 4 ~ 'shooting',
+                                                NORDFORSK1_TACTIC1 == 'Shooting' ~ 'shooting',
+                                                NORDFORSK1_TACTIC1 == 5 ~ 'bombing', 
+                                                NORDFORSK1_TACTIC1 == 'Bombing' ~ 'bombing'), 
+                            NORDFORSK1_TARGET = case_when(NORDFORSK1_TARGET == 1 ~ 'a military facility',
+                                                           NORDFORSK1_TARGET == 'military facility' ~ 'a military facility',
+                                                           NORDFORSK1_TARGET == 2 ~ 'a police station',
+                                                           NORDFORSK1_TARGET == 'police station' ~ 'a police station',
+                                                           NORDFORSK1_TARGET == 3 ~ 'a school',
+                                                           NORDFORSK1_TARGET == 'school' ~ 'a school',
+                                                           NORDFORSK1_TARGET == 4 ~ 'a church',
+                                                           NORDFORSK1_TARGET == 'church' ~ 'a church',
+                                                           NORDFORSK1_TARGET == 5 ~ 'a mosque',
+                                                           NORDFORSK1_TARGET == 'mosque' ~ 'a mosque',
+                                                           NORDFORSK1_TARGET == 6 ~ 'a synagogue',
+                                                           NORDFORSK1_TARGET == 'synagogue' ~ 'a synagogue'),
+                 NORDFORSK1_CASUALTIES = case_when(NORDFORSK1_CASUALTIES == 1 ~ 'No',
+                                                   NORDFORSK1_CASUALTIES == 'No one was killed' ~ 'No',
+                                                   NORDFORSK1_CASUALTIES == 2 ~ 'One person',
+                                                   NORDFORSK1_CASUALTIES == 'One person' ~ 'One person',
+                                                NORDFORSK1_CASUALTIES == 3 ~ 'Two people',
+                                                NORDFORSK1_CASUALTIES == 'Two people' ~ 'Two people',
+                                                NORDFORSK1_CASUALTIES == 4 ~ 'Ten people',
+                                                NORDFORSK1_CASUALTIES == 'Ten people' ~ 'Ten people'),
+                 NORDFORSK1_TACTIC2 = case_when(NORDFORSK1_TACTIC2 == 1 ~ 'the protest',
+                                                NORDFORSK1_TACTIC2 == 'Protest' ~ 'the protest',
+                                                NORDFORSK1_TACTIC2 == 2 ~ 'the sabotage',
+                                                NORDFORSK1_TACTIC2 == 'Sabotage' ~ 'the sabotage',
+                                                NORDFORSK1_TACTIC2 == 3 ~ 'the hostage taking',
+                                                NORDFORSK1_TACTIC2 == 'Hostage taking' ~ 'the hostage taking',
+                                                NORDFORSK1_TACTIC2 == 4 ~ 'the shooting',
+                                                NORDFORSK1_TACTIC2 == 'Shooting' ~ 'the shooting',
+                                                NORDFORSK1_TACTIC2 == 5 ~ 'the bombing',
+                                                NORDFORSK1_TACTIC2 == 'Bombing' ~ 'the bombing'),
+                 NORDFORSK1_ADJECTIVE = case_when(NORDFORSK1_ADJECTIVE == 1 ~ 'one',
+                                                  NORDFORSK1_ADJECTIVE == 'one' ~ 'one',
+                                                NORDFORSK1_ADJECTIVE == 2 ~ 'one Christian',
+                                                NORDFORSK1_ADJECTIVE == 'one Christian' ~ 'one Christian',
+                                                NORDFORSK1_ADJECTIVE == 3 ~ 'one Muslim',
+                                                NORDFORSK1_ADJECTIVE == 'one Muslim' ~ 'one Muslim',
+                                                NORDFORSK1_ADJECTIVE == 4 ~ 'one left-wing extremist',
+                                                NORDFORSK1_ADJECTIVE == 'one left-wing extremist' ~ 'one left-wing extremist',
+                                                NORDFORSK1_ADJECTIVE == 5 ~ 'one right-wing extremist',
+                                                NORDFORSK1_ADJECTIVE == 'one right-wing extremist' ~ 'one right-wing extremist'),
+                 NORDFORSK1_SUBJECTIVE = case_when(NORDFORSK1_SUBJECTIVE == 1 ~ 'organisation',
+                                                   NORDFORSK1_SUBJECTIVE == 'organization' ~ 'organisation',
+                                                NORDFORSK1_SUBJECTIVE == 2 ~ 'group',
+                                                NORDFORSK1_SUBJECTIVE == 'group' ~ 'group',
+                                                NORDFORSK1_SUBJECTIVE == 3 ~ 'individual',
+                                                NORDFORSK1_SUBJECTIVE == 'indiviudal' ~ 'individual',
+                                                NORDFORSK1_SUBJECTIVE == 4 ~ 'individual of unsound mind',
+                                                NORDFORSK1_SUBJECTIVE == 'individual of unsound mind' ~ 'individual of unsound mind'),
+                 NORDFORSK1_MOTIVATION = case_when(NORDFORSK1_MOTIVATION == 1 ~ 'there was no clear motivation behind the incident',
+                                                   NORDFORSK1_MOTIVATION == 'there was no clear motivation behind the incident' ~ 'there was no clear motivation behind the incident',
+                                                NORDFORSK1_MOTIVATION == 2 ~ 'the incident was carried out with the aim of changing government policy',
+                                                NORDFORSK1_MOTIVATION == 'the incident was carried out with the aim of changing goverment policy' ~ 'the incident was carried out with the aim of changing government policy',
+                                                NORDFORSK1_MOTIVATION == 3 ~ 'the motivation behind the incident came from a hatred towards the target',
+                 NORDFORSK1_MOTIVATION == 'the motivation behind the incident came from a hatred towards the target' ~ 'the motivation behind the incident came from a hatred towards the target'),
+                 NORDFORSK2_OBJECT = case_when(NORDFORSK2_OBJECT == 1 ~ 'you personally',
+                                               NORDFORSK2_OBJECT == 'for you personally' ~ 'you personally',
+                                                NORDFORSK2_OBJECT == 2 ~ '[country]',
+                                               NORDFORSK2_OBJECT == 'Iceland' ~ '[country]',
+                                                NORDFORSK2_OBJECT == 3 ~ 'Europe',
+                                               NORDFORSK2_OBJECT == 'Europe' ~ 'Europe'),
+                 NORDFORSK2_TENSE = case_when(NORDFORSK2_TENSE == 1 ~ 'today',
+                                              NORDFORSK2_TENSE == 'today' ~ 'today',
+                                                NORDFORSK2_TENSE == 2 ~ 'in the future',
+                                              NORDFORSK2_TENSE == 'in the future' ~ 'in the future'),
+                   NORDFORSK7_EVENT = case_when(NORDFORSK7_EVENT == 1 ~ 'natural disasters',
+                                                NORDFORSK7_EVENT == 'natural disasters' ~ 'natural disasters',
+                                                NORDFORSK7_EVENT == 2 ~ 'terrorist attack',
+                                                NORDFORSK7_EVENT == 'terrorist attack' ~ 'terrorist attack')
+
+                 )
 ```
 
 
