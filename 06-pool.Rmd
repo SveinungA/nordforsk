@@ -6,13 +6,16 @@ if(!require("haven")){install.packages("haven");  library(haven)}
 if(!require("here")){install.packages("here");  library(here)}
 if(!require("kableExtra")){install.packages("kableExtra");  library(kableExtra)}
 if(!require("knitr")){install.packages("knitr");  library(knitr)}
+if(!require("labelled")){install.packages("labelled");  library(labelled) }
 if(!require("magick")){install.packages("magick");  library(magick)}
 if(!require("openxlsx")){install.packages("openxlsx");  library(openxlsx)}
 if(!require("readxl")){install.packages("readxl");  library(readxl)}
 if(!require("sjlabelled")){install.packages("sjlabelled");  library(sjlabelled)}
+if(!require("sjPlot")){install.packages("sjPlot");  library(sjPlot)}
 if(!require("tidyverse")){install.packages("tidyverse");  library(tidyverse)}
 if(!require("utf8")){install.packages("utf8");  library(utf8)}
 if(!require("webshot")){install.packages("webshot");  library(webshot)}
+if(!require("surveytoolbox")){devtools::install_github("martinctc/surveytoolbox");  library(surveytoolbox)}
 
 knitr::opts_chunk$set(echo = FALSE, knitr.kable.NA = "", cache = FALSE, message = FALSE )
 ```
@@ -20,7 +23,7 @@ knitr::opts_chunk$set(echo = FALSE, knitr.kable.NA = "", cache = FALSE, message 
 ```{r pool_load_iceland}
 #Iceland
 ##Load data
-di <- read_sav('C:\\Users/svein/Documents/NORDFORSKdata/Terrorism_Iceland_EnglishLabels.sav')
+di <- read_sav('C:\\Users/svein/Documents/NORDFORSKdata/Terrorism_Iceland_EnglishLabelss.sav')
 
 ## Select variables and rename to harmonized variable names
 di_pool <- di %>% select(ResponseId = ResponseId,
@@ -89,8 +92,9 @@ di_pool <- di_pool %>% mutate(AGE=replace(AGE, which(AGE <30), 1), # Reduce age 
 
 ## Standardize sp13 and sp14 variables to harmonized format, separating the random assignment of treatment from post measure response
 di_pool <- pivot_longer(di_pool, sp13:sp14, names_to = 'NORDFORSK8_TREAT', values_to = 'NORDFORSK8_DV_A', values_drop_na = TRUE) %>% 
-   mutate(NORDFORSK8_TREAT=replace(NORDFORSK8_TREAT, which(NORDFORSK8_TREAT=='sp13'), 1),
-         NORDFORSK8_TREAT=replace(NORDFORSK8_TREAT, which(NORDFORSK8_TREAT=='sp14'), 0))
+   mutate(NORDFORSK8_TREAT=replace(NORDFORSK8_TREAT, which(NORDFORSK8_TREAT=='sp13'), '1'),
+         NORDFORSK8_TREAT=replace(NORDFORSK8_TREAT, which(NORDFORSK8_TREAT=='sp14'), '0'),
+         )
 ```
 
 ```{r pool_load_norway}
