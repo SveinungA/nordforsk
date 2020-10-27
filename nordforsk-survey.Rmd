@@ -1,0 +1,1845 @@
+--- 
+title: "Survey Guide: The Challenge from Terrorism in the Nordic Countries"
+author: ""
+date: "`r Sys.Date()`"
+site: bookdown::bookdown_site
+output: bookdown::gitbook
+documentclass: book
+bibliography: [book.bib, packages.bib]
+biblio-style: apalike
+link-citations: yes
+github-repo: rstudio/bookdown-demo
+description: "This is the guide to the survey on the challenge from terrorism in the Nordic countries, conducted in Iceland, Norway, and Sweden in 2018-2019. "
+---
+
+# About 
+
+This document is a guide to the survey of the research project *The challenge from terrorism in the Nordic countries*.
+The project is a collaboration between Iceland, Norway, and Sweden, and funded by the Nordic Research Council (NORDFORSK).
+
+
+<!--chapter:end:index.Rmd-->
+
+# Iceland
+```{r ice_setup, include=FALSE, echo=FALSE}
+if(!require("codebook")){install.packages("codebook");  library(codebook)}
+if(!require("haven")){install.packages("haven");  library(haven)}
+if(!require("here")){install.packages("here");  library(here)}
+if(!require("tidyverse")){install.packages("tidyverse");  library(tidyverse)}
+if(!require("knitr")){install.packages("knitr");  library(knitr)}
+if(!require("magick")){install.packages("magick");  library(magick)}
+if(!require("utf8")){install.packages("utf8");  library(utf8)}
+
+knitr::opts_chunk$set(echo = FALSE, knitr.kable.NA = "", cache = FALSE, message = FALSE )
+```
+> Here follows some information about the SSRI, and the people involved in the project.
+
+
+```{r ice_load_data}
+di <- read_sav('C:\\Users/svein/Documents/nordforskdata/Terrorism_Iceland.sav') 
+```
+NOTES TO ICELAND:
+
+- SOME TRANSLATIONS OF INTRODUCTION TEXTS ARE MISSING.
+COULD YOU RETRIEVE THESE, IF POSSIBLE?
+
+- For *NORDFORSK8_TREAT* AND *NORDFORSK8_DV*, THE ICELANDIC DATA SET HAS BEEN MODIFIED TO FIT THE STRUCTURE OF THE TABLES
+AS A RESULT, THE NA VALUES OF *NORDFORSK8_DV* HAVE BEEN FILTERED OUT. 
+
+- UNDER *NORDFORSK7*, THE ICELANDIC DATA SET HAS TWO MORE VARIABLES THAN THE OTHER DATA SETS DUE TO LANGUAGE DIFFERENCES (CONJUGATION OF SUBJECTS). 
+I HAVE NOT INCLUDED *TERROR10_B* OR *TERROR10_C* IN THE GUIDE FOR THIS REASON, BUT PLEASE LET ME KNOW IF YOU OBJECT.
+
+## Additional variables 
+
+Below is an overview of the additional variables in the data set that have not yet been pooled. 
+The project group will together determine which variables ought to be pooled across the three countries.
+
+```{r ice_other}
+
+other <- di %>% select(stada, atvinna, hjusk, fjoldi_heimili, fjoldi_barna, e_tekjur_lokad, h_tekjur_lokad)
+
+codebook(other, detailed_variables = FALSE, detailed_scales = FALSE, missingness_report = FALSE)
+
+```
+
+<!--chapter:end:03-iceland.Rmd-->
+
+# Norway
+
+```{r nor_setup, include=FALSE, echo=FALSE}
+if(!require("codebook")){install.packages("codebook");  library(codebook)}
+if(!require("haven")){install.packages("haven");  library(haven)}
+if(!require("here")){install.packages("here");  library(here)}
+if(!require("tidyverse")){install.packages("tidyverse");  library(tidyverse)}
+if(!require("knitr")){install.packages("knitr");  library(knitr)}
+if(!require("magick")){install.packages("magick");  library(magick)}
+if(!require("readxl")){install.packages("readxl");  library(readxl)}
+if(!require("utf8")){install.packages("utf8");  library(utf8)}
+
+knitr::opts_chunk$set(echo = FALSE, knitr.kable.NA = "", cache = FALSE, message = FALSE )
+```
+
+```{r nor_load_data}
+
+
+dn <- read_sav('C:\\Users/svein/Documents/nordforskdata/Norwegian Citizen Panel - wave 15 - NO.sav') 
+dn <- dn %>% select(starts_with('r15pad_terror'), responseid, r15P1, r15P4_2, r15P5_1) %>% filter(!is.na(r15pad_terror1_ran1))
+```
+
+## Additional variables 
+
+A specific data set is not created for this project, but relevant variables can be selected from the full panel data set.
+The project group will together determine which variables ought to be pooled across the three countries.
+
+<!--chapter:end:04-norway.Rmd-->
+
+# Sweden
+
+> Here follows some information about the Swedish Citizen Panel, and the people involved in the project.
+
+```{r swe_setup, include=FALSE, echo=FALSE}
+if(!require("codebook")){install.packages("codebook");  library(codebook)}
+if(!require("haven")){install.packages("haven");  library(haven)}
+if(!require("here")){install.packages("here");  library(here)}
+if(!require("tidyverse")){install.packages("tidyverse");  library(tidyverse)}
+if(!require("knitr")){install.packages("knitr");  library(knitr)}
+if(!require("magick")){install.packages("magick");  library(magick)}
+if(!require("readxl")){install.packages("readxl");  library(readxl)}
+if(!require("utf8")){install.packages("utf8");  library(utf8)}
+
+knitr::opts_chunk$set(echo = FALSE, knitr.kable.NA = "", cache = FALSE, message = FALSE )
+```
+
+```{r swe_load_data}
+
+ds <- read_dta('C:\\Users/svein/Documents/nordforskdata/s5_sohlberg.dta') 
+
+ds <- ds %>% select(-(starts_with('t_q')))
+```
+
+> Note on the Swedish data set:
+For all randomized experimental variables, there is consistently an empty value " ", which has a frequency of 4. These are respondents who dropped out of the survey earlier, and have been deleted from the data set.
+
+
+## Additional variables 
+
+Below is an overview of the additional variables in the data set that have not yet been pooled. 
+(A set of time stamp variables are not displayed below, but available.)
+The project group will together determine which variables ought to be pooled across the three countries.
+
+```{r swe_other}
+
+other <- ds %>% select(lrpown_mp36, s5, edu_gammal, lrpown_gammal)
+
+codebook(other, detailed_variables = FALSE, detailed_scales = FALSE, missingness_report = FALSE)
+```
+
+<!--chapter:end:05-sweden.Rmd-->
+
+# POOL DATASETS
+
+```{r POOL_setup, include=FALSE, echo=FALSE}
+if(!require("gt")){install.packages("gt");  library(gt)}
+if(!require("haven")){install.packages("haven");  library(haven)}
+if(!require("here")){install.packages("here");  library(here)}
+if(!require("kableExtra")){install.packages("kableExtra");  library(kableExtra)}
+if(!require("knitr")){install.packages("knitr");  library(knitr)}
+if(!require("labelled")){install.packages("labelled");  library(labelled) }
+if(!require("magick")){install.packages("magick");  library(magick)}
+if(!require("openxlsx")){install.packages("openxlsx");  library(openxlsx)}
+if(!require("readxl")){install.packages("readxl");  library(readxl)}
+if(!require("sjlabelled")){install.packages("sjlabelled");  library(sjlabelled)}
+if(!require("sjPlot")){install.packages("sjPlot");  library(sjPlot)}
+if(!require("tidyverse")){install.packages("tidyverse");  library(tidyverse)}
+if(!require("utf8")){install.packages("utf8");  library(utf8)}
+if(!require("webshot")){install.packages("webshot");  library(webshot)}
+if(!require("surveytoolbox")){devtools::install_github("martinctc/surveytoolbox");  library(surveytoolbox)}
+
+knitr::opts_chunk$set(echo = FALSE, knitr.kable.NA = "", cache = FALSE, message = FALSE )
+```
+
+```{r pool_load_iceland}
+#Iceland
+##Load data
+di <- read_sav('C:\\Users/svein/Documents/NORDFORSKdata/Terrorism_Iceland_EnglishLabelss.sav')
+
+## Select variables and rename to harmonized variable names
+di_pool <- di %>% select(ResponseId = ResponseId,
+NORDFORSK1_TACTIC1 = taktikk1,
+NORDFORSK1_TARGET = mal,
+NORDFORSK1_CASUALTIES = personer,
+NORDFORSK1_TACTIC2 = taktikk2,
+NORDFORSK1_ADJECTIVE = adjektiv,
+NORDFORSK1_SUBJECTIVE = subjekt,
+NORDFORSK1_MOTIVATION = motivasjon,
+NORDFORSK1_DV_A = sp3,
+NORDFORSK1_DV_B_1 = sp4_1,
+NORDFORSK1_DV_B_2 = sp4_2,
+NORDFORSK1_DV_B_3 = sp4_3,
+NORDFORSK1_DV_B_4 = sp4_4,
+NORDFORSK1_DV_B_5 = sp4_5,
+NORDFORSK1_DV_B_6 = sp4_6,
+NORDFORSK1_DV_B_7 = sp4_7,
+NORDFORSK2_OBJECT = terror_2a,
+NORDFORSK2_TENSE = terror_2b,
+NORDFORSK2_DV = sp5,
+NORDFORSK3 = sp6,
+NORDFORSK4 = sp7,
+NORDFORSK5 = sp8,
+NORDFORSK6_1 = sp9_1,
+NORDFORSK6_2 = sp9_2,
+NORDFORSK6_3 = sp9_3,
+NORDFORSK6_4 = sp9_4,
+NORDFORSK6_5 = sp9_5,
+NORDFORSK6_6 = sp9_6,
+NORDFORSK7_EVENT = terror10_a,
+NORDFORSK7_DV = sp10,
+NORDFORSK8_PRE = sp12,
+sp13, sp14,
+NORDFORSK8_DV_B = sp15,
+NORDFORSK8_DV_C = sp16,
+GENDER = Gender,
+AGE = Age,
+EDUCATION = Education
+) %>% 
+  mutate(sp13 = as.character(sp13),
+         sp14 = as.character(sp14),
+         NORDFORSK5 = as.character(NORDFORSK5))
+
+
+di_pool <- di_pool %>% mutate(AGE=replace(AGE, which(AGE <30), 1), # Reduce age categories in Icelandic data set to six
+                              AGE=replace(AGE, which(AGE >=30 & AGE < 40), 2),
+                              AGE=replace(AGE, which(AGE >=40 & AGE < 50), 3),
+                              AGE=replace(AGE, which(AGE >=50 & AGE < 60), 4),
+                              AGE=replace(AGE, which(AGE >=60 & AGE < 70), 5),
+                              AGE=replace(AGE, which(AGE >=70), 6),
+                              EDUCATION=replace(EDUCATION, which(EDUCATION <5), 0), # Reduce education categories in Icelandic data set to two
+                              EDUCATION=replace(EDUCATION, which(EDUCATION >4 & EDUCATION <9), 1),
+                              NORDFORSK5= replace(NORDFORSK5, which(NORDFORSK5==2), 'Progressive Party'),
+                              NORDFORSK5= replace(NORDFORSK5, which(NORDFORSK5==3), 'Reform Party'),
+                              NORDFORSK5= replace(NORDFORSK5, which(NORDFORSK5==4), 'Independence Party'),
+                              NORDFORSK5= replace(NORDFORSK5, which(NORDFORSK5==6), 'The People\'s Party'),
+                              NORDFORSK5= replace(NORDFORSK5, which(NORDFORSK5==8), 'The Pirate Party'),
+                              NORDFORSK5= replace(NORDFORSK5, which(NORDFORSK5==10), 'Social Democrats'),
+                              NORDFORSK5= replace(NORDFORSK5, which(NORDFORSK5==11), 'Left-Green Party'),
+                              NORDFORSK5= replace(NORDFORSK5, which(NORDFORSK5==12), 'The Center Party'),
+                              NORDFORSK5= replace(NORDFORSK5, which(NORDFORSK5==13), 'Other'),
+                              NORDFORSK5= replace(NORDFORSK5, which(NORDFORSK5==14), 'None')
+                              
+                                                )
+
+## Standardize sp13 and sp14 variables to harmonized format, separating the random assignment of treatment from post measure response
+di_pool <- pivot_longer(di_pool, sp13:sp14, names_to = 'NORDFORSK8_TREAT', values_to = 'NORDFORSK8_DV_A', values_drop_na = TRUE) %>% 
+   mutate(NORDFORSK8_TREAT=replace(NORDFORSK8_TREAT, which(NORDFORSK8_TREAT=='sp13'), '1'),
+         NORDFORSK8_TREAT=replace(NORDFORSK8_TREAT, which(NORDFORSK8_TREAT=='sp14'), '0'),
+         )
+```
+
+```{r pool_load_norway}
+
+#Norway
+## Load data
+dn <- read_sav('C:\\Users/svein/Documents/nordforskdata/Norwegian Citizen Panel - wave 15 - EN.sav')
+dn <- dn %>% select(starts_with('r15pad_terror'), responseid, r15P1, r15P4_2, r15P5_1) %>% filter(!is.na(r15pad_terror1_ran1))
+
+## Select variables and rename to harmonized variable names
+dn_pool <- dn %>% select(ResponseId = responseid,
+NORDFORSK1_TACTIC1 = r15pad_terror1_ran1,
+NORDFORSK1_TARGET = r15pad_terror1_ran3,
+NORDFORSK1_CASUALTIES = r15pad_terror1_ran4,
+NORDFORSK1_TACTIC2 = r15pad_terror1_ran5,
+NORDFORSK1_ADJECTIVE = r15pad_terror1_ran6,
+NORDFORSK1_SUBJECTIVE = r15pad_terror1_ran7,
+NORDFORSK1_MOTIVATION = r15pad_terror1_ran8,
+NORDFORSK1_DV_A = r15pad_terror1_a,
+NORDFORSK1_DV_B_1 = r15pad_terror1_b_1,
+NORDFORSK1_DV_B_2 = r15pad_terror1_b_2,
+NORDFORSK1_DV_B_3 = r15pad_terror1_b_3,
+NORDFORSK1_DV_B_4 = r15pad_terror1_b_4,
+NORDFORSK1_DV_B_5 = r15pad_terror1_b_5,
+NORDFORSK1_DV_B_6 = r15pad_terror1_b_6,
+NORDFORSK1_DV_B_7 = r15pad_terror1_b_7,
+NORDFORSK2_OBJECT = r15pad_terror2_ran1,
+NORDFORSK2_TENSE = r15pad_terror2_ran2,
+NORDFORSK2_DV = r15pad_terror2,
+NORDFORSK3 = r15pad_terror3,
+NORDFORSK4 = r15pad_terror5,
+NORDFORSK5 = r15pad_terror6,
+NORDFORSK6_1 = r15pad_terror8_1,
+NORDFORSK6_2 = r15pad_terror8_2,
+NORDFORSK6_3 = r15pad_terror8_3,
+NORDFORSK6_4 = r15pad_terror8_4,
+NORDFORSK6_5 = r15pad_terror8_5,
+NORDFORSK6_6 = r15pad_terror8_6,
+NORDFORSK7_EVENT = r15pad_terror10_ran,
+NORDFORSK7_DV = r15pad_terror10,
+NORDFORSK8_PRE = r15pad_terror11pre,
+NORDFORSK8_TREAT = r15pad_terror11_ran, 
+NORDFORSK8_DV_A =  r15pad_terror11posta,
+NORDFORSK8_DV_B =  r15pad_terror11postb,
+NORDFORSK8_DV_C = r15pad_terror11postc,
+GENDER = r15P1,
+AGE = r15P5_1,
+EDUCATION = r15P4_2) %>% 
+  mutate(ResponseId = as.character(ResponseId), #standardize object class among the data sets
+         NORDFORSK1_TACTIC1 = as.character(NORDFORSK1_TACTIC1),
+         NORDFORSK1_TARGET = as.character(NORDFORSK1_TARGET),
+         NORDFORSK1_CASUALTIES = as.character(NORDFORSK1_CASUALTIES),
+         NORDFORSK1_TACTIC2 = as.character(NORDFORSK1_TACTIC2),
+         NORDFORSK1_ADJECTIVE = as.character(NORDFORSK1_ADJECTIVE),
+         NORDFORSK1_SUBJECTIVE = as.character(NORDFORSK1_SUBJECTIVE),
+         NORDFORSK1_MOTIVATION = as.character(NORDFORSK1_MOTIVATION),
+         NORDFORSK2_OBJECT = as.character(NORDFORSK2_OBJECT),
+         NORDFORSK2_TENSE = as.character(NORDFORSK2_TENSE),
+         NORDFORSK5 = as.character(NORDFORSK5),
+         NORDFORSK7_EVENT = as.character(NORDFORSK7_EVENT),
+         NORDFORSK8_TREAT = as.character(NORDFORSK8_TREAT)
+  ) 
+
+##Standardize values to pooled data set
+dn_pool <- dn_pool %>% mutate(NORDFORSK1_DV_A=replace(NORDFORSK1_DV_A, which(NORDFORSK1_DV_A>96), NA), # Convert 97 values to NA to conform to pooled standard
+                              NORDFORSK1_DV_B_1=replace(NORDFORSK1_DV_B_1, which(NORDFORSK1_DV_B_1>96), NA),
+                              NORDFORSK1_DV_B_2=replace(NORDFORSK1_DV_B_2, which(NORDFORSK1_DV_B_2>96), NA),
+                              NORDFORSK1_DV_B_3=replace(NORDFORSK1_DV_B_3, which(NORDFORSK1_DV_B_3>96), NA),
+                              NORDFORSK1_DV_B_4=replace(NORDFORSK1_DV_B_4, which(NORDFORSK1_DV_B_4>96), NA),
+                              NORDFORSK1_DV_B_5=replace(NORDFORSK1_DV_B_5, which(NORDFORSK1_DV_B_5>96), NA),
+                              NORDFORSK1_DV_B_6=replace(NORDFORSK1_DV_B_6, which(NORDFORSK1_DV_B_6>96), NA),
+                              NORDFORSK1_DV_B_7=replace(NORDFORSK1_DV_B_7, which(NORDFORSK1_DV_B_7>96), NA),
+                              NORDFORSK2_DV=replace(NORDFORSK2_DV, which(NORDFORSK2_DV>96), NA),
+                              NORDFORSK3=replace(NORDFORSK3, which(NORDFORSK3>96), NA),
+                              NORDFORSK4=replace(NORDFORSK4, which(NORDFORSK4>96), NA),
+                              NORDFORSK6_1=replace(NORDFORSK6_1, which(NORDFORSK6_1>96), NA),
+                              NORDFORSK6_2=replace(NORDFORSK6_2, which(NORDFORSK6_2>96), NA),
+                              NORDFORSK6_3=replace(NORDFORSK6_3, which(NORDFORSK6_3>96), NA),
+                              NORDFORSK6_4=replace(NORDFORSK6_4, which(NORDFORSK6_4>96), NA),
+                              NORDFORSK6_5=replace(NORDFORSK6_5, which(NORDFORSK6_5>96), NA),
+                              NORDFORSK6_6=replace(NORDFORSK6_6, which(NORDFORSK6_6>96), NA),
+                              NORDFORSK7_DV=replace(NORDFORSK7_DV, which(NORDFORSK7_DV>96), NA),
+                              NORDFORSK8_PRE=replace(NORDFORSK8_PRE, which(NORDFORSK8_PRE>96), NA),
+                              NORDFORSK8_DV_A=replace(NORDFORSK8_DV_A, which(NORDFORSK8_DV_A>96), NA),
+                              NORDFORSK8_DV_B=replace(NORDFORSK8_DV_B, which(NORDFORSK8_DV_B>96), NA),
+                              NORDFORSK8_DV_C=replace(NORDFORSK8_DV_C, which(NORDFORSK8_DV_C>96), NA),
+                              AGE=replace(AGE, which(AGE >5), 1), # Reduce age categories in Norwegian data set to six and revert scale to fit other data sets
+                              AGE=replace(AGE, which(AGE ==5), 2),
+                              AGE=replace(AGE, which(AGE ==4), 3),
+                              AGE=replace(AGE, which(AGE ==3), 4),
+                              AGE=replace(AGE, which(AGE ==2), 5),
+                              AGE=replace(AGE, which(AGE ==1), 6),
+                              EDUCATION=replace(EDUCATION, which(EDUCATION <6), 0), # Reduce education categories in Norwegian data set to two
+                              EDUCATION=replace(EDUCATION, which(EDUCATION >5 & EDUCATION <12), 1),
+                              EDUCATION=replace(EDUCATION, which(EDUCATION >11), NA),
+                              NORDFORSK5= replace(NORDFORSK5, which(NORDFORSK5==1), 'The Labour Party'),
+                              NORDFORSK5= replace(NORDFORSK5, which(NORDFORSK5==2), 'The Progress Party'),
+                              NORDFORSK5= replace(NORDFORSK5, which(NORDFORSK5==3), 'The Conservative Party'),
+                              NORDFORSK5= replace(NORDFORSK5, which(NORDFORSK5==4), 'The Socialist Left Party'),
+                              NORDFORSK5= replace(NORDFORSK5, which(NORDFORSK5==5), 'The Centre Party'),
+                              NORDFORSK5= replace(NORDFORSK5, which(NORDFORSK5==6), 'The Christian Democrats'),
+                              NORDFORSK5= replace(NORDFORSK5, which(NORDFORSK5==7), 'The Liberal Party'),
+                              NORDFORSK5= replace(NORDFORSK5, which(NORDFORSK5==8), 'The Red Party'),
+                              NORDFORSK5= replace(NORDFORSK5, which(NORDFORSK5==9), 'The Green Party'),
+                              NORDFORSK5= replace(NORDFORSK5, which(NORDFORSK5==10), 'Other'),
+                              NORDFORSK5= replace(NORDFORSK5, which(NORDFORSK5==11), 'None'),
+                              NORDFORSK5= replace(NORDFORSK5, which(NORDFORSK5==97), NA),
+                                                )
+```
+
+```{r pool_load_sweden}
+#Sweden
+## Load data
+ds <- read_dta('C:\\Users/svein/Documents/nordforskdata/s5_sohlberg.dta') 
+
+## Select variables and rename to harmonized variable names
+ds_pool <- ds %>% select(c(#ResponseId = responseid,
+NORDFORSK1_TACTIC1 = q269_incidenttyp,
+NORDFORSK1_TARGET = q269_plats,
+NORDFORSK1_CASUALTIES = q269_omkomna,
+NORDFORSK1_TACTIC2 = q269_incidenten,
+NORDFORSK1_ADJECTIVE = q269_ideologi,
+NORDFORSK1_SUBJECTIVE = q269_subjekt,
+NORDFORSK1_MOTIVATION = q269_motiv,
+NORDFORSK1_DV_A = q270,
+NORDFORSK1_DV_B_1 = q272_1,
+NORDFORSK1_DV_B_2 = q272_2,
+NORDFORSK1_DV_B_3 = q272_3,
+NORDFORSK1_DV_B_4 = q272_4,
+NORDFORSK1_DV_B_5 = q272_5,
+NORDFORSK1_DV_B_6 = q272_6,
+NORDFORSK1_DV_B_7 = q272_7,
+NORDFORSK2_OBJECT = q274_hot,
+NORDFORSK2_TENSE = q274_tempus,
+NORDFORSK2_DV = q274,
+NORDFORSK3 = q276,
+NORDFORSK4 = q278,
+NORDFORSK5 = q280,
+NORDFORSK6_1 = q282_1,
+NORDFORSK6_2 = q282_2,
+NORDFORSK6_3 = q282_3,
+NORDFORSK6_4 = q282_4,
+NORDFORSK6_5 = q282_5,
+NORDFORSK6_6 = q282_6,
+NORDFORSK7_EVENT = q284_kristyp,
+NORDFORSK7_DV = q284,
+NORDFORSK8_PRE = q286,
+NORDFORSK8_TREAT = q288,
+NORDFORSK8_DV_A =  q290,
+NORDFORSK8_DV_B =  q292,
+NORDFORSK8_DV_C = q294,
+GENDER = sex,
+AGE = age6,
+EDUCATION = edu_mp36)
+) %>% 
+  mutate(NORDFORSK8_TREAT = as.character(NORDFORSK8_TREAT),
+         NORDFORSK5 = as.character(NORDFORSK5)
+         )
+
+ds_pool <- ds_pool %>% mutate(EDUCATION=replace(EDUCATION, which(EDUCATION <7), 0), # Reduce education categories in Swedish data set to two
+                              EDUCATION=replace(EDUCATION, which(EDUCATION >6 & EDUCATION <10), 1),
+                              NORDFORSK5= replace(NORDFORSK5, which(NORDFORSK5==1), 'The Social Democrats'), #Add Swedish political parties
+                              NORDFORSK5= replace(NORDFORSK5, which(NORDFORSK5==2), 'The Sweden Democrats'),
+                              NORDFORSK5= replace(NORDFORSK5, which(NORDFORSK5==3), 'The Moderates'),
+                              NORDFORSK5= replace(NORDFORSK5, which(NORDFORSK5==4), 'The Left Party'),
+                              NORDFORSK5= replace(NORDFORSK5, which(NORDFORSK5==5), 'The Centre Party'),
+                              NORDFORSK5= replace(NORDFORSK5, which(NORDFORSK5==6), 'The Christian Democrats'),
+                              NORDFORSK5= replace(NORDFORSK5, which(NORDFORSK5==7), 'The Liberal Party'),
+                              NORDFORSK5= replace(NORDFORSK5, which(NORDFORSK5==8), 'The Green Party'),
+                              NORDFORSK5= replace(NORDFORSK5, which(NORDFORSK5==9), 'Other'),
+                              NORDFORSK5= replace(NORDFORSK5, which(NORDFORSK5==10), 'None')
+                                                )
+```
+
+```{r pool_bind}
+#Merge data sets from Iceland, Norway, and Sweden
+d_pool <- bind_rows(di_pool, dn_pool, ds_pool)
+```
+
+```{r pool_eng_values}
+# Translate to values to English
+d_pool <- d_pool %>% mutate(NORDFORSK1_TACTIC1 = case_when(NORDFORSK1_TACTIC1 == 1 ~ 'protest',
+                                                           NORDFORSK1_TACTIC1 == 'Protest' ~ 'protest',
+                                                           NORDFORSK1_TACTIC1 == 'En protest' ~ 'protest',
+                                                NORDFORSK1_TACTIC1 == 2 ~ 'sabotage',
+                                                NORDFORSK1_TACTIC1 == 'Sabotage' ~ 'sabotage',
+                                                NORDFORSK1_TACTIC1 == 'Ett sabotage' ~ 'sabotage',
+                                                NORDFORSK1_TACTIC1 == 3 ~ 'hostage taking',
+                                                NORDFORSK1_TACTIC1 == 'Hostage taking' ~ 'hostage taking',
+                                                NORDFORSK1_TACTIC1 == 'Ett gisslantagande' ~ 'hostage taking',
+                                                NORDFORSK1_TACTIC1 == 4 ~ 'shooting',
+                                                NORDFORSK1_TACTIC1 == 'Shooting' ~ 'shooting',
+                                                NORDFORSK1_TACTIC1 == 'En skjutning' ~ 'shooting',
+                                                NORDFORSK1_TACTIC1 == 5 ~ 'bombing', 
+                                                NORDFORSK1_TACTIC1 == 'Bombing' ~ 'bombing',
+                                                NORDFORSK1_TACTIC1 == 'En bombning' ~ 'bombing'), 
+                            NORDFORSK1_TARGET = case_when(NORDFORSK1_TARGET == 1 ~ 'a military facility',
+                                                           NORDFORSK1_TARGET == 'military facility' ~ 'a military facility',
+                                                          NORDFORSK1_TARGET == 'på en militäranläggning' ~ 'a military facility',
+                                                           NORDFORSK1_TARGET == 2 ~ 'a police station',
+                                                           NORDFORSK1_TARGET == 'police station' ~ 'a police station',
+                                                          NORDFORSK1_TARGET == 'på en polisstation' ~ 'a police station',
+                                                           NORDFORSK1_TARGET == 3 ~ 'a school',
+                                                           NORDFORSK1_TARGET == 'school' ~ 'a school',
+                                                          NORDFORSK1_TARGET == 'i en skola' ~ 'a school',
+                                                           NORDFORSK1_TARGET == 4 ~ 'a church',
+                                                           NORDFORSK1_TARGET == 'church' ~ 'a church',
+                                                          NORDFORSK1_TARGET == 'i en kyrka' ~ 'a church',
+                                                           NORDFORSK1_TARGET == 5 ~ 'a mosque',
+                                                           NORDFORSK1_TARGET == 'mosque' ~ 'a mosque',
+                                                          NORDFORSK1_TARGET == 'i en moské' ~ 'a mosque',
+                                                           NORDFORSK1_TARGET == 6 ~ 'a synagogue',
+                                                           NORDFORSK1_TARGET == 'synagogue' ~ 'a synagogue',
+                                                          NORDFORSK1_TARGET == 'i en synagoga' ~ 'a synagogue'),
+                 NORDFORSK1_CASUALTIES = case_when(NORDFORSK1_CASUALTIES == 1 ~ 'No',
+                                                   NORDFORSK1_CASUALTIES == 'No one was killed' ~ 'No',
+                                                   NORDFORSK1_CASUALTIES == 'Ingen' ~ 'No',
+                                                   NORDFORSK1_CASUALTIES == 2 ~ 'One person',
+                                                   NORDFORSK1_CASUALTIES == 'One person' ~ 'One person',
+                                                   NORDFORSK1_CASUALTIES == 'En person' ~ 'One person',
+                                                NORDFORSK1_CASUALTIES == 3 ~ 'Two people',
+                                                NORDFORSK1_CASUALTIES == 'Two people' ~ 'Two people',
+                                                NORDFORSK1_CASUALTIES == 'Två personer' ~ 'Two people',
+                                                NORDFORSK1_CASUALTIES == 4 ~ 'Ten people',
+                                                NORDFORSK1_CASUALTIES == 'Ten people' ~ 'Ten people',
+                                                NORDFORSK1_CASUALTIES == 'Tio personer' ~ 'Ten people'),
+                 NORDFORSK1_TACTIC2 = case_when(NORDFORSK1_TACTIC2 == 1 ~ 'the protest',
+                                                NORDFORSK1_TACTIC2 == 'Protest' ~ 'the protest',
+                                                NORDFORSK1_TACTIC2 == 'protesten' ~ 'the protest',
+                                                NORDFORSK1_TACTIC2 == 2 ~ 'the sabotage',
+                                                NORDFORSK1_TACTIC2 == 'Sabotage' ~ 'the sabotage',
+                                                NORDFORSK1_TACTIC2 == 'sabotaget' ~ 'the sabotage',
+                                                NORDFORSK1_TACTIC2 == 3 ~ 'the hostage taking',
+                                                NORDFORSK1_TACTIC2 == 'Hostage taking' ~ 'the hostage taking',
+                                                NORDFORSK1_TACTIC2 == 'gisslantagningen' ~ 'the hostage taking',
+                                                NORDFORSK1_TACTIC2 == 4 ~ 'the shooting',
+                                                NORDFORSK1_TACTIC2 == 'Shooting' ~ 'the shooting',
+                                                NORDFORSK1_TACTIC2 == 'skjutningen' ~ 'the shooting',
+                                                NORDFORSK1_TACTIC2 == 5 ~ 'the bombing',
+                                                NORDFORSK1_TACTIC2 == 'Bombing' ~ 'the bombing',
+                                                NORDFORSK1_TACTIC2 == 'bombningen' ~ 'the bombing'),
+                 NORDFORSK1_ADJECTIVE = case_when(NORDFORSK1_ADJECTIVE == 1 ~ 'one',
+                                                  NORDFORSK1_ADJECTIVE == 'one' ~ 'one',
+                                                  NORDFORSK1_ADJECTIVE == 'en' ~ 'one',
+                                                NORDFORSK1_ADJECTIVE == 2 ~ 'one Christian',
+                                                NORDFORSK1_ADJECTIVE == 'one Christian' ~ 'one Christian',
+                                                NORDFORSK1_ADJECTIVE == 'en kristen' ~ 'one Christian',
+                                                NORDFORSK1_ADJECTIVE == 3 ~ 'one Muslim',
+                                                NORDFORSK1_ADJECTIVE == 'one Muslim' ~ 'one Muslim',
+                                                NORDFORSK1_ADJECTIVE == 'en muslimsk' ~ 'one Muslim',
+                                                NORDFORSK1_ADJECTIVE == 4 ~ 'one left-wing extremist',
+                                                NORDFORSK1_ADJECTIVE == 'one left-wing extremist' ~ 'one left-wing extremist',
+                                                NORDFORSK1_ADJECTIVE == 'en vänsterextrem' ~ 'one left-wing extremist',
+                                                NORDFORSK1_ADJECTIVE == 5 ~ 'one right-wing extremist',
+                                                NORDFORSK1_ADJECTIVE == 'one right-wing extremist' ~ 'one right-wing extremist',
+                                                NORDFORSK1_ADJECTIVE == 'en högerextrem' ~ 'one right-wing extremist'),
+                 NORDFORSK1_SUBJECTIVE = case_when(NORDFORSK1_SUBJECTIVE == 1 ~ 'organisation',
+                                                   NORDFORSK1_SUBJECTIVE == 'organization' ~ 'organisation',
+                                                   NORDFORSK1_SUBJECTIVE == 'organiSation' ~ 'organisation',
+                                                NORDFORSK1_SUBJECTIVE == 2 ~ 'group',
+                                                NORDFORSK1_SUBJECTIVE == 'group' ~ 'group',
+                                                NORDFORSK1_SUBJECTIVE == 'grupp' ~ 'group',
+                                                NORDFORSK1_SUBJECTIVE == 3 ~ 'individual',
+                                                NORDFORSK1_SUBJECTIVE == 'indiviudal' ~ 'individual',
+                                                NORDFORSK1_SUBJECTIVE == 'individ' ~ 'individual',
+                                                NORDFORSK1_SUBJECTIVE == 4 ~ 'individual of unsound mind',
+                                                NORDFORSK1_SUBJECTIVE == 'individual of unsound mind' ~ 'individual of unsound mind',
+                                                NORDFORSK1_SUBJECTIVE == 'psykiskt sjuk individ' ~ 'individual of unsound mind'),
+                 NORDFORSK1_MOTIVATION = case_when(NORDFORSK1_MOTIVATION == 1 ~ 'there was no clear motivation behind the incident',
+                                                   NORDFORSK1_MOTIVATION == 'there was no clear motivation behind the incident' ~ 'there was no clear motivation behind the incident',
+                                                   NORDFORSK1_MOTIVATION == 'att det inte fanns något tydligt motiv bakom händelsen' ~ 'there was no clear motivation behind the incident',
+                                                NORDFORSK1_MOTIVATION == 2 ~ 'the incident was carried out with the aim of changing government policy',
+                                                NORDFORSK1_MOTIVATION == 'the incident was carried out with the aim of changing goverment policy' ~ 'the incident was carried out with the aim of changing government policy',
+                                                NORDFORSK1_MOTIVATION == 'att händelsen utfördes med målet att förändra regeringens politik' ~ 'the incident was carried out with the aim of changing government policy',
+                                                NORDFORSK1_MOTIVATION == 3 ~ 'the motivation behind the incident came from a hatred towards the target',
+                 NORDFORSK1_MOTIVATION == 'the motivation behind the incident came from a hatred towards the target' ~ 'the motivation behind the incident came from a hatred towards the target',
+                 NORDFORSK1_MOTIVATION == 'att händelsen var motiverad utifrån hat gentemot målet' ~ 'the motivation behind the incident came from a hatred towards the target'),
+                 NORDFORSK2_OBJECT = case_when(NORDFORSK2_OBJECT == 1 ~ 'you personally',
+                                               NORDFORSK2_OBJECT == 'for you personally' ~ 'you personally',
+                                               NORDFORSK2_OBJECT == 'dig personligen' ~ 'you personally',
+                                                NORDFORSK2_OBJECT == 2 ~ '[country]',
+                                               NORDFORSK2_OBJECT == 'Iceland' ~ '[country]',
+                                               NORDFORSK2_OBJECT == 'Sverige' ~ '[country]',
+                                                NORDFORSK2_OBJECT == 3 ~ 'Europe',
+                                               NORDFORSK2_OBJECT == 'Europe' ~ 'Europe',
+                                               NORDFORSK2_OBJECT == 'Europa' ~ 'Europe'),
+                 NORDFORSK2_TENSE = case_when(NORDFORSK2_TENSE == 1 ~ 'today',
+                                              NORDFORSK2_TENSE == 'today' ~ 'today',
+                                              NORDFORSK2_TENSE == 'idag' ~ 'today',
+                                                NORDFORSK2_TENSE == 2 ~ 'in the future',
+                                              NORDFORSK2_TENSE == 'in the future' ~ 'in the future',
+                                              NORDFORSK2_TENSE == 'i framtiden' ~ 'in the future'),
+                 NORDFORSK7_EVENT = case_when(NORDFORSK7_EVENT == 1 ~ 'natural disasters',
+                                                NORDFORSK7_EVENT == 'natural disasters' ~ 'natural disasters',
+                                                NORDFORSK7_EVENT == 'naturkatastrofer' ~ 'natural disasters',
+                                                NORDFORSK7_EVENT == 2 ~ 'terrorist attack',
+                                                NORDFORSK7_EVENT == 'terrorist attack' ~ 'terrorist attack',
+                                                NORDFORSK7_EVENT == 'terrorattacker' ~ 'terrorist attack')
+
+                 )
+```
+
+```{r set_labels}
+# Set labels for the pooled data set
+d_pool <- d_pool %>% set_labels(NORDFORSK1_DV_A, labels = c('Yes, this is terrorism' = 1,
+                                                              'No, this is not terrorism' = 2)) %>% 
+  set_labels(NORDFORSK1_DV_B_1, labels = c('Strongly agree' = 1,
+                                                              'Agree' = 2,
+                                                              'Agree somewhat' = 3,
+                                                              'Neither agree nor disagree' = 4,
+                                                              'Disagree somewhat' = 5,
+                                                              'Disagree' = 6,
+                                                              'Strongly disagree' = 7)) %>% 
+  set_labels(NORDFORSK1_DV_B_2, labels = c('Strongly agree' = 1,
+                                                              'Agree' = 2,
+                                                              'Agree somewhat' = 3,
+                                                              'Neither agree nor disagree' = 4,
+                                                              'Disagree somewhat' = 5,
+                                                              'Disagree' = 6,
+                                                              'Strongly disagree' = 7)) %>% 
+  set_labels(NORDFORSK1_DV_B_3, labels = c('Strongly agree' = 1,
+                                                              'Agree' = 2,
+                                                              'Agree somewhat' = 3,
+                                                              'Neither agree nor disagree' = 4,
+                                                              'Disagree somewhat' = 5,
+                                                              'Disagree' = 6,
+                                                              'Strongly disagree' = 7)) %>% 
+  set_labels(NORDFORSK1_DV_B_4, labels = c('Strongly agree' = 1,
+                                                              'Agree' = 2,
+                                                              'Agree somewhat' = 3,
+                                                              'Neither agree nor disagree' = 4,
+                                                              'Disagree somewhat' = 5,
+                                                              'Disagree' = 6,
+                                                              'Strongly disagree' = 7)) %>% 
+  set_labels(NORDFORSK1_DV_B_5, labels = c('Strongly agree' = 1,
+                                                              'Agree' = 2,
+                                                              'Agree somewhat' = 3,
+                                                              'Neither agree nor disagree' = 4,
+                                                              'Disagree somewhat' = 5,
+                                                              'Disagree' = 6,
+                                                              'Strongly disagree' = 7)) %>% 
+  set_labels(NORDFORSK1_DV_B_6, labels = c('Strongly agree' = 1,
+                                                              'Agree' = 2,
+                                                              'Agree somewhat' = 3,
+                                                              'Neither agree nor disagree' = 4,
+                                                              'Disagree somewhat' = 5,
+                                                              'Disagree' = 6,
+                                                              'Strongly disagree' = 7)) %>% 
+  set_labels(NORDFORSK1_DV_B_7, labels = c('Strongly agree' = 1,
+                                                              'Agree' = 2,
+                                                              'Agree somewhat' = 3,
+                                                              'Neither agree nor disagree' = 4,
+                                                              'Disagree somewhat' = 5,
+                                                              'Disagree' = 6,
+                                                              'Strongly disagree' = 7)) %>% 
+  set_labels(NORDFORSK2_DV, labels = c('Very serious' = 1,
+                                                              'Serious' = 2,
+                                                              'Somewhat serious' = 3,
+                                                              'Not very serious' = 4,
+                                                              'Not a threat' = 5)) %>% 
+  set_labels(NORDFORSK3, labels = c('Strongly agree' = 1,
+                                                              'Agree' = 2,
+                                                              'Agree somewhat' = 3,
+                                                              'Neither agree nor disagree' = 4,
+                                                              'Disagree somewhat' = 5,
+                                                              'Disagree' = 6,
+                                                              'Strongly disagree' = 7)) %>% 
+  set_labels(NORDFORSK4, labels = c('Very important' = 1,
+                                                              'Important' = 2,
+                                                              'Somewhat important' = 3,
+                                                              'Slightly important' = 4,
+                                                              'Not important at all' = 5)) %>% 
+  set_labels(NORDFORSK6_1, labels = c('Extremely good' = 1,
+                                                              'Very good' = 2,
+                                                              'Somewhat good' = 3,
+                                                              'Neither good nor bad' = 4,
+                                                              'Somewhat bad' = 5,
+                                                              'Very bad' = 6,
+                                                              'Extremely bad' = 7)) %>% 
+  set_labels(NORDFORSK6_2, labels = c('Extremely good' = 1,
+                                                              'Very good' = 2,
+                                                              'Somewhat good' = 3,
+                                                              'Neither good nor bad' = 4,
+                                                              'Somewhat bad' = 5,
+                                                              'Very bad' = 6,
+                                                              'Extremely bad' = 7)) %>% 
+  set_labels(NORDFORSK6_3, labels = c('Extremely good' = 1,
+                                                              'Very good' = 2,
+                                                              'Somewhat good' = 3,
+                                                              'Neither good nor bad' = 4,
+                                                              'Somewhat bad' = 5,
+                                                              'Very bad' = 6,
+                                                              'Extremely bad' = 7)) %>% 
+  set_labels(NORDFORSK6_4, labels = c('Extremely good' = 1,
+                                                              'Very good' = 2,
+                                                              'Somewhat good' = 3,
+                                                              'Neither good nor bad' = 4,
+                                                              'Somewhat bad' = 5,
+                                                              'Very bad' = 6,
+                                                              'Extremely bad' = 7)) %>% 
+  set_labels(NORDFORSK6_5, labels = c('Extremely good' = 1,
+                                                              'Very good' = 2,
+                                                              'Somewhat good' = 3,
+                                                              'Neither good nor bad' = 4,
+                                                              'Somewhat bad' = 5,
+                                                              'Very bad' = 6,
+                                                              'Extremely bad' = 7)) %>% 
+  set_labels(NORDFORSK6_6, labels = c('Extremely good' = 1,
+                                                              'Very good' = 2,
+                                                              'Somewhat good' = 3,
+                                                              'Neither good nor bad' = 4,
+                                                              'Somewhat bad' = 5,
+                                                              'Very bad' = 6,
+                                                              'Extremely bad' = 7)) %>% 
+    set_labels(NORDFORSK7_DV, labels = c('I support it very strongly' = 1,
+                                                              'I support it strongly' = 2,
+                                                              'I support it somewhat' = 3,
+                                                              'I neither support it nor oppose it' = 4,
+                                                              'I oppose it somewhat' = 5,
+                                                              'I oppose it strongly' = 6,
+                                                              'I oppose it very strongly' = 7)) %>% 
+    set_labels(NORDFORSK8_PRE, labels = c('It led to a lot more terrorism' = 1,
+                                                              'It led to somewhat more terrorism' = 2,
+                                                              'It did not lead to any more or any less terrorism' = 3,
+                                                              'It led to less terrorism' = 4,
+                                                              'It led to a lot less terrorism' = 5)) %>% 
+  set_labels(NORDFORSK8_DV_A, labels = c('Increase greatly' = 1,
+                                                              'Increase' = 2,
+                                                              'Increase somewhat' = 3,
+                                                              'Neither increase nor decrease' = 4,
+                                                              'Decrease somewhat' = 5,
+                                                              'Decrease' = 6,
+                                                              'Decrease greatly' = 7)) %>% 
+  set_labels(NORDFORSK8_DV_B, labels = c('Receive many more' = 1,
+                                                              'Receive more' = 2,
+                                                              'Receive a few more' = 3,
+                                                              'Neither receive any more nor any less' = 4,
+                                                              'Receive a few less' = 5,
+                                                              'Receive fewer' = 6,
+                                                              'Receive many fewer' = 7)) %>% 
+  set_labels(NORDFORSK8_DV_A, labels = ('Strongly agree' = 1,
+                                                              'Agree' = 2,
+                                                              'Agree somewhat' = 3,
+                                                              'Neither agree nor disagree' = 4,
+                                                              'Disagree somewhat' = 5,
+                                                              'Disagree' = 6,
+                                                              'Strongly disagree' = 7))
+  
+  
+  
+  
+#dn_pool %>% surveytoolbox::extract_vallab('NORDFORSK8_DV_C')
+
+```
+
+
+
+<!--chapter:end:06-pool.Rmd-->
+
+# NORDFORSK1
+
+```{r setup, include=FALSE, echo=FALSE}
+if(!require("gt")){install.packages("gt");  library(gt)}
+if(!require("haven")){install.packages("haven");  library(haven)}
+if(!require("here")){install.packages("here");  library(here)}
+if(!require("kableExtra")){install.packages("kableExtra");  library(kableExtra)}
+if(!require("knitr")){install.packages("knitr");  library(knitr)}
+if(!require("magick")){install.packages("magick");  library(magick)}
+if(!require("openxlsx")){install.packages("openxlsx");  library(openxlsx)}
+if(!require("readxl")){install.packages("readxl");  library(readxl)}
+if(!require("sjlabelled")){install.packages("sjlabelled");  library(sjlabelled)}
+if(!require("tidyverse")){install.packages("tidyverse");  library(tidyverse)}
+if(!require("utf8")){install.packages("utf8");  library(utf8)}
+if(!require("webshot")){install.packages("webshot");  library(webshot)}
+
+knitr::opts_chunk$set(echo = FALSE, knitr.kable.NA = "", cache = FALSE, message = FALSE )
+```
+
+This chapter displays tables with distributions for each variable included the conjoint experiment, labelled NORDFORSK 1, as well as question wordings and values for each individual panel.
+
+
+>Could you please now imagine that an incident has taken place in the Nordic region and then consider some questions about the incident below.
+The incident involves a [NORDFORSK1_TACTIC1] that targeted [NORDFORSK1_TARGET] [on Iceland / in Norway / in Sweden]. 
+[NORDFORSK1_CASUALTIES] were killed in [NORDFORSK1_TACTIC2], which was performed by [NORDFORSK1_ADJECTIVE] [NORDFORSK1_SUBJECTIVE]. 
+News coverage suggests [NORDFORSK1_MOTIVATION].
+
+**Translations**
+Icelandic
+NA
+
+Norwegian  
+Vi ber deg nå se for deg en tenkt hendelse i Norden, og ta stilling til noen spørsmål vi stiller om hendelsen under.
+Hendelsen gjelder en  [NORDFORSK1_TACTIC1] som fant sted [NORDFORSK1_TARGET] i Norge. 
+[NORDFORSK1_CASUALTIES] ble drept i [NORDFORSK1_TACTIC2], som ble utført av [NORDFORSK1_ADJECTIVE] [NORDFORSK1_SUBJECTIVE].
+Nyhetsdekningen tyder på [NORDFORSK1_MOTIVATION].
+
+Swedish  
+Vi ber dig nu att föreställa dig en påhittad händelse i Norden och svara på några frågor om
+händelsen. 
+[NORDFORSK1_TACTIC1] inträffade [NORDFORSK1_TARGET] i Sverige. [NORDFORSK1_CASUALTIES]
+dödades i [NORDFORSK1_TACTIC2] som utfördes av [NORDFORSK1_ADJECTIVE]
+[NORDFORSK1_SUBJECTIVE]. Nyhetsrapporteringen tyder på [NORDFORSK1_MOTIVATION].
+
+## NORDFORSK1_TACTIC1
+```{r conjoint_tactic1}
+Source = c('protest', 'sabotage', 'hostage taking', 'shooting', 'bombing')
+Iceland <- count(di, taktikk1)  
+Norway <- count(dn, as_label(r15pad_terror1_ran1)) %>% filter(!is.na(`as_label(r15pad_terror1_ran1)`))
+Sweden <- count(ds, q269_incidenttyp) %>% filter(n > 10)
+tactic1 <- bind_cols(Source, Iceland, Norway, Sweden)
+
+kable(tactic1, booktabs = T, linesep = "", escape = F, caption = "Panel variable names and values",  col.names = linebreak(c("Pooled", "Iceland", 'n', "Norway", 'n', "Sweden", 'n'))) %>%
+  footnote(general = "Variable names. Iceland = taktikk1, Norway =  r15pad_terror1_ran1, Sweden = q269_incidenttyp")
+```
+
+## NORDFORSK1_TARGET
+```{r conjoint_target}
+Source = c('a military facility', 'a police station', 'a school', 'a church', 'a mosque', 'a synagogue')
+Iceland <- count(di, mal)  
+Norway <- count(dn, as_label(r15pad_terror1_ran3)) %>% filter(!is.na(`as_label(r15pad_terror1_ran3)`))
+Sweden <- count(ds, q269_plats) %>% filter(n > 10)
+target <- bind_cols(Source, Iceland, Norway, Sweden)
+
+kable(target, booktabs = T, linesep = "", escape = F, caption = "Panel variable names and values",  col.names = linebreak(c("Pooled", "Iceland", 'n', "Norway", 'n', "Sweden", 'n'))) %>%
+ footnote(general = "Variable names. Iceland = mal, Norway =  r15pad_terror1_ran3, Sweden = q269_plats")
+```
+
+## NORDFORSK1_CASUALTIES
+```{r conjoint_casualties}                  
+Source <-  c('No one', 'One person', 'Two people', 'Ten people')
+Iceland <- count(di, personer)  
+Norway <- count(dn, as_label(r15pad_terror1_ran4)) %>% filter(!is.na(`as_label(r15pad_terror1_ran4)`))
+Sweden <- count(ds, q269_omkomna) %>% filter(n > 10)
+casualties <- bind_cols(Source, Iceland, Norway, Sweden)
+
+kable(casualties, booktabs = T, linesep = "", escape = F, caption = "Panel variable names and values",  col.names = linebreak(c("Pooled", "Iceland", 'n', "Norway", 'n', "Sweden", 'n'))) %>%
+ footnote(general = "Variable names. Iceland = personer, Norway =  r15pad_terror1_ran4, Sweden = q269_omkomna")
+```
+
+## NORDFORSK1_TACTIC2
+```{r conjoint_tactic2}                
+Source <- c('the protest', 'the sabotage', 'the hostage taking', 'the shooting', 'the bombing')
+Iceland <- count(di, taktikk2)  
+Norway <- count(dn, as_label(r15pad_terror1_ran5)) %>% filter(!is.na(`as_label(r15pad_terror1_ran5)`))
+Sweden <- count(ds, q269_incidenten) %>% filter(n > 10)
+tactic2 <- bind_cols(Source, Iceland, Norway, Sweden)
+
+kable(tactic2, booktabs = T, linesep = "", escape = F, caption = "Panel variable names and values",  col.names = linebreak(c("Pooled", "Iceland", 'n', "Norway", 'n', "Sweden", 'n'))) %>%
+ footnote(general = "Variable names. Iceland = taktikk2, Norway =  r15pad_terror1_ran5, Sweden = q269_incidenten")
+```
+
+## NORDFORSK1_ADJECTIVE
+```{r conjoint_adjective}
+
+Source = tibble(c('one', 'one Christian', 'one Muslim', 'one left-wing extremist', 'one right-wing extremist'))
+Iceland <- count(di, adjektiv)  
+Norway <- count(dn, as_label(r15pad_terror1_ran6)) %>% filter(!is.na(`as_label(r15pad_terror1_ran6)`))
+Sweden <- count(ds, q269_ideologi) %>% filter(n > 10)
+adjective <- bind_cols(Source, Iceland, Norway, Sweden)
+
+kable(adjective, booktabs = T, linesep = "", escape = F, caption = "Panel variable names and values",  col.names = linebreak(c("Pooled", "Iceland", 'n', "Norway", 'n', "Sweden", 'n'))) %>%
+ footnote(general = "Variable names. Iceland = adjektiv, Norway =  r15pad_terror1_ran6, Sweden = q269_ideologi")
+```                      
+     
+## NORDFORSK1_SUBJECTIVE                     
+```{r conjoint_subject}                      
+Source = c('organisation', 'group', 'individual', 'individual of unsound mind')
+Iceland <- count(di, subjekt)  
+Norway <- count(dn, as_label(r15pad_terror1_ran7)) %>% filter(!is.na(`as_label(r15pad_terror1_ran7)`))
+Sweden <- count(ds, q269_subjekt) %>% filter(n > 10)
+subject <- bind_cols(Source, Iceland, Norway, Sweden)
+
+kable(subject, booktabs = T, linesep = "", escape = F, caption = "Panel variable names and values",  col.names = linebreak(c("Pooled", "Iceland", 'n', "Norway", 'n', "Sweden", 'n'))) %>%
+ footnote(general = "Variable names. Iceland = subjekt, Norway =  r15pad_terror1_ran7, Sweden = q269_subjekt")
+```               
+
+## NORDFORSK1_MOTIVATION
+```{r conjoint_motivation}               
+Source <- c('there was no clear motivation behind the incident', 'the incident was carried out with the aim of changing government policy', 'the motivation behind the incident came from a hatred towards the target')
+Iceland <- count(di, motivasjon)  
+Norway <- count(dn, as_label(r15pad_terror1_ran8)) %>% filter(!is.na(`as_label(r15pad_terror1_ran8)`))
+Sweden <- count(ds, q269_motiv) %>% filter(n > 10)
+motivation <- bind_cols(Source, Iceland, Norway, Sweden)
+
+kable(motivation, booktabs = T, linesep = "", escape = F, caption = "Panel variable names and values",  col.names = linebreak(c("Pooled", "Iceland", 'n', "Norway", 'n', "Sweden", 'n'))) %>%
+ footnote(general = "Variable names. Iceland = motivasjon, Norway =  r15pad_terror1_ran8, Sweden = q269_motiv")
+
+```
+## NORDFORSK1_DV_A
+
+> Would you classify this incident as an act of terrorism?
+
+*Translations*
+
+Iceland  
+Myndir þú flokka þetta sem hryðjuverk?
+
+Norway  
+Vil du klassifisere denne hendelsen som terrorisme?
+
+Sweden  
+Skulle du säga att detta är terrorism?
+
+```{r conjoint_dv_a}
+Source <- c('Yes, this is terrorism', 'No, this is not terrorism', NA)
+Iceland <- count(di, as_label(sp3))
+Norway <- count(dn, as_label(r15pad_terror1_a)) %>% filter(`as_label(r15pad_terror1_a)` != 'Ikke spurt')
+Sweden <- count(ds, as_label(q270))
+post <- bind_cols(Source, Iceland, Norway, Sweden)
+
+kable(post, booktabs = T, linesep = "", escape = F, caption = "Panel variable names and values",  col.names = linebreak(c("Pooled", "Iceland", 'n', "Norway", 'n', "Sweden", 'n'))) %>%
+ footnote(general = "Variable names. Iceland = sp3, Norway =  r15pad_terror1_a, Sweden = q270")
+```
+
+## NORDFORSK1_DV_B
+
+> Imagine that the authorities suspected that this incident was imminent. 
+To what extent do you agree or disagree that the authorities should have the right to:
+
+*Translations*
+
+Iceland  
+Ímyndum okkur að yfirvöld hefðu grun um að þetta atvik væri yfirvofandi. 
+Hversu sammála eða ósammála ert þú því að yfirvöld ættu að hafa réttinn til að gera eftirfarandi?
+
+Norway  
+Tenk deg at myndighetene hadde mistanke om at denne hendelsen var nært forestående. Hvor enig eller uenig er du i at myndighetene burde har rett til å:
+
+Sweden  
+Föreställ dig att myndigheterna misstänkte att denna händelse var nära förestående. Hur
+för eller emot är du att myndigheterna borde ha rätt till att:
+
+
+### NORDFORSK1_DV_B_1
+
+> Hold people in custody as long as they want without charging them
+
+*Translations*
+
+Icelandic  
+Halda fólki í gæsluvarðhaldi eins lengi og þau vilja án ákæru.
+
+Norway  
+Holde personer i forvaring så lenge de vil uten å stille dem for retten.
+
+Sweden  
+Hålla personer häktade utan att ställa inför rätta.
+
+
+```{r conjoint_dv_b_1}
+
+Source <- c('Strongly agree', 'Agree', 'Agree somewhat', 'Neither agree nor disagree', 'Disagree somewhat', 'Disagree', 'Strongly disagree', NA)
+Iceland <- count(di, as_label(sp4_1))
+Norway <- count(dn, as_label(r15pad_terror1_b_1)) %>% filter(`as_label(r15pad_terror1_b_1)` != 'Ikke spurt')
+Sweden <- count(ds, as_label(q272_1))
+post <- bind_cols(Source, Iceland, Norway, Sweden)
+
+kable(post, booktabs = T, linesep = "", escape = F, caption = "Panel variable names and values",  col.names = linebreak(c("Pooled", "Iceland", 'n', "Norway", 'n', "Sweden", 'n'))) %>%
+ footnote(general = "Variable names. Iceland = sp4_1, Norway =  r15pad_terror1_b_1, Sweden = q272_1")
+```
+
+### NORDFORSK1_DV_B_2
+
+> Listen in on people's telephone conversations
+
+*Translations*
+
+Icelandic  
+Hlera símtöl fólks
+
+Norway  
+Avlytte folks telefonsamtaler
+
+Sweden  
+Avlyssna människors telefonsamtal
+
+
+```{r conjoint_dv2_b_2}
+
+Source <- c('Strongly agree', 'Agree', 'Agree somewhat', 'Neither agree nor disagree', 'Disagree somewhat', 'Disagree', 'Strongly disagree', NA)
+Iceland <- count(di, as_label(sp4_2))
+Norway <- count(dn, as_label(r15pad_terror1_b_2)) %>% filter(`as_label(r15pad_terror1_b_2)` != 'Ikke spurt')
+Sweden <- count(ds, as_label(q272_2))
+post <- bind_cols(Source, Iceland, Norway, Sweden)
+
+kable(post, booktabs = T, linesep = "", escape = F, caption = "Panel variable names and values",  col.names = linebreak(c("Pooled", "Iceland", 'n', "Norway", 'n', "Sweden", 'n'))) %>%
+ footnote(general = "Variable names. Iceland = sp4_2, Norway =  r15pad_terror1_b_2, Sweden = q272_2")
+```
+
+### NORDFORSK1_DV_B_3
+
+> Randomly stop and search people on the street
+
+*Translations*
+
+Icelandic  
+Stöðva fólk af handahófi úti á götu og leita á því
+
+Norway  
+Tilfeldig stoppe og ransake folk på gaten
+
+Sweden  
+Tillfälligt stoppa och visitera människor på gatan
+
+
+```{r conjoint_dv2_b_3}
+
+Source <- c('Strongly agree', 'Agree', 'Agree somewhat', 'Neither agree nor disagree', 'Disagree somewhat', 'Disagree', 'Strongly disagree', NA)
+Iceland <- count(di, as_label(sp4_3))
+Norway <- count(dn, as_label(r15pad_terror1_b_3)) %>% filter(`as_label(r15pad_terror1_b_3)` != 'Ikke spurt')
+Sweden <- count(ds, as_label(q272_3))
+post <- bind_cols(Source, Iceland, Norway, Sweden)
+
+kable(post, booktabs = T, linesep = "", escape = F, caption = "Panel variable names and values",  col.names = linebreak(c("Pooled", "Iceland", 'n', "Norway", 'n', "Sweden", 'n'))) %>%
+ footnote(general = "Variable names. Iceland = sp4_3, Norway =  r15pad_terror1_b_3, Sweden = q272_3")
+```
+
+### NORDFORSK1_DV_B_4
+
+> Conduct surveillance of people's Email and Internet communications
+
+*Translations*
+
+Icelandic  
+Fylgjast með tölvupósti fólks og öðrum upplýsingum sem sendar eru á netinu
+
+Norway  
+Overvåke folks epost og internettkommunikasjon
+
+Sweden  
+Övervaka människors epost och internetkommunikation
+
+
+```{r conjoint_dv2_b_4}
+
+Source <- c('Strongly agree', 'Agree', 'Agree somewhat', 'Neither agree nor disagree', 'Disagree somewhat', 'Disagree', 'Strongly disagree', NA)
+Iceland <- count(di, as_label(sp4_4))
+Norway <- count(dn, as_label(r15pad_terror1_b_4)) %>% filter(`as_label(r15pad_terror1_b_4)` != 'Ikke spurt')
+Sweden <- count(ds, as_label(q272_4))
+post <- bind_cols(Source, Iceland, Norway, Sweden)
+
+kable(post, booktabs = T, linesep = "", escape = F, caption = "Panel variable names and values",  col.names = linebreak(c("Pooled", "Iceland", 'n', "Norway", 'n', "Sweden", 'n'))) %>%
+ footnote(general = "Variable names. Iceland = sp4_4, Norway =  r15pad_terror1_b_4, Sweden = q272_4")
+```
+
+### NORDFORSK1_DV_B_5
+
+> Conduct surveillance/wire tapping of rooms
+
+*Translations*
+
+Icelandic  
+Vakta/hlera húsnæði fólks
+
+Norway  
+Overvåke/avlytte rom
+
+Sweden  
+Övervaka/avlyssna rum
+
+```{r conjoint_dv2_b_5}
+
+Source <- c('Strongly agree', 'Agree', 'Agree somewhat', 'Neither agree nor disagree', 'Disagree somewhat', 'Disagree', 'Strongly disagree', NA)
+Iceland <- count(di, as_label(sp4_5))
+Norway <- count(dn, as_label(r15pad_terror1_b_5)) %>% filter(`as_label(r15pad_terror1_b_5)` != 'Ikke spurt')
+Sweden <- count(ds, as_label(q272_5))
+post <- bind_cols(Source, Iceland, Norway, Sweden)
+
+kable(post, booktabs = T, linesep = "", escape = F, caption = "Panel variable names and values",  col.names = linebreak(c("Pooled", "Iceland", 'n', "Norway", 'n', "Sweden", 'n'))) %>%
+ footnote(general = "Variable names. Iceland = sp4_5, Norway =  r15pad_terror1_b_5, Sweden = q272_5")
+```
+
+### NORDFORSK1_DV_B_6
+
+> Cordon off parts of the city
+
+*Translations*
+
+Icelandic  
+Loka af hluta borgarinnar/bæjarins
+
+Norway  
+Sperre av deler av byrommet
+
+Sweden  
+Spärra av delar av staden/orten
+
+
+```{r conjoint_dv2_b_6}
+
+Source <- c('Strongly agree', 'Agree', 'Agree somewhat', 'Neither agree nor disagree', 'Disagree somewhat', 'Disagree', 'Strongly disagree', NA)
+Iceland <- count(di, as_label(sp4_6))
+Norway <- count(dn, as_label(r15pad_terror1_b_6)) %>% filter(`as_label(r15pad_terror1_b_6)` != 'Ikke spurt')
+Sweden <- count(ds, as_label(q272_6))
+post <- bind_cols(Source, Iceland, Norway, Sweden)
+
+kable(post, booktabs = T, linesep = "", escape = F, caption = "Panel variable names and values",  col.names = linebreak(c("Pooled", "Iceland", 'n', "Norway", 'n', "Sweden", 'n'))) %>%
+ footnote(general = "Variable names. Iceland = sp4_6, Norway =  r15pad_terror1_b_6, Sweden = q272_6")
+```
+
+### NORDFORSK1_DV_B_7
+
+> Let armed police or the army patrol the streets
+
+*Translations*
+
+Icelandic  
+Láta vopnaða lögreglu eða her vakta göturnar
+
+Norway  
+La bevæpnet politi eller forsvaret patruljere gatene
+
+Sweden  
+Låta beväpnad polis eller försvaret patrullera gatorn
+
+```{r conjoint_dv2_b_7}
+
+Source <- c('Strongly agree', 'Agree', 'Agree somewhat', 'Neither agree nor disagree', 'Disagree somewhat', 'Disagree', 'Strongly disagree', NA)
+Iceland <- count(di, as_label(sp4_7))
+Norway <- count(dn, as_label(r15pad_terror1_b_7)) %>% filter(`as_label(r15pad_terror1_b_7)` != 'Ikke spurt')
+Sweden <- count(ds, as_label(q272_7))
+post <- bind_cols(Source, Iceland, Norway, Sweden)
+
+kable(post, booktabs = T, linesep = "", escape = F, caption = "Panel variable names and values",  col.names = linebreak(c("Pooled", "Iceland", 'n', "Norway", 'n', "Sweden", 'n'))) %>%
+ footnote(general = "Variable names. Iceland = sp4_7, Norway =  r15pad_terror1_b_7, Sweden = q272_7")
+```
+
+
+<!--chapter:end:07-nordforsk1.Rmd-->
+
+# NORDFORSK2
+
+```{r nordforsk2_setup, include=FALSE, echo=FALSE}
+if(!require("gt")){install.packages("gt");  library(gt)}
+if(!require("forcats")){install.packages("forcats");  library(forcats)}
+if(!require("haven")){install.packages("haven");  library(haven)}
+if(!require("here")){install.packages("here");  library(here)}
+if(!require("kableExtra")){install.packages("kableExtra");  library(kableExtra)}
+if(!require("knitr")){install.packages("knitr");  library(knitr)}
+if(!require("magick")){install.packages("magick");  library(magick)}
+if(!require("openxlsx")){install.packages("openxlsx");  library(openxlsx)}
+if(!require("readxl")){install.packages("readxl");  library(readxl)}
+if(!require("sjlabelled")){install.packages("sjlabelled");  library(sjlabelled)}
+if(!require("tidyverse")){install.packages("tidyverse");  library(tidyverse)}
+if(!require("utf8")){install.packages("utf8");  library(utf8)}
+if(!require("webshot")){install.packages("webshot");  library(webshot)}
+
+knitr::opts_chunk$set(echo = FALSE, knitr.kable.NA = "", cache = FALSE, message = FALSE )
+```
+
+> Overall, how serious a threat do you perceive terrorism to be for [NORDFORSK2_OBJECT] [NORDFORSK_TENSE]?
+
+*Translations*
+
+Icelandic  
+Þegar á heildina er litið, hversu alvarlega ógn telur þú hryðjuverk vera fyrir [NORDFORSK2_OBJECT] [NORDFORSK_TENSE]?
+
+Norwegian  
+Hvor stor trussel er terror for [NORDFORSK2_OBJECT] [NORDFORSK_TENSE].
+
+Swedish  
+I allmänhet, hur allvarligt hot uppfattar du att terrorism är för x? ">I allmänhet, hur allvarligt hot uppfattar du att terrorism är för [NORDFORSK2_OBJECT] [NORDFORSK_TENSE]?
+
+## NORDFORSK2_OBJECT
+
+```{r nordforsk2_object}
+Source = c('you personally', '[country]', 'Europe')
+Iceland <- count(di, terror_2a) 
+Iceland <- Iceland %>% arrange(factor(terror_2a, levels = LETTERS[c(3, 1, 2)]), desc(terror_2a))
+Norway <- count(dn, as_label(r15pad_terror2_ran1)) %>% filter(!is.na(`as_label(r15pad_terror2_ran1)`))
+Sweden <- count(ds, q274_hot) %>% filter(n > 10)
+Sweden <- Sweden %>% arrange(factor(q274_hot, levels = c('dig personligen', 'Sverige', 'Europa')), q274_hot)
+object <- bind_cols(Source, Iceland, Norway, Sweden)
+
+kable(object, booktabs = T, linesep = "", escape = F, caption = "Panel variable names and values",  col.names = linebreak(c("Pooled", "Iceland", 'n', "Norway", 'n', "Sweden", 'n'))) %>%
+  footnote(general = "Variable names. Iceland = terror_2a, Norway =  r15pad_terror2_ran1, Sweden = q274_hot")
+```
+
+## NORDFORSK2_TENSE
+
+```{r nordforsk2_tense}
+Source = c('today', 'in the future')
+Iceland <- count(di, terror_2b)  
+Norway <- count(dn, as_label(r15pad_terror2_ran2)) %>% filter(!is.na(`as_label(r15pad_terror2_ran2)`))
+Sweden <- count(ds, q274_tempus) %>% filter(n > 10)
+Sweden <- Sweden %>% arrange(factor(q274_tempus, levels = c('idag', 'i framtiden')), q274_tempus)
+tense <- bind_cols(Source, Iceland, Norway, Sweden)
+
+kable(tense, booktabs = T, linesep = "", escape = F, caption = "Panel variable names and values",  col.names = linebreak(c("Pooled", "Iceland", 'n', "Norway", 'n', "Sweden", 'n'))) %>%
+  footnote(general = "Variable names. Iceland = terror_2b, Norway =  r15pad_terror2_ran2, Sweden = q274_tempus")
+```
+
+## NORDFORSK2_DV
+
+```{r nordforsk2_dv}
+Source = c('Very serious', 'Serious', 'Somewhat serious', 'Not very serious', 'Not a threat', NA)
+Iceland <- count(di, as_label(sp5))  
+Norway <- count(dn, as_label(r15pad_terror2)) %>% filter(`as_label(r15pad_terror2)` != 'Ikke spurt')
+Sweden <- count(ds, as_label(q274)) 
+post <- bind_cols(Source, Iceland, Norway, Sweden)
+
+kable(post, booktabs = T, linesep = "", escape = F, caption = "Panel variable names and values",  col.names = linebreak(c("Pooled", "Iceland", 'n', "Norway", 'n', "Sweden", 'n'))) %>%
+  footnote(general = "Variable names. Iceland = sp5, Norway =  r15pad_terror2, Sweden = q274")
+```
+
+<!--chapter:end:08-nordforsk2.Rmd-->
+
+# NORDFORSK3
+
+```{r nordforsk3_setup, include=FALSE, echo=FALSE}
+if(!require("gt")){install.packages("gt");  library(gt)}
+if(!require("haven")){install.packages("haven");  library(haven)}
+if(!require("here")){install.packages("here");  library(here)}
+if(!require("kableExtra")){install.packages("kableExtra");  library(kableExtra)}
+if(!require("knitr")){install.packages("knitr");  library(knitr)}
+if(!require("magick")){install.packages("magick");  library(magick)}
+if(!require("openxlsx")){install.packages("openxlsx");  library(openxlsx)}
+if(!require("readxl")){install.packages("readxl");  library(readxl)}
+if(!require("sjlabelled")){install.packages("sjlabelled");  library(sjlabelled)}
+if(!require("tidyverse")){install.packages("tidyverse");  library(tidyverse)}
+if(!require("utf8")){install.packages("utf8");  library(utf8)}
+if(!require("webshot")){install.packages("webshot");  library(webshot)}
+
+knitr::opts_chunk$set(echo = FALSE, knitr.kable.NA = "", cache = FALSE, message = FALSE )
+```
+
+> To what extent do you agree that the safeguarding of society's security should be at the expense of individuals' freedom (such
+as protection of privacy and the right to privacy)?
+
+*Translations*
+
+Icelandic  
+Hversu sammála ert þú að verndun öryggis í samfélaginu ætti að vera á kostnað einstaklingsfrelsis (til dæmis persónuverndar og réttinum til einkalífs)?
+
+Norway  
+Ivaretakelse av sikkerhet bør gå på bekostning av enkeltindividers frihet.
+
+Sweden  
+I vilken utsträckning samhällets säkerhet på bekostnad av individers frihet?
+
+```{r nordforsk3}
+Source = c('Strongly agree', 'Agree', 'Agree somewhat', 'Neither agree nor disagree', 'Disagree somewhat', 'Disagree', 'Strongly disagree', NA)
+Iceland <- count(di, as_label(sp6))  
+Norway <- count(dn, as_label(r15pad_terror3)) %>% filter(`as_label(r15pad_terror3)` != 'Ikke spurt')
+Sweden <- count(ds, as_label(q276)) %>% filter(n > 10)
+nordforsk3 <- bind_cols(Source, Iceland, Norway, Sweden)
+
+kable(nordforsk3, booktabs = T, linesep = "", escape = F, caption = "Panel variable names and values",  col.names = linebreak(c("Pooled", "Iceland", 'n', "Norway", 'n', "Sweden", 'n'))) %>%
+  footnote(general = "Variable names. Iceland = sp6, Norway =  r15pad_terror3, Sweden = q276")
+```
+
+<!--chapter:end:09-nordforsk3.Rmd-->
+
+# NORDFORSK4
+
+```{r nordforsk4_setup, include=FALSE, echo=FALSE}
+if(!require("gt")){install.packages("gt");  library(gt)}
+if(!require("haven")){install.packages("haven");  library(haven)}
+if(!require("here")){install.packages("here");  library(here)}
+if(!require("kableExtra")){install.packages("kableExtra");  library(kableExtra)}
+if(!require("knitr")){install.packages("knitr");  library(knitr)}
+if(!require("magick")){install.packages("magick");  library(magick)}
+if(!require("openxlsx")){install.packages("openxlsx");  library(openxlsx)}
+if(!require("readxl")){install.packages("readxl");  library(readxl)}
+if(!require("sjlabelled")){install.packages("sjlabelled");  library(sjlabelled)}
+if(!require("tidyverse")){install.packages("tidyverse");  library(tidyverse)}
+if(!require("utf8")){install.packages("utf8");  library(utf8)}
+if(!require("webshot")){install.packages("webshot");  library(webshot)}
+
+knitr::opts_chunk$set(echo = FALSE, knitr.kable.NA = "", cache = FALSE, message = FALSE )
+```
+
+> How important are anti-terrorism measures for you personally?
+
+*Translations*
+
+Iceland  
+Hversu mikilvægar finnst þér aðgerðir gegn hryðjuverkum vera?
+
+Norway  
+Hvor viktig er antiterrortiltak for deg.
+
+Sweden 
+Hur viktiga är åtgärder mot terrorism för dig personligen?
+
+```{r nordforsk4}
+Source = c('Very important', 'Important', 'Somewhat important', 'Slightly important', 'Not important at all', NA)
+Iceland <- count(di, as_label(sp7))  
+Norway <- count(dn, as_label(r15pad_terror5)) %>% filter(`as_label(r15pad_terror5)` != 'Ikke spurt')
+Sweden <- count(ds, as_label(q278)) %>% filter(n > 10)
+nordforsk4 <- bind_cols(Source, Iceland, Norway, Sweden)
+
+kable(nordforsk4, booktabs = T, linesep = "", escape = F, caption = "Panel variable names and values",  col.names = linebreak(c("Pooled", "Iceland", 'n', "Norway", 'n', "Sweden", 'n'))) %>%
+  footnote(general = "Variable names. Iceland = sp7, Norway =  r15pad_terror5, Sweden = q278")
+```
+
+<!--chapter:end:10-nordforsk4.Rmd-->
+
+# NORDFORSK5
+
+```{r nordforsk5_setup, include=FALSE, echo=FALSE}
+if(!require("gt")){install.packages("gt");  library(gt)}
+if(!require("haven")){install.packages("haven");  library(haven)}
+if(!require("here")){install.packages("here");  library(here)}
+if(!require("kableExtra")){install.packages("kableExtra");  library(kableExtra)}
+if(!require("knitr")){install.packages("knitr");  library(knitr)}
+if(!require("magick")){install.packages("magick");  library(magick)}
+if(!require("openxlsx")){install.packages("openxlsx");  library(openxlsx)}
+if(!require("readxl")){install.packages("readxl");  library(readxl)}
+if(!require("sjlabelled")){install.packages("sjlabelled");  library(sjlabelled)}
+if(!require("tidyverse")){install.packages("tidyverse");  library(tidyverse)}
+if(!require("utf8")){install.packages("utf8");  library(utf8)}
+if(!require("webshot")){install.packages("webshot");  library(webshot)}
+
+knitr::opts_chunk$set(echo = FALSE, knitr.kable.NA = "", cache = FALSE, message = FALSE )
+```
+
+> Which political party do you think has the best policies aimed at combating terrorist attacks in [Iceland / Norway / Sweden]?
+
+*Translations*
+
+Iceland  
+Hvaða stjórnmálaflokkur telur þú að hafi bestu stefnu til að sporna við hryðjuverkum á Íslandi?
+
+Norway  
+Hvilket parti har den beste antiterrorpolitikken.
+
+Sweden  
+Bästa part för bekämpa terrorism?
+
+```{r nordforsk5}
+Source <- rep(NA, each = 12)
+Iceland <- count(di, as_label(sp8)) %>% add_row(`as_label(sp8)` = NA, n = NA)
+Norway <- count(dn, as_label(r15pad_terror6)) %>% filter(`as_label(r15pad_terror6)` != 'Ikke spurt')
+Sweden <- count(ds, as_label(q280)) %>% add_row(`as_label(q280)`= NA, n = NA)
+nordforsk5 <- bind_cols(Source, Iceland, Norway, Sweden)
+
+kable(nordforsk5, booktabs = T, linesep = "", escape = F, caption = "Panel variable names and values",  col.names = linebreak(c("Pooled", "Iceland", 'n', "Norway", 'n', "Sweden", 'n'))) %>%
+  footnote(general = "Variable names. Iceland = sp8, Norway =  r15pad_terror6, Sweden = q280")
+```
+
+<!--chapter:end:11-nordforsk5.Rmd-->
+
+# NORDFORSK6
+
+```{r nordforsk6_setup, include=FALSE, echo=FALSE}
+if(!require("gt")){install.packages("gt");  library(gt)}
+if(!require("haven")){install.packages("haven");  library(haven)}
+if(!require("here")){install.packages("here");  library(here)}
+if(!require("kableExtra")){install.packages("kableExtra");  library(kableExtra)}
+if(!require("knitr")){install.packages("knitr");  library(knitr)}
+if(!require("magick")){install.packages("magick");  library(magick)}
+if(!require("openxlsx")){install.packages("openxlsx");  library(openxlsx)}
+if(!require("readxl")){install.packages("readxl");  library(readxl)}
+if(!require("sjlabelled")){install.packages("sjlabelled");  library(sjlabelled)}
+if(!require("tidyverse")){install.packages("tidyverse");  library(tidyverse)}
+if(!require("utf8")){install.packages("utf8");  library(utf8)}
+if(!require("webshot")){install.packages("webshot");  library(webshot)}
+
+knitr::opts_chunk$set(echo = FALSE, knitr.kable.NA = "", cache = FALSE, message = FALSE )
+```
+
+> In your opinion, how good or bad are the following actors [on Iceland / in Norway / in Sweden] regarding their ability to deal with the risk of terrorist attacks?
+
+*Translations*
+
+Iceland  
+Hversu vel eða illa telur þú að eftirfarandi aðilar á Íslandi séu í stakk búnir til að bregðast við hættunni sem stafar af hryðjuverkaárásum? 
+
+Norway  
+Hvor godt eller dårlig vil du si at følgende aktører i Norge er i stand til å håndtere faren for terrorangrep? 
+
+Sweden 
+Hur bra eller dåliga skulle du säga att följande aktörer i Sverige är på att hantera risken för
+terrorattacker?
+
+## NORDFORSK6_1
+
+> International organizations
+
+Iceland  
+Alþjóðastofnanir
+
+Norway  
+Internasjonale organisasjoner
+
+Sweden  
+Internationella organisationer
+
+```{r nordforsk6_1}
+Source <- c('Extremely good', 'Very good', 'Somewhat good', 'Neither good nor bad', 'Somewhat bad', 'Very bad', 'Extremely bad', NA)
+Iceland <- count(di, as_label(sp9_1))
+Norway <- count(dn, as_label(r15pad_terror8_1)) %>% filter(`as_label(r15pad_terror8_1)` != 'Ikke spurt')
+Sweden <- count(ds, as_label(q282_1))
+nordforsk6_1 <- bind_cols(Source, Iceland, Norway, Sweden)
+
+kable(nordforsk6_1, booktabs = T, linesep = "", escape = F, caption = "Panel variable names and values",  col.names = linebreak(c("Pooled", "Iceland", 'n', "Norway", 'n', "Sweden", 'n'))) %>%
+  footnote(general = "Variable names. Iceland = sp9_1, Norway =  r15pad_terror8_1, Sweden = q282_1")
+```
+
+## NORDFORSK6_2
+
+> National authorities
+
+Iceland  
+Ríkisstjórnin
+
+Norway  
+Nasjonale myndigheter
+
+Sweden  
+Nationella myndigheter
+
+```{r nordforsk6_2}
+Source <- c('Extremely good', 'Very good', 'Somewhat good', 'Neither good nor bad', 'Somewhat bad', 'Very bad', 'Extremely bad', NA)
+Iceland <- count(di, as_label(sp9_2)) 
+Norway <- count(dn, as_label(r15pad_terror8_2)) %>% filter(`as_label(r15pad_terror8_2)` != 'Ikke spurt')
+Sweden <- count(ds, as_label(q282_2))
+nordforsk6_2 <- bind_cols(Source, Iceland, Norway, Sweden)
+
+kable(nordforsk6_2, booktabs = T, linesep = "", escape = F, caption = "Panel variable names and values",  col.names = linebreak(c("Pooled", "Iceland", 'n', "Norway", 'n', "Sweden", 'n'))) %>%
+  footnote(general = "Variable names. Iceland = sp9_2, Norway =  r15pad_terror8_2, Sweden = q282_2")
+```
+
+## NORDFORSK6_3
+
+> Local authorities
+
+Iceland  
+Sveitarstjórnir
+
+Norway  
+Lokale myndigheter
+
+Sweden  
+Lokala myndigheter
+
+```{r nordforsk6_3}
+Source <- c('Extremely good', 'Very good', 'Somewhat good', 'Neither good nor bad', 'Somewhat bad', 'Very bad', 'Extremely bad', NA)
+Iceland <- count(di, as_label(sp9_3)) 
+Norway <- count(dn, as_label(r15pad_terror8_3)) %>% filter(`as_label(r15pad_terror8_3)` != 'Ikke spurt')
+Sweden <- count(ds, as_label(q282_3))
+nordforsk6_3 <- bind_cols(Source, Iceland, Norway, Sweden)
+
+kable(nordforsk6_3, booktabs = T, linesep = "", escape = F, caption = "Panel variable names and values",  col.names = linebreak(c("Pooled", "Iceland", 'n', "Norway", 'n', "Sweden", 'n'))) %>%
+  footnote(general = "Variable names. Iceland = sp9_3, Norway =  r15pad_terror8_3, Sweden = q282_3")
+```
+
+## NORDFORSK6_4
+
+> The police
+
+Iceland  
+Lögreglan
+
+Norway  
+Politiet
+
+Sweden  
+Polisen   
+
+```{r nordforsk6_4}
+Source <- c('Extremely good', 'Very good', 'Somewhat good', 'Neither good nor bad', 'Somewhat bad', 'Very bad', 'Extremely bad', NA)
+Iceland <- count(di, as_label(sp9_4)) 
+Norway <- count(dn, as_label(r15pad_terror8_4)) %>% filter(`as_label(r15pad_terror8_4)` != 'Ikke spurt')
+Sweden <- count(ds, as_label(q282_4))
+nordforsk6_4 <- bind_cols(Source, Iceland, Norway, Sweden)
+
+kable(nordforsk6_4, booktabs = T, linesep = "", escape = F, caption = "Panel variable names and values",  col.names = linebreak(c("Pooled", "Iceland", 'n', "Norway", 'n', "Sweden", 'n'))) %>%
+  footnote(general = "Variable names. Iceland = sp9_4, Norway =  r15pad_terror8_4, Sweden = q282_4")
+```
+
+## NORDFORSK6_5
+
+> NGOs
+
+Iceland  
+Frjáls félagasamtök
+
+Norway  
+Frivillige organisasjoner
+
+Sweden  
+Frivilligorganisationer
+
+```{r nordforsk6_5}
+Source <- c('Extremely good', 'Very good', 'Somewhat good', 'Neither good nor bad', 'Somewhat bad', 'Very bad', 'Extremely bad', NA)
+Iceland <- count(di, as_label(sp9_5)) 
+Norway <- count(dn, as_label(r15pad_terror8_5)) %>% filter(`as_label(r15pad_terror8_5)` != 'Ikke spurt')
+Sweden <- count(ds, as_label(q282_5)) %>% add_row(`as_label(q282_5)`=NA, n= NA, .before=1)
+nordforsk6_5 <- bind_cols(Source, Iceland, Norway, Sweden)
+
+kable(nordforsk6_5, booktabs = T, linesep = "", escape = F, caption = "Panel variable names and values",  col.names = linebreak(c("Pooled", "Iceland", 'n', "Norway", 'n', "Sweden", 'n'))) %>%
+  footnote(general = "Variable names. Iceland = sp9_5, Norway =  r15pad_terror8_5, Sweden = q282_5") %>% 
+  footnote(general = 'Value *Extremt bra* appears to be missing in the data set. The reason is that no answer was recorded for this value. The respondents did have that response option available when answering the survey.')
+```
+
+## NORDFORSK6_6
+
+> Individual citizens
+
+Iceland  
+Almennir borgarar
+
+Norway  
+Den enkelte innbygger
+
+Sweden  
+Den enskilde invånaren
+
+```{r nordforsk6_6}
+Source <- c('Extremely good', 'Very good', 'Somewhat good', 'Neither good nor bad', 'Somewhat bad', 'Very bad', 'Extremely bad', NA)
+Iceland <- count(di, as_label(sp9_6)) 
+Norway <- count(dn, as_label(r15pad_terror8_6)) %>% filter(`as_label(r15pad_terror8_6)` != 'Ikke spurt')
+Sweden <- count(ds, as_label(q282_6)) %>% add_row(`as_label(q282_6)`=NA, n=NA, .before = 1)
+nordforsk6_6 <- bind_cols(Source, Iceland, Norway, Sweden)
+
+kable(nordforsk6_6, booktabs = T, linesep = "", escape = F, caption = "Panel variable names and values",  col.names = linebreak(c("Pooled", "Iceland", 'n', "Norway", 'n', "Sweden", 'n'))) %>%
+  footnote(general = "Variable names. Iceland = sp9_6, Norway =  r15pad_terror8_6, Sweden = q282_6") %>% 
+  footnote(general = 'Value *Extremt bra* appears to be missing in the data set. The reason is that no answer was recorded for this value. The respondents did have that response option available when answering the survey.')
+```
+
+<!--chapter:end:12-nordforsk6.Rmd-->
+
+# NORDFORSK7
+
+```{r NORDFORSK7_setup, include=FALSE, echo=FALSE}
+if(!require("gt")){install.packages("gt");  library(gt)}
+if(!require("haven")){install.packages("haven");  library(haven)}
+if(!require("here")){install.packages("here");  library(here)}
+if(!require("kableExtra")){install.packages("kableExtra");  library(kableExtra)}
+if(!require("knitr")){install.packages("knitr");  library(knitr)}
+if(!require("magick")){install.packages("magick");  library(magick)}
+if(!require("openxlsx")){install.packages("openxlsx");  library(openxlsx)}
+if(!require("readxl")){install.packages("readxl");  library(readxl)}
+if(!require("sjlabelled")){install.packages("sjlabelled");  library(sjlabelled)}
+if(!require("tidyverse")){install.packages("tidyverse");  library(tidyverse)}
+if(!require("utf8")){install.packages("utf8");  library(utf8)}
+if(!require("webshot")){install.packages("webshot");  library(webshot)}
+
+knitr::opts_chunk$set(echo = FALSE, knitr.kable.NA = "", cache = FALSE, message = FALSE )
+```
+
+
+> Presently, there is great deal of attention focused on [NORDFORSK7_EVENT]. 
+The state can put various measures in place to reduce the risk of [NORDFORSK7_EVENT], but there is controversy over how much money the state should prioritize to spend on such measures.
+
+*Translations*
+
+Iceland  
+NA 
+
+Norway  
+I disse dager er det stor oppmerksomhet rundt [NORDFORSK7_EVENT]. 
+Staten kan sette inn ulike tiltak for å redusere faren for [NORDFORSK7_EVENT], men det er uenighet om hvor mye penger staten bør prioritere å bruke på slike tiltak.
+
+Sweden  
+För närvarande är det mycket uppmärksamhet kring [NORDFORSK7_EVENT]. Staten kan
+vidta olika åtgärder för att minska risken för [NORDFORSK7_EVENT], men det råder oenighet om hur mycket pengar staten bör prioritera att spendera på sådana åtgärder.
+ 
+
+## NORDFORSK7_EVENT
+
+```{r NORDFORSK7_EVENT}
+Source <- c('natural disasters', 'terrorist attacks')
+Iceland <- count(di, as_label(terror10_a))
+Norway <- count(dn, as_label(r15pad_terror10_ran)) %>% filter(!is.na(`as_label(r15pad_terror10_ran)`))
+Sweden <- count(ds, as_label(q284_kristyp)) %>% filter(n>10)
+NORDFORSK7_EVENT <- bind_cols(Source, Iceland, Norway, Sweden)
+
+kable(NORDFORSK7_EVENT, booktabs = T, linesep = "", escape = F, caption = "Panel variable names and values",  col.names = linebreak(c("Pooled", "Iceland", 'n', "Norway", 'n', "Sweden", 'n'))) %>%
+  footnote(general = "Variable names. Iceland = terror10_a, Norway =  r15pad_terror10_ran, Sweden = q284_kristyp") %>% 
+  footnote(general = 'Due to language grammar, the Icelandic data set has three versions of what is the same random assignment of treatment variable NORDFORSK_EVENT). These have variable names terror10_b and terror10_c in the original data set, and are not included in the pooled data set.')
+```
+
+## NORDFORSK7_DV
+> If the state can expect to save one human life by spending NOK 100 million on measures to reduce the risk of [NORDFORSK7_EVENT], do you think the state should prioritize these measures? These measures should be carried out if they have to be funded through increased taxes among the population?
+
+*Translations*
+
+Iceland
+NA
+
+Norway  
+Hvis staten kan regne med å redde ett menneskeliv ved å bruke 100 millioner kroner på tiltak for å redusere faren
+[NORDFORSK7_EVENT], synes du staten bør prioritere disse tiltakene?
+
+Sweden  
+Om staten kan räkna med att rädda ett människoliv genom att spendera 100 miljoner kronor på åtgärder för att minska risken för [NORDFORSK7_EVENT], tycker du att staten borde prioritera dessa åtgärder?
+
+```{r NORDFORSK7_DV}
+Source <- c('I support it very strongly', 'I support it strongly', 'I support it somewhat', 'I neither support it nor oppose it', 'I oppose it somewhat', 'I oppose it strongly', 'I support it very strongly', NA)
+Iceland <- count(di, as_label(sp10))
+Norway <- count(dn, as_label(r15pad_terror10)) %>% filter(`as_label(r15pad_terror10)` != 'Ikke spurt')
+Sweden <- count(ds, as_label(q284)) 
+NORDFORSK7_DV <- bind_cols(Source, Iceland, Norway, Sweden)
+
+kable(NORDFORSK7_DV, booktabs = T, linesep = "", escape = F, caption = "Panel variable names and values",  col.names = linebreak(c("Pooled", "Iceland", 'n', "Norway", 'n', "Sweden", 'n'))) %>%
+  footnote(general = "Variable names. Iceland = sp10, Norway =  r15pad_terror10, Sweden = q284")
+```
+
+<!--chapter:end:13-nordforsk7.Rmd-->
+
+# NORDFORSK8
+
+```{r NORDFORSK8_setup, include=FALSE, echo=FALSE}
+if(!require("gt")){install.packages("gt");  library(gt)}
+if(!require("haven")){install.packages("haven");  library(haven)}
+if(!require("here")){install.packages("here");  library(here)}
+if(!require("kableExtra")){install.packages("kableExtra");  library(kableExtra)}
+if(!require("knitr")){install.packages("knitr");  library(knitr)}
+if(!require("magick")){install.packages("magick");  library(magick)}
+if(!require("openxlsx")){install.packages("openxlsx");  library(openxlsx)}
+if(!require("readxl")){install.packages("readxl");  library(readxl)}
+if(!require("sjlabelled")){install.packages("sjlabelled");  library(sjlabelled)}
+if(!require("tidyverse")){install.packages("tidyverse");  library(tidyverse)}
+if(!require("utf8")){install.packages("utf8");  library(utf8)}
+if(!require("webshot")){install.packages("webshot");  library(webshot)}
+
+knitr::opts_chunk$set(echo = FALSE, knitr.kable.NA = "", cache = FALSE, message = FALSE )
+```
+
+
+> Over the past twenty years, there have been high levels of immigration from Muslim countries in Africa, Asia and the Middle
+East to Europe.
+There are differences in how strict certain countries are regarding their immigration policies. There are also differences
+regarding which countries Muslims typically prefer to emigrate to. By gathering large amounts of data, researchers can use
+these differences to study the correlation between Muslim immigration and terrorism.
+A US research team recently used data from 174 countries during the period of 1995-2015 to study how the probability of
+terrorism changed as a result of increased immigration from Muslim countries.
+
+
+*Translations*
+
+Iceland  
+NA 
+
+Norway  
+I løpet av de siste tjue årene har det vært høy innvandring fra muslimske land i Afrika, Asia og Midtøsten til Europa.
+Det er variasjon i hvor streng innvandringspolitikk som praktiseres mellom land. Det er også variasjon med tanke på hvilke
+land muslimer typisk foretrekker å emigrere til. Ved å samle store mengder data kan forskere bruke denne variasjonen til å
+studere sammenhengen mellom muslimsk innvandring og terrorisme.
+Et forskerteam fra USA brukte nylig data fra 174 land i perioden 1995-2015 til å studere hvordan sannsynligheten for
+terrorisme endret seg som følge av økt innvandring fra muslimske land.
+
+Sweden  
+Under de senaste tjugo åren har det varit hög invandring från muslimska länder i Afrika,
+Asien och Mellanöstern till Europa.
+Det finns skillnader i hur strikt invandringspolitik olika länder har.
+Det finns också skillnader gällande vilka länder muslimer vanligtvis föredrar att emigrera till.
+Genom att samla in stora mängder data kan forskare använda dessa skillnader till att studera förhållandet mellan muslimsk invandring och terrorism.
+Ett amerikanskt forskarteam använde nyligen data från 174 länder under perioden 1995-2015 för att studera hur sannolikheten för terrorism förändrades till följd av ökad invandring från muslimska länder.
+
+
+## NORDFORSK8_PRE
+
+>  During the period of 1995-2015, how do you think increased immigration from Muslim-majority countries influenced
+recipient countries?
+
+
+*Translations*
+
+Iceland
+Hvaða áhrif telur þú að aukinn fjöldi innflytjenda frá löndum þar sem múslimar eru í meirihluta hafi haft á móttökulöndin á árunum 1995 til 2015?
+
+Norway  
+I løpet av perioden 1995-2015, hvordan tror du økt innvandring fra muslimske majoritetsland påvirket mottakerlandene?
+
+Sweden  
+Under perioden 1995-2015, hur tror du att ökad invandring från muslimska majoritetsländer har
+påverkat mottagarländerna?
+
+```{r NORDFORSK8_PRE}
+Source <- c('It led to a lot more terrorism', 'It led to somewhat more terrorism', 'It did not lead to any more or any less terrorism', 'It led to less terrorism', 'It led to a lot less terrorism', NA)
+Iceland <- count(di, as_label(sp12))
+Norway <- count(dn, as_label(r15pad_terror11pre)) %>% filter(`as_label(r15pad_terror11pre)` != 'Ikke spurt')
+Sweden <- count(ds, as_label(q286)) %>% add_row(`as_label(q286)` = NA, n=NA, .before = 5)
+NORDFORSK8 <- bind_cols(Source, Iceland, Norway, Sweden)
+
+kable(NORDFORSK8, booktabs = T, linesep = "", escape = F, caption = "Panel variable names and values",  col.names = linebreak(c("Pooled", "Iceland", 'n', "Norway", 'n', "Sweden", 'n'))) %>%
+  footnote(general = "Variable names. Iceland = sp12, Norway =  r15pad_terror11pre, Sweden = q286") %>% 
+  footnote(general = "Value *Det ledde till mindre terrorism* appears to be missing in the data set. The reason is that no answer was recorded for this value. The respondents did have that response option available when answering the survey.")
+```
+
+## NORDFORSK8_TREAT
+
+Note that the Iceland responses were split into two variables, where sp13 refers to the variable name of the treatment group and sp14 refers to the control group.
+The original sp13 and sp14 Icelandic data set has been pivoted long 'nordforsk8_treat' lists the random assignment to treatment groups and 'nordforsk8_dv' refers to the respondents' responses:
+```{r NORDFORSK8_pivot}
+#ddi <- di %>% mutate(temp = case_when(is.na(sp13)) ~ 99) 
+ddi <- pivot_longer(di, sp13:sp14, names_to = 'ice_nordforsk8_treat', values_to = 'ice_nordforsk8_dv', values_drop_na = TRUE)
+```
+
+```{r NORDFORSK8_TREAT}
+
+Source <- c('For your information, the researchers who analysed the correlation between immigration from Muslim countries and terrorist attacks in recipient countries, found that increased Muslim immigration had no impact on terrorism in recipient countries.', " ")
+Iceland <- count(ddi, as_label(ice_nordforsk8_treat))
+Norway <- count(dn, as_label(r15pad_terror11_ran)) %>% filter(!is.na(`as_label(r15pad_terror11_ran)`))
+ds <- ds  %>% set_labels(q288, labels = c('För din kännedom, forskarna som analyserade sambandet mellan invandring från muslimska länder och terroristattacker i värdländerna fann ingen påverkan från ökad muslimsk invandring på terrorism i mottagarländerna.' = 1,
+                                        ' ' = 0))
+Sweden <- count(ds, as_label(q288)) %>% filter(n>10)
+NORDFORSK8_TREAT <- bind_cols(Source, Iceland, Norway, Sweden)
+
+kable(NORDFORSK8_TREAT, booktabs = T, linesep = "", escape = F, caption = "Panel variable names and values",  col.names = linebreak(c("Pooled", "Iceland", 'n', "Norway", 'n', "Sweden", 'n'))) %>%
+  footnote(general = "Variable names. Iceland = sp13 and sp14, Norway =  r15pad_terror11_ran, Sweden = q286. Note that the Iceland responses were split into two variables, where sp13 refers to the variable name of the treatment group and sp14 refers to the control group.")
+
+```
+
+## NORDFORSK8_DV_A
+
+
+*Transalations*
+
+Iceland  
+
+Telur þú að hryðjuverkaógnin á Íslandi muni aukast á næstu tíu árum ef við tökum á móti fleiri innflytjendum frá múslimskum löndum í Afríku, Asíu og Miðausturlöndum?
+
+Norway  
+I løpet av de neste ti årene, tror du terrorfaren i Norge vil øke hvis vi velger å ta imot flere innvandrere fra muslimske land i Afrika, Asia og Midtøsten? Terrorfaren vil...
+
+Sweden  
+Inom de kommande tio åren, tror du att risken för terrorattacker i Sverige kommer att öka om vi väljer att ta emot fler invandrare från muslimska länder i Afrika, Asien och Mellanöstern? Risken för terrorattacker kommer att…
+
+```{r NORDFORSK8_DV_A}
+
+Source <- c('Increase greatly', 'Increase', 'Increase somewhat', 'Neither increase nor decrease', 'Decrease somewhat', 'Decrease', 'Decrease greatly', NA)
+Iceland <- count(ddi, as_label(ice_nordforsk8_dv)) %>% add_row(`as_label(ice_nordforsk8_dv)`= NA, n = NA)
+Norway <- count(dn, as_label(r15pad_terror11posta)) %>% filter(`as_label(r15pad_terror11posta)` != 'Ikke spurt')
+Sweden <- count(ds, as_label(q290)) %>% add_row(`as_label(q290)` = NA, n = NA, .before = 7)
+NORDFORSK8_DV_A <- bind_cols(Source, Iceland, Norway, Sweden)
+
+kable(NORDFORSK8_DV_A, booktabs = T, linesep = "", escape = F, caption = "Panel variable names and values",  col.names = linebreak(c("Pooled", "Iceland", 'n', "Norway", 'n', "Sweden", 'n'))) %>%
+  footnote(general = "Variable names. Iceland = sp13 and sp14, Norway =  r15pad_terror11posta, Sweden = q290. Note that the Iceland responses were split into two variables, where sp13 refers to the variable name of the treatment group and sp14 refers to the control group.") %>% 
+  footnote(general = "Value *Minska kraftigt* appears to be missing in the data set. The reason is that no answer was recorded for this value. The respondents did have that response option available when answering the survey.")
+
+```
+
+
+## NORDFORSK8_DV_B
+
+>There is an ongoing debate in Norway about how many refugees we should receive. 
+Do you think Norway should receive more or fewer refugees than it does today?
+
+*Transalations*
+
+Iceland  
+Nú stendur yfir umræða á Íslandi um hversu mörgum flóttamönnum við eigum að taka á móti. Telur þú að Ísland eigi að taka á móti fleiri eða færri flóttamönnum en gert er í dag?
+
+Norway  
+Det er en pågående debatt i Norge om hvor mange flyktninger vi bør ta imot. Synes du Norge bør ta imot flere eller færre flyktninger enn i dag?
+
+Sweden  
+Tycker du att Sverige bör ta emot fler eller färre flyktingar än idag? 
+
+```{r NORDFORSK8_DV_B}
+
+Source <- c('Receive many more', 'Receive more', 'Receive a few more', 'Neither receive any more nor any less', 'Receive a few less', 'Receive fewer', 'Receive many fewer', NA)
+Iceland <- count(di, as_label(sp15))
+Norway <- count(dn, as_label(r15pad_terror11postb)) %>% filter(`as_label(r15pad_terror11postb)` != 'Ikke spurt')
+Sweden <- count(ds, as_label(q292)) 
+NORDFORSK8_DV_B <- bind_cols(Source, Iceland, Norway, Sweden)
+
+kable(NORDFORSK8_DV_B, booktabs = T, linesep = "", escape = F, caption = "Panel variable names and values",  col.names = linebreak(c("Pooled", "Iceland", 'n', "Norway", 'n', "Sweden", 'n'))) %>%
+  footnote(general = "Variable names. Iceland = sp15, Norway =  r15pad_terror11postb, Sweden = q292.")
+```
+
+## NORDFORSK8_DV_C
+
+> To what extent do you agree or disagree that Norway should reduce the proportion of refugees with Muslim backgrounds?
+
+*Transalations*
+
+Iceland  
+
+Hversu sammála eða ósammála ert þú að Ísland eigi að reyna að lækka hlutfall flóttamanna sem eru múslimar?
+
+Norway  
+Noen mener Norge bør redusere andelen muslimske flyktninger vi tar imot.
+Hvor enig eller uenig er du i at Norge bør redusere andelen flyktninger med muslimsk bakgrunn?
+
+Sweden  
+Hur för eller emot Sverige  minska andelen flyktingar med muslimsk bakgrund?
+
+```{r NORDFORSK8_DV_C}
+
+Source <- c('Strongly agree', 'Agree', 'Agree somewhat', 'Neither agree nor disagree', 'Disagree somewhat', 'Disagree', 'Strongly disagree', NA)
+Iceland <- count(di, as_label(sp16))
+Norway <- count(dn, as_label(r15pad_terror11postc)) %>% filter(`as_label(r15pad_terror11postc)` != 'Ikke spurt')
+Sweden <- count(ds, as_label(q294)) 
+NORDFORSK8_DV_C <- bind_cols(Source, Iceland, Norway, Sweden)
+
+kable(NORDFORSK8_DV_C, booktabs = T, linesep = "", escape = F, caption = "Panel variable names and values",  col.names = linebreak(c("Pooled", "Iceland", 'n', "Norway", 'n', "Sweden", 'n'))) %>%
+  footnote(general = "Variable names. Iceland = sp16, Norway =  r15pad_terror11postc, Sweden = q294.")
+```
+
+
+<!--chapter:end:14-nordforsk8.Rmd-->
+
+# GENDER
+
+
+```{r GENDER_setup, include=FALSE, echo=FALSE}
+if(!require("gt")){install.packages("gt");  library(gt)}
+if(!require("haven")){install.packages("haven");  library(haven)}
+if(!require("here")){install.packages("here");  library(here)}
+if(!require("kableExtra")){install.packages("kableExtra");  library(kableExtra)}
+if(!require("knitr")){install.packages("knitr");  library(knitr)}
+if(!require("magick")){install.packages("magick");  library(magick)}
+if(!require("openxlsx")){install.packages("openxlsx");  library(openxlsx)}
+if(!require("readxl")){install.packages("readxl");  library(readxl)}
+if(!require("sjlabelled")){install.packages("sjlabelled");  library(sjlabelled)}
+if(!require("tidyverse")){install.packages("tidyverse");  library(tidyverse)}
+if(!require("utf8")){install.packages("utf8");  library(utf8)}
+if(!require("webshot")){install.packages("webshot");  library(webshot)}
+
+knitr::opts_chunk$set(echo = FALSE, knitr.kable.NA = "", cache = FALSE, message = FALSE )
+```
+
+
+```{r GENDER_PRE}
+Source <- c('Male', 'Female')
+Iceland <- count(di, as_label(kyn))
+Norway <- count(dn, as_label(r15P1))
+Sweden <- count(ds, as_label(sex)) 
+GENDER <- bind_cols(Source, Iceland, Norway, Sweden)
+
+kable(GENDER, booktabs = T, linesep = "", escape = F, caption = "Panel variable names and values",  col.names = linebreak(c("Source Questionnaire", "Iceland", 'n', "Norway", 'n', "Sweden", 'n'))) %>%
+  footnote(general = "Variable names. Iceland = kyn, Norway =  r15P1, Sweden = sex")
+```
+
+<!--chapter:end:16-gender.Rmd-->
+
+# AGE
+ 
+ 
+
+```{r AGE_setup, include=FALSE, echo=FALSE}
+if(!require("gt")){install.packages("gt");  library(gt)}
+if(!require("haven")){install.packages("haven");  library(haven)}
+if(!require("here")){install.packages("here");  library(here)}
+if(!require("kableExtra")){install.packages("kableExtra");  library(kableExtra)}
+if(!require("knitr")){install.packages("knitr");  library(knitr)}
+if(!require("magick")){install.packages("magick");  library(magick)}
+if(!require("openxlsx")){install.packages("openxlsx");  library(openxlsx)}
+if(!require("readxl")){install.packages("readxl");  library(readxl)}
+if(!require("sjlabelled")){install.packages("sjlabelled");  library(sjlabelled)}
+if(!require("tidyverse")){install.packages("tidyverse");  library(tidyverse)}
+if(!require("utf8")){install.packages("utf8");  library(utf8)}
+if(!require("webshot")){install.packages("webshot");  library(webshot)}
+
+knitr::opts_chunk$set(echo = FALSE, knitr.kable.NA = "", cache = FALSE, message = FALSE )
+```
+
+
+```{r AGE}
+Pooled <- c('Under 30', '30-39', '40-49', '50-59', '60-69', '70 and older', NA)
+# Iceland <- count(di, as_label(aldur))
+Norway <- count(dn, as_label(r15P5_1))
+Norway <- Norway[nrow(Norway):1, ]
+Sweden <- count(ds, as_label(age6)) %>% add_row(`as_label(age6)` = NA, n=NA)
+AGE <- bind_cols(Pooled, Norway, Sweden)
+
+kable(AGE, booktabs = T, linesep = "", escape = F, caption = "Panel variable names and values",  col.names = linebreak(c("Pooled", "Norway", 'n', "Sweden", 'n'))) %>%
+  footnote(general = "Variable names. Iceland = aldur, Norway = r15P5_1, Sweden = age6")
+```
+How to pool the education variable depends upon the research need of the project members.
+The proposed harmonization is to create six values with the respondents' age in 2019.
+Iceland has a continous age variable, and is for practical purposes left out of the table.
+
+<!--chapter:end:17-age.Rmd-->
+
+# EDUCATION
+
+
+
+```{r EDUCATION_setup, include=FALSE, echo=FALSE}
+if(!require("gt")){install.packages("gt");  library(gt)}
+if(!require("haven")){install.packages("haven");  library(haven)}
+if(!require("here")){install.packages("here");  library(here)}
+if(!require("kableExtra")){install.packages("kableExtra");  library(kableExtra)}
+if(!require("knitr")){install.packages("knitr");  library(knitr)}
+if(!require("magick")){install.packages("magick");  library(magick)}
+if(!require("openxlsx")){install.packages("openxlsx");  library(openxlsx)}
+if(!require("readxl")){install.packages("readxl");  library(readxl)}
+if(!require("sjlabelled")){install.packages("sjlabelled");  library(sjlabelled)}
+if(!require("tidyverse")){install.packages("tidyverse");  library(tidyverse)}
+if(!require("utf8")){install.packages("utf8");  library(utf8)}
+if(!require("webshot")){install.packages("webshot");  library(webshot)}
+
+knitr::opts_chunk$set(echo = FALSE, knitr.kable.NA = "", cache = FALSE, message = FALSE )
+```
+
+
+```{r EDUCATION_PRE}
+Pooled <- rep(1:13)
+Iceland <- count(di, as_label(menntun)) %>% add_row(`as_label(menntun)` = NA, n=NA) %>% add_row(`as_label(menntun)` = NA, n=NA) %>% add_row(`as_label(menntun)` = NA, n=NA) %>% add_row(`as_label(menntun)` = NA, n=NA)
+Norway <- count(dn, as_label(r15P4_2)) %>% filter(`as_label(r15P4_2)` != 'Ikke spurt')
+Sweden <- count(ds, as_label(edu_mp36)) %>% add_row(`as_label(edu_mp36)` = NA, n=NA) %>% add_row(`as_label(edu_mp36)` = NA, n=NA) %>% add_row(`as_label(edu_mp36)` = NA, n=NA)
+EDUCATION <- bind_cols(Pooled, Iceland, Norway, Sweden)
+
+kable(EDUCATION, booktabs = T, linesep = "", escape = F, caption = "Panel variable names and values",  col.names = linebreak(c("Pooled", "Iceland", 'n', "Norway", 'n', "Sweden", 'n'))) %>%
+  footnote(general = "Variable names. Iceland = menntun, Norway =  r15P4_2, Sweden = edu_mp36")
+```
+
+How to pool the education variable depends upon the research need of the project members.
+The preliminary recoding (which will stand unless someone suggests another one) proposes to recode into a binary variable with high/low education levels.
+The proposed cutoff for higher education levels in Iceland is 5 and higher, in Norway 6 and higher, and in Sweden 7 and higher.
+
+<!--chapter:end:18-education.Rmd-->
+
