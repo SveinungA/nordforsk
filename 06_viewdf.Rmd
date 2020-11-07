@@ -1,0 +1,11 @@
+# View pooled data file
+
+```{r view_df_setup, include=FALSE, echo=FALSE}
+if(!require("sjPlot")){install.packages("sjPlot");  library(sjPlot)}
+knitr::opts_chunk$set(echo = TRUE, knitr.kable.NA = "", cache = FALSE, message = FALSE )
+```
+
+```{view_df_pooled}
+
+view_df(d_pool)
+```

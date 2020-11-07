@@ -1,0 +1,639 @@
+# POOL DATASETS
+```{r POOL_setup, include=FALSE, echo=FALSE}
+if(!require("haven")){install.packages("haven");  library(haven)}
+if(!require("kableExtra")){install.packages("kableExtra");  library(kableExtra)}
+if(!require("knitr")){install.packages("knitr");  library(knitr)}
+if(!require("labelled")){install.packages("labelled");  library(labelled) }
+if(!require("magrittr")){install.packages("magrittr");  library(magrittr) }
+if(!require("readxl")){install.packages("readxl");  library(readxl)}
+if(!require("sjlabelled")){install.packages("sjlabelled");  library(sjlabelled)}
+if(!require("sjPlot")){install.packages("sjPlot");  library(sjPlot)}
+if(!require("tidyverse")){install.packages("tidyverse");  library(tidyverse)}
+if(!require("utf8")){install.packages("utf8");  library(utf8)}
+if(!require("surveytoolbox")){devtools::install_github("martinctc/surveytoolbox");  library(surveytoolbox)}
+
+knitr::opts_chunk$set(echo = TRUE, knitr.kable.NA = "", cache = FALSE, message = FALSE )
+```
+
+This chapter displays the coding procedure to pool the three data sets.
+
+## Iceland
+### Load data
+
+```{r pool_load_iceland}
+di <- sjlabelled::read_spss('C:\\Users/svein/Documents/NORDFORSKdata/Terrorism_Iceland.sav')
+di_is <- sjlabelled::read_spss('C:\\Users/svein/Documents/NORDFORSKdata/Terrorism_Iceland_is.sav')
+
+## Select variables and rename to harmonized variable names
+di_pool <- di %>% select(ResponseId = ResponseId,
+NORDFORSK1_TACTIC1 = taktikk1,
+NORDFORSK1_TARGET = mal,
+NORDFORSK1_CASUALTIES = personer,
+NORDFORSK1_TACTIC2 = taktikk2,
+NORDFORSK1_ADJECTIVE = adjektiv,
+NORDFORSK1_SUBJECTIVE = subjekt,
+NORDFORSK1_MOTIVATION = motivasjon,
+NORDFORSK1_DV_A = sp3,
+NORDFORSK1_DV_B_1 = sp4_1,
+NORDFORSK1_DV_B_2 = sp4_2,
+NORDFORSK1_DV_B_3 = sp4_3,
+NORDFORSK1_DV_B_4 = sp4_4,
+NORDFORSK1_DV_B_5 = sp4_5,
+NORDFORSK1_DV_B_6 = sp4_6,
+NORDFORSK1_DV_B_7 = sp4_7,
+NORDFORSK2_OBJECT = terror_2a,
+NORDFORSK2_TENSE = terror_2b,
+NORDFORSK2_DV = sp5,
+NORDFORSK3 = sp6,
+NORDFORSK4 = sp7,
+NORDFORSK5 = sp8,
+NORDFORSK6_1 = sp9_1,
+NORDFORSK6_2 = sp9_2,
+NORDFORSK6_3 = sp9_3,
+NORDFORSK6_4 = sp9_4,
+NORDFORSK6_5 = sp9_5,
+NORDFORSK6_6 = sp9_6,
+NORDFORSK7_EVENT = terror10_a,
+NORDFORSK7_DV = sp10,
+NORDFORSK8_PRE = sp12,
+sp13, sp14,
+NORDFORSK8_DV_B = sp15,
+NORDFORSK8_DV_C = sp16,
+GENDER = Gender,
+AGE = Age,
+EDUCATION = Education,
+LEFTRIGHT = sp24
+) 
+
+di_pool <- di_pool %>% mutate(NORDFORSK1_TACTIC1 = case_when(NORDFORSK1_TACTIC1 == 'Protest' ~ 1,
+                                                NORDFORSK1_TACTIC1 == 'Sabotage' ~ 2,
+                                                NORDFORSK1_TACTIC1 == 'Hostage taking' ~ 3,
+                                                NORDFORSK1_TACTIC1 == 'Shooting' ~ 4,
+                                                NORDFORSK1_TACTIC1 == 'Bombing' ~ 5), 
+                            NORDFORSK1_TARGET = case_when(NORDFORSK1_TARGET == 'military facility' ~ 1,
+                                                           NORDFORSK1_TARGET == 'police station' ~ 2,
+                                                           NORDFORSK1_TARGET == 'school' ~ 3,
+                                                           NORDFORSK1_TARGET == 'church' ~ 4,
+                                                           NORDFORSK1_TARGET == 'mosque' ~ 5,
+                                                           NORDFORSK1_TARGET == 'synagogue' ~ 6),
+                 NORDFORSK1_CASUALTIES = case_when(NORDFORSK1_CASUALTIES == 'No one was killed' ~ 1,
+                                                   NORDFORSK1_CASUALTIES == 'One person' ~ 2,
+                                                   NORDFORSK1_CASUALTIES == 'Two people' ~ 3,
+                                                NORDFORSK1_CASUALTIES == 'Ten people' ~ 4),
+                 NORDFORSK1_TACTIC2 = case_when(NORDFORSK1_TACTIC2 == 'Protest' ~ 1,
+                                                NORDFORSK1_TACTIC2 == 'Sabotage' ~ 2,
+                                                NORDFORSK1_TACTIC2 == 'Hostage taking' ~ 3,
+                                                NORDFORSK1_TACTIC2 == 'Shooting' ~ 4,
+                                                NORDFORSK1_TACTIC2 == 'Bombing' ~ 5),
+                 NORDFORSK1_ADJECTIVE = case_when(NORDFORSK1_ADJECTIVE == 'one' ~ 1,
+                                                NORDFORSK1_ADJECTIVE == 'one Christian' ~ 2,
+                                                NORDFORSK1_ADJECTIVE == 'one Muslim' ~ 3,
+                                                NORDFORSK1_ADJECTIVE == 'one left-wing extremist' ~ 4,
+                                                NORDFORSK1_ADJECTIVE == 'one right-wing extremist' ~ 5),
+                 NORDFORSK1_SUBJECTIVE = case_when(NORDFORSK1_SUBJECTIVE == 'organization' ~ 1,
+                                                NORDFORSK1_SUBJECTIVE == 'group' ~ 2,
+                                                NORDFORSK1_SUBJECTIVE == 'indiviudal' ~ 3,
+                                                NORDFORSK1_SUBJECTIVE == 'individual of unsound mind' ~ 4),
+                 NORDFORSK1_MOTIVATION = case_when(NORDFORSK1_MOTIVATION == 'there was no clear motivation behind the incident' ~ 1,
+                                                NORDFORSK1_MOTIVATION == 'the incident was carried out with the aim of changing goverment policy' ~ 2,
+                 NORDFORSK1_MOTIVATION == 'the motivation behind the incident came from a hatred towards the target' ~ 3),
+                 NORDFORSK2_OBJECT = case_when(NORDFORSK2_OBJECT == 'for you personally' ~ 1,
+                                               NORDFORSK2_OBJECT == 'Iceland' ~ 2,
+                                               NORDFORSK2_OBJECT == 'Europe' ~ 3),
+                 NORDFORSK2_TENSE = case_when(NORDFORSK2_TENSE == 'today' ~ 1,
+                                              NORDFORSK2_TENSE == 'in the future' ~ 2),
+                 NORDFORSK7_EVENT = case_when(  NORDFORSK7_EVENT == 'natural disasters' ~ 1,
+                                                NORDFORSK7_EVENT == 'terrorist attack' ~ 2))
+```
+
+### Standardise values
+```{r pool_set_values_iceland}
+di_pool <- di_pool %>% mutate(NORDFORSK5 = case_when(NORDFORSK5 == 2 ~ 1,
+                                                     NORDFORSK5 == 3 ~ 2,
+                                                     NORDFORSK5 == 4 ~ 3,
+                                                     NORDFORSK5 == 6 ~ 4,
+                                                     NORDFORSK5 == 8 ~ 5,
+                                                     NORDFORSK5 == 10 ~ 6,
+                                                     NORDFORSK5 == 11 ~ 7,
+                                                     NORDFORSK5 == 12 ~ 8,
+                                                     NORDFORSK5 == 13 ~ 9,
+                                                     NORDFORSK5 == 14~ 10),
+                              AGE = case_when(AGE <30 ~ 1,
+                                              AGE %in% 30:39 ~ 2,
+                                              AGE %in% 40:49 ~ 3,
+                                              AGE %in% 50:59 ~ 4,
+                                              AGE %in% 60:69 ~ 5,
+                                              AGE >=70 ~ 6),
+                              EDUCATION = case_when(EDUCATION <5 ~ 1,
+                                                    EDUCATION %in% 5:8 ~ 2),
+                              LEFTRIGHT = case_when(LEFTRIGHT == 0 ~ 1,
+                                       LEFTRIGHT == 1 ~ 2,
+                                       LEFTRIGHT == 2 ~ 3,
+                                       LEFTRIGHT == 3 ~ 4,
+                                       LEFTRIGHT == 4 ~ 5,
+                                       LEFTRIGHT == 5 ~ 6,
+                                       LEFTRIGHT == 6 ~ 7,
+                                       LEFTRIGHT == 7 ~ 8,
+                                       LEFTRIGHT == 8 ~ 9,
+                                       LEFTRIGHT == 9 ~ 10,
+                                       LEFTRIGHT == 10 ~ 11))
+                 
+## Standardize sp13 and sp14 variables to harmonized format, separating the random assignment of treatment from post measure response
+di_pool <- pivot_longer(di_pool, sp13:sp14, names_to = 'NORDFORSK8_TREAT', values_to = 'NORDFORSK8_DV_A', values_drop_na = TRUE) %>% 
+   mutate(NORDFORSK8_TREAT=replace(NORDFORSK8_TREAT, which(NORDFORSK8_TREAT=='sp13'), 1),
+         NORDFORSK8_TREAT=replace(NORDFORSK8_TREAT, which(NORDFORSK8_TREAT=='sp14'), 2),
+         NORDFORSK8_TREAT= as_numeric(NORDFORSK8_TREAT)
+         )
+```
+
+## Norway
+### Load data
+```{r pool_load_norway}
+dn <- read_sav('C:\\Users/svein/Documents/nordforskdata/Norwegian Citizen Panel wave 1-15 - EN.sav')
+dn <- dn %>% select(starts_with('r15pad_terror'), responseid, r15P1, r15P4_2, r15P5_1, r14pk8_1, r15Weight1) %>% filter(!is.na(r15pad_terror1_ran1))
+```
+
+## Select variables 
+```{r pool_select_vars_Norway}
+dn_pool <- dn %>% select(ResponseId = responseid,
+NORDFORSK1_TACTIC1 = r15pad_terror1_ran1,
+NORDFORSK1_TARGET = r15pad_terror1_ran3,
+NORDFORSK1_CASUALTIES = r15pad_terror1_ran4,
+NORDFORSK1_TACTIC2 = r15pad_terror1_ran5,
+NORDFORSK1_ADJECTIVE = r15pad_terror1_ran6,
+NORDFORSK1_SUBJECTIVE = r15pad_terror1_ran7,
+NORDFORSK1_MOTIVATION = r15pad_terror1_ran8,
+NORDFORSK1_DV_A = r15pad_terror1_a,
+NORDFORSK1_DV_B_1 = r15pad_terror1_b_1,
+NORDFORSK1_DV_B_2 = r15pad_terror1_b_2,
+NORDFORSK1_DV_B_3 = r15pad_terror1_b_3,
+NORDFORSK1_DV_B_4 = r15pad_terror1_b_4,
+NORDFORSK1_DV_B_5 = r15pad_terror1_b_5,
+NORDFORSK1_DV_B_6 = r15pad_terror1_b_6,
+NORDFORSK1_DV_B_7 = r15pad_terror1_b_7,
+NORDFORSK2_OBJECT = r15pad_terror2_ran1,
+NORDFORSK2_TENSE = r15pad_terror2_ran2,
+NORDFORSK2_DV = r15pad_terror2,
+NORDFORSK3 = r15pad_terror3,
+NORDFORSK4 = r15pad_terror5,
+NORDFORSK5 = r15pad_terror6,
+NORDFORSK6_1 = r15pad_terror8_1,
+NORDFORSK6_2 = r15pad_terror8_2,
+NORDFORSK6_3 = r15pad_terror8_3,
+NORDFORSK6_4 = r15pad_terror8_4,
+NORDFORSK6_5 = r15pad_terror8_5,
+NORDFORSK6_6 = r15pad_terror8_6,
+NORDFORSK7_EVENT = r15pad_terror10_ran,
+NORDFORSK7_DV = r15pad_terror10,
+NORDFORSK8_PRE = r15pad_terror11pre,
+NORDFORSK8_TREAT = r15pad_terror11_ran, 
+NORDFORSK8_DV_A =  r15pad_terror11posta,
+NORDFORSK8_DV_B =  r15pad_terror11postb,
+NORDFORSK8_DV_C = r15pad_terror11postc,
+GENDER = r15P1,
+AGE = r15P5_1,
+EDUCATION = r15P4_2,
+LEFTRIGHT = r14pk8_1,
+WEIGHTS =  r15Weight1) %>% 
+  mutate(ResponseId = as.character(ResponseId), #standardise object class among the data sets
+          ) 
+```
+
+### Standardise values
+```{r pool_set_values_Norway}
+dn_pool <- dn_pool %>% mutate(AGE = case_when(AGE >5 ~ 1,
+                                              AGE == 5 ~ 2,
+                                              AGE == 4 ~ 3,
+                                              AGE == 3 ~ 4,
+                                              AGE == 2 ~ 5,
+                                              AGE == 1 ~ 6),
+                              EDUCATION = case_when(EDUCATION <6 ~ 1,
+                                                    EDUCATION %in% 5:11 ~ 2),
+                              NORDFORSK5 = case_when(NORDFORSK5 == 1 ~ 11,
+                                                     NORDFORSK5 == 2 ~ 12,
+                                                     NORDFORSK5 == 3 ~ 13,
+                                                     NORDFORSK5 == 4 ~ 14,
+                                                     NORDFORSK5 == 5 ~ 15,
+                                                     NORDFORSK5 == 6 ~ 16,
+                                                     NORDFORSK5 == 7 ~ 17,
+                                                     NORDFORSK5 == 8 ~ 18,
+                                                     NORDFORSK5 == 9 ~ 19,
+                                                     NORDFORSK5 == 10 ~ 20,
+                                                     NORDFORSK5 == 11 ~ 21))
+```
+
+## Sweden
+### Load data
+```{r pool_load_sweden}
+ds <- read_dta('C:\\Users/svein/Documents/nordforskdata/s5_sohlberg.dta') 
+#ds <- ds %>% select(-(starts_with('t_q')))
+```
+
+### Select variables
+```{r pool_select_vars_sweden}
+ds_pool <- ds %>% select(c(
+NORDFORSK1_TACTIC1 = q269_incidenttyp,
+NORDFORSK1_TARGET = q269_plats,
+NORDFORSK1_CASUALTIES = q269_omkomna,
+NORDFORSK1_TACTIC2 = q269_incidenten,
+NORDFORSK1_ADJECTIVE = q269_ideologi,
+NORDFORSK1_SUBJECTIVE = q269_subjekt,
+NORDFORSK1_MOTIVATION = q269_motiv,
+NORDFORSK1_DV_A = q270,
+NORDFORSK1_DV_B_1 = q272_1,
+NORDFORSK1_DV_B_2 = q272_2,
+NORDFORSK1_DV_B_3 = q272_3,
+NORDFORSK1_DV_B_4 = q272_4,
+NORDFORSK1_DV_B_5 = q272_5,
+NORDFORSK1_DV_B_6 = q272_6,
+NORDFORSK1_DV_B_7 = q272_7,
+NORDFORSK2_OBJECT = q274_hot,
+NORDFORSK2_TENSE = q274_tempus,
+NORDFORSK2_DV = q274,
+NORDFORSK3 = q276,
+NORDFORSK4 = q278,
+NORDFORSK5 = q280,
+NORDFORSK6_1 = q282_1,
+NORDFORSK6_2 = q282_2,
+NORDFORSK6_3 = q282_3,
+NORDFORSK6_4 = q282_4,
+NORDFORSK6_5 = q282_5,
+NORDFORSK6_6 = q282_6,
+NORDFORSK7_EVENT = q284_kristyp,
+NORDFORSK7_DV = q284,
+NORDFORSK8_PRE = q286,
+NORDFORSK8_TREAT = q288,
+NORDFORSK8_DV_A =  q290,
+NORDFORSK8_DV_B =  q292,
+NORDFORSK8_DV_C = q294,
+GENDER = sex,
+AGE = age6,
+EDUCATION = edu_mp36,
+LEFTRIGHT = lrpown_mp36)
+) %>% 
+    mutate(ResponseId = seq(1, 1293, 1),
+           ResponseId = as.character(ResponseId),
+           NORDFORSK8_TREAT = as_numeric(NORDFORSK8_TREAT),
+        NORDFORSK5 = as_numeric(NORDFORSK5)
+         )
+```
+
+### Standardise values
+```{r pool_set_values_sweden}
+ds_pool <- ds_pool %>% mutate(NORDFORSK1_TACTIC1 = case_when(NORDFORSK1_TACTIC1 == 'En protest' ~ 1,
+                                                NORDFORSK1_TACTIC1 == 'Ett sabotage' ~ 2,
+                                                NORDFORSK1_TACTIC1 == 'Ett gisslantagande' ~ 3,
+                                                NORDFORSK1_TACTIC1 == 'En skjutning' ~ 4,
+                                                NORDFORSK1_TACTIC1 == 'En bombning' ~ 5), 
+                            NORDFORSK1_TARGET = case_when(NORDFORSK1_TARGET == 'på en militäranläggning' ~ 1,
+                                                          NORDFORSK1_TARGET == 'på en polisstation' ~ 2,
+                                                          NORDFORSK1_TARGET == 'i en skola' ~ 3,
+                                                          NORDFORSK1_TARGET == 'i en kyrka' ~ 4,
+                                                          NORDFORSK1_TARGET == 'i en moské' ~ 5,
+                                                          NORDFORSK1_TARGET == 'i en synagoga' ~ 6),
+                 NORDFORSK1_CASUALTIES = case_when(NORDFORSK1_CASUALTIES == 'Ingen' ~ 1,
+                                                   NORDFORSK1_CASUALTIES == 'En person' ~ 2,
+                                                NORDFORSK1_CASUALTIES == 'Två personer' ~ 3,
+                                                NORDFORSK1_CASUALTIES == 'Tio personer' ~ 4),
+                 NORDFORSK1_TACTIC2 = case_when(NORDFORSK1_TACTIC2 == 'protesten' ~ 1,
+                                                NORDFORSK1_TACTIC2 == 'sabotaget' ~ 2,
+                                                NORDFORSK1_TACTIC2 == 'gisslantagningen' ~ 3,
+                                                NORDFORSK1_TACTIC2 == 'skjutningen' ~ 4,
+                                                NORDFORSK1_TACTIC2 == 'bombningen' ~ 5),
+                 NORDFORSK1_ADJECTIVE = case_when(NORDFORSK1_ADJECTIVE == 'en' ~ 1,
+                                                NORDFORSK1_ADJECTIVE == 'en kristen' ~ 2,
+                                                NORDFORSK1_ADJECTIVE == 'en muslimsk' ~ 3,
+                                                NORDFORSK1_ADJECTIVE == 'en vänsterextrem' ~ 4,
+                                                NORDFORSK1_ADJECTIVE == 'en högerextrem' ~ 5),
+                 NORDFORSK1_SUBJECTIVE = case_when(NORDFORSK1_SUBJECTIVE == 'organiSation' ~ 1,
+                                                NORDFORSK1_SUBJECTIVE == 'grupp' ~ 2,
+                                                NORDFORSK1_SUBJECTIVE == 'individ' ~ 3,
+                                                NORDFORSK1_SUBJECTIVE == 'psykiskt sjuk individ' ~ 4),
+                 NORDFORSK1_MOTIVATION = case_when(NORDFORSK1_MOTIVATION == 'att det inte fanns något tydligt motiv bakom händelsen' ~ 1,
+                                                NORDFORSK1_MOTIVATION == 'att händelsen utfördes med målet att förändra regeringens politik' ~ 2,
+                 NORDFORSK1_MOTIVATION == 'att händelsen var motiverad utifrån hat gentemot målet' ~ 3),
+                 NORDFORSK2_OBJECT = case_when(NORDFORSK2_OBJECT == 'dig personligen' ~ 1,
+                                               NORDFORSK2_OBJECT == 'Sverige' ~ 2,
+                                               NORDFORSK2_OBJECT == 'Europa' ~ 3),
+                 NORDFORSK2_TENSE = case_when(NORDFORSK2_TENSE == 'idag' ~ 1,
+                                              NORDFORSK2_TENSE == 'i framtiden' ~ 2),
+                  NORDFORSK5 = case_when(NORDFORSK5 == 1 ~ 31,
+                                                     NORDFORSK5 == 2 ~ 32,
+                                                     NORDFORSK5 == 3 ~ 33,
+                                                     NORDFORSK5 == 4 ~ 34,
+                                                     NORDFORSK5 == 5 ~ 35,
+                                                     NORDFORSK5 == 6 ~ 36,
+                                                     NORDFORSK5 == 7 ~ 37,
+                                                     NORDFORSK5 == 8 ~ 38,
+                                                     NORDFORSK5 == 10 ~39,
+                                                     NORDFORSK5 == 11 ~ 40),
+                 NORDFORSK7_EVENT = case_when(NORDFORSK7_EVENT == 'naturkatastrofer' ~ 1,
+                                                NORDFORSK7_EVENT == 'terrorattacker' ~ 2),
+                 NORDFORSK8_TREAT = case_when(NORDFORSK8_TREAT == 1 ~ 1,
+                                                NORDFORSK8_TREAT == 0 ~ 2),
+                 EDUCATION = case_when(EDUCATION <7 ~ 1,
+                                                    EDUCATION %in% 6:9 ~ 2),
+                 LEFTRIGHT = case_when(LEFTRIGHT == 0 ~ 1,
+                                       LEFTRIGHT == 1 ~ 2,
+                                       LEFTRIGHT == 2 ~ 3,
+                                       LEFTRIGHT == 3 ~ 4,
+                                       LEFTRIGHT == 4 ~ 5,
+                                       LEFTRIGHT == 5 ~ 6,
+                                       LEFTRIGHT == 6 ~ 7,
+                                       LEFTRIGHT == 7 ~ 8,
+                                       LEFTRIGHT == 8 ~ 9,
+                                       LEFTRIGHT == 9 ~ 10,
+                                       LEFTRIGHT == 10 ~ 11)
+                             )  
+```
+
+## Bind data sets
+```{r pool_bind}
+#Merge data sets from Iceland, Norway, and Sweden
+d_pool <- bind_rows(list(di_pool, dn_pool, ds_pool), .id = "Country") %>% mutate(Country = as.numeric(Country))
+```
+
+## Set value labels
+```{r set_value_labels}
+# Set labels for the pooled data set
+d_pool <- d_pool %>% set_labels(Country, labels = c('Iceland' = 1,
+                                                    'Norway' = 2,
+                                                    'Sweden' = 3)) %>%
+  set_labels(NORDFORSK1_TACTIC1, labels = c('protest' = 1,
+                                            'sabotage' = 2,
+                                            'hostage taking' = 3,
+                                            'shooting' = 4,
+                                            'bombing' =5)) %>% 
+  set_labels(NORDFORSK1_TARGET, labels = c('a military facility' = 1,
+                                           'a police station' = 2,
+                                           'a school' = 3,
+                                           'a church' = 4,
+                                           'a mosque' = 5,
+                                           'a synagogue' = 6)) %>% 
+  set_labels(NORDFORSK1_CASUALTIES, labels = c('No' = 1,
+                                               'One person' = 2,
+                                               'Two people' = 3,
+                                               'Ten people' = 4)) %>% 
+  set_labels(NORDFORSK1_TACTIC2, labels = c('the protest' = 1,
+                                            'the sabotage' = 2,
+                                            'the hostage taking' = 3,
+                                            'the shooting' = 4,
+                                            'the bombing' =5)) %>% 
+  set_labels(NORDFORSK1_ADJECTIVE, labels = c('one' = 1,
+                                              'one Christian' = 2,
+                                              'one Muslim' = 3,
+                                              'one left-wing extremist' = 4,
+                                              'one right-wing extremist' = 5)) %>% 
+  set_labels(NORDFORSK1_SUBJECTIVE, labels = c('organisation' = 1,
+                                              'group' = 2,
+                                              'individual' = 3,
+                                              'individual of unsound mind' = 4)) %>% 
+    set_labels(NORDFORSK1_MOTIVATION, labels = c('there was no clear motivation behind the incident' = 1,
+                                              'the incident was carried out with the aim of changing government policy' = 2,
+                                              'the motivation behind the incident came from a hatred towards the target' = 3)) %>% 
+set_labels(NORDFORSK1_DV_A, labels = c('Yes, this is terrorism' = 1,
+                                       'No, this is not terrorism' = 2)) %>% 
+  set_labels(NORDFORSK1_DV_B_1, labels = c('Strongly agree' = 1,
+                                           'Agree' = 2,
+                                           'Agree somewhat' = 3,
+                                           'Neither agree nor disagree' = 4,
+                                           'Disagree somewhat' = 5,
+                                           'Disagree' = 6,
+                                           'Strongly disagree' = 7)) %>% 
+  set_labels(NORDFORSK1_DV_B_2, labels = c('Strongly agree' = 1,
+                                           'Agree' = 2,
+                                           'Agree somewhat' = 3,
+                                           'Neither agree nor disagree' = 4,
+                                           'Disagree somewhat' = 5,
+                                           'Disagree' = 6,
+                                           'Strongly disagree' = 7)) %>% 
+  set_labels(NORDFORSK1_DV_B_3, labels = c('Strongly agree' = 1,
+                                           'Agree' = 2,
+                                           'Agree somewhat' = 3,
+                                           'Neither agree nor disagree' = 4,
+                                           'Disagree somewhat' = 5,
+                                           'Disagree' = 6,
+                                           'Strongly disagree' = 7)) %>% 
+  set_labels(NORDFORSK1_DV_B_4, labels = c('Strongly agree' = 1,
+                                           'Agree' = 2,
+                                           'Agree somewhat' = 3,
+                                           'Neither agree nor disagree' = 4,
+                                           'Disagree somewhat' = 5,
+                                           'Disagree' = 6,
+                                           'Strongly disagree' = 7)) %>% 
+  set_labels(NORDFORSK1_DV_B_5, labels = c('Strongly agree' = 1,
+                                           'Agree' = 2,
+                                           'Agree somewhat' = 3,
+                                           'Neither agree nor disagree' = 4,
+                                           'Disagree somewhat' = 5,
+                                           'Disagree' = 6,
+                                           'Strongly disagree' = 7)) %>% 
+  set_labels(NORDFORSK1_DV_B_6, labels = c('Strongly agree' = 1,
+                                           'Agree' = 2,
+                                           'Agree somewhat' = 3,
+                                           'Neither agree nor disagree' = 4,
+                                           'Disagree somewhat' = 5,
+                                           'Disagree' = 6,
+                                           'Strongly disagree' = 7)) %>% 
+  set_labels(NORDFORSK1_DV_B_7, labels = c('Strongly agree' = 1,
+                                           'Agree' = 2,
+                                           'Agree somewhat' = 3,
+                                           'Neither agree nor disagree' = 4,
+                                           'Disagree somewhat' = 5,
+                                           'Disagree' = 6,
+                                           'Strongly disagree' = 7)) %>% 
+  set_labels(NORDFORSK2_OBJECT, labels = c('you personally' = 1,
+                                           '[country]' = 2,
+                                           'Europe' = 3)) %>% 
+  set_labels(NORDFORSK2_TENSE, labels = c('today' = 1,
+                                          'in the future' = 2)) %>% 
+  set_labels(NORDFORSK2_DV, labels = c('Very serious' = 1,
+                                                              'Serious' = 2,
+                                                              'Somewhat serious' = 3,
+                                                              'Not very serious' = 4,
+                                                              'Not a threat' = 5)) %>% 
+  set_labels(NORDFORSK3, labels = c('Strongly agree' = 1,
+                                                              'Agree' = 2,
+                                                              'Agree somewhat' = 3,
+                                                              'Neither agree nor disagree' = 4,
+                                                              'Disagree somewhat' = 5,
+                                                              'Disagree' = 6,
+                                                              'Strongly disagree' = 7)) %>% 
+  set_labels(NORDFORSK4, labels = c('Very important' = 1,
+                                                              'Important' = 2,
+                                                              'Somewhat important' = 3,
+                                                              'Slightly important' = 4,
+                                                              'Not important at all' = 5)) %>% 
+   set_labels(NORDFORSK5, labels = c('Progress Party (Iceland)'= 1,
+                                                         'Reform Party' = 2,
+                                                         'Independence Party' = 3,
+                                                         'The Peoples Party' = 4,
+                                                         'The Pirate Party' = 5,
+                                                         'Social Democrats (Iceland)' = 6,
+                                                         'Left-Green Party' = 7,
+                                                         'The Center Party (Iceland)' = 8,
+                                                         'Other' = 9,
+                                                         'None' = 10,
+                                     'The Labour Party'= 11,
+                                                         'The Progress Party (Norway)' = 12,
+                                                         'The Conservative Party' = 13,
+                                                         'The Socialist Left Party' = 14,
+                                                         'The Centre Party (Norway)' = 15,
+                                                         'The Christian Democrats (Norway)' = 16,
+                                                         'The Liberal Party (Norway)' = 17,
+                                                         'The Red Party' = 18,
+                                                         'The Green Party (Norway)' = 19,
+                                     'The Social Democrats (Sweden)'= 21,
+                                                         'The Sweden Democrats' = 22,
+                                                         'The Moderates' = 23,
+                                                         'The Left Party' = 24,
+                                                         'The Centre Party (Sweden)' = 25,
+                                                         'The Christian Democrats (Norway)' = 26,
+                                                         'The Liberal Party (Sweden)' = 27,
+                                                         'The Green Party (Sweden)' = 28)
+              ) %>% 
+ set_labels(NORDFORSK6_1, labels = c('Extremely good' = 1,
+                                                              'Very good' = 2,
+                                                              'Somewhat good' = 3,
+                                                              'Neither good nor bad' = 4,
+                                                              'Somewhat bad' = 5,
+                                                              'Very bad' = 6,
+                                                              'Extremely bad' = 7)) %>% 
+  set_labels(NORDFORSK6_2, labels = c('Extremely good' = 1,
+                                                              'Very good' = 2,
+                                                              'Somewhat good' = 3,
+                                                              'Neither good nor bad' = 4,
+                                                              'Somewhat bad' = 5,
+                                                              'Very bad' = 6,
+                                                              'Extremely bad' = 7)) %>% 
+  set_labels(NORDFORSK6_3, labels = c('Extremely good' = 1,
+                                                              'Very good' = 2,
+                                                              'Somewhat good' = 3,
+                                                              'Neither good nor bad' = 4,
+                                                              'Somewhat bad' = 5,
+                                                              'Very bad' = 6,
+                                                              'Extremely bad' = 7)) %>% 
+  set_labels(NORDFORSK6_4, labels = c('Extremely good' = 1,
+                                                              'Very good' = 2,
+                                                              'Somewhat good' = 3,
+                                                              'Neither good nor bad' = 4,
+                                                              'Somewhat bad' = 5,
+                                                              'Very bad' = 6,
+                                                              'Extremely bad' = 7)) %>% 
+  set_labels(NORDFORSK6_5, labels = c('Extremely good' = 1,
+                                                              'Very good' = 2,
+                                                              'Somewhat good' = 3,
+                                                              'Neither good nor bad' = 4,
+                                                              'Somewhat bad' = 5,
+                                                              'Very bad' = 6,
+                                                              'Extremely bad' = 7)) %>% 
+  set_labels(NORDFORSK6_6, labels = c('Extremely good' = 1,
+                                                              'Very good' = 2,
+                                                              'Somewhat good' = 3,
+                                                              'Neither good nor bad' = 4,
+                                                              'Somewhat bad' = 5,
+                                                              'Very bad' = 6,
+                                                              'Extremely bad' = 7)) %>% 
+  set_labels(NORDFORSK7_EVENT, labels = c('natural disasters' = 1,
+                                          'terrorist attack' = 2)) %>% 
+    set_labels(NORDFORSK7_DV, labels = c('I support it very strongly' = 1,
+                                                              'I support it strongly' = 2,
+                                                              'I support it somewhat' = 3,
+                                                              'I neither support it nor oppose it' = 4,
+                                                              'I oppose it somewhat' = 5,
+                                                              'I oppose it strongly' = 6,
+                                                              'I oppose it very strongly' = 7)) %>% 
+    set_labels(NORDFORSK8_PRE, labels = c('It led to a lot more terrorism' = 1,
+                                                              'It led to somewhat more terrorism' = 2,
+                                                              'It did not lead to any more or any less terrorism' = 3,
+                                                              'It led to less terrorism' = 4,
+                                                              'It led to a lot less terrorism' = 5)) %>% 
+    set_labels(NORDFORSK8_TREAT, labels = c('For your information, the researchers who analysed the correlation between immigration from Muslim countries and terrorism' = 1, 'No information' = 2)) %>% 
+  set_labels(NORDFORSK8_DV_A, labels = c('Increase greatly' = 1,
+                                                              'Increase' = 2,
+                                                              'Increase somewhat' = 3,
+                                                              'Neither increase nor decrease' = 4,
+                                                              'Decrease somewhat' = 5,
+                                                              'Decrease' = 6,
+                                                              'Decrease greatly' = 7)) %>% 
+  set_labels(NORDFORSK8_DV_B, labels = c('Receive many more' = 1,
+                                                              'Receive more' = 2,
+                                                              'Receive a few more' = 3,
+                                                              'Neither receive any more nor any less' = 4,
+                                                              'Receive a few less' = 5,
+                                                              'Receive fewer' = 6,
+                                                              'Receive many fewer' = 7))  %>% 
+  set_labels(NORDFORSK8_DV_C, labels = c('Strongly agree' = 1,
+                                                              'Agree' = 2,
+                                                              'Agree somewhat' = 3,
+                                                              'Neither agree nor disagree' = 4,
+                                                              'Disagree somewhat' = 5,
+                                                              'Disagree' = 6,
+                                                              'Strongly disagree' = 7)) %>% 
+  set_labels(AGE, labels = c('Under 30' = 1,
+                             '30-39' = 2,
+                             '40-49' = 3,
+                             '50-59' = 4,
+                             '60-69' = 5,
+                             '70 or older' = 6)) %>% 
+  set_labels(GENDER, labels = c('Male' = 1,
+                                'Female' = 2)) %>% 
+  set_labels(EDUCATION, labels = c('No higher education' = 1,
+                                   'Higher education' = 2))
+```
+
+### Set variable lables
+```{r set_variable_labels}
+d_pool <- d_pool %>% var_labels(ResponseId = 'Response ID',
+                      NORDFORSK1_TACTIC1 = 'Randomly, uniformly assigned treatment variable',
+                      NORDFORSK1_TARGET = 'Randomly, uniformly assigned treatment variable',
+                      NORDFORSK1_CASUALTIES = 'Randomly, uniformly assigned treatment variable',
+                      NORDFORSK1_TACTIC2 = 'Randomly, uniformly assigned treatment variable',
+                      NORDFORSK1_ADJECTIVE  = 'Randomly, uniformly assigned treatment variable',
+                      NORDFORSK1_SUBJECTIVE = 'Randomly, uniformly assigned treatment variable',
+                      NORDFORSK1_MOTIVATION = 'Randomly, uniformly assigned treatment variable',
+                      NORDFORSK1_DV_A = "Terrorism experiment: Is the event a terrorist act.",
+                      NORDFORSK1_DV_B_1 = "Agree/disagree: Authorities may: Detain indefinately without trial." ,
+                      NORDFORSK1_DV_B_2 = "Agree/disagree: Authorities may: Wire tap phone calls.",
+                      NORDFORSK1_DV_B_3 = "Agree/disagree: Authorities may: Stop and search people on the street.",
+                      NORDFORSK1_DV_B_4 = "Agree/disagree: Authorities may: Monitor emails and internet communication.",
+                      NORDFORSK1_DV_B_5 = "Agree/disagree: Authorities may: Monitor/bug rooms.",
+                      NORDFORSK1_DV_B_6 = "Agree/disagree: Authorities may: Cordon off parts of the city.",
+                      NORDFORSK1_DV_B_7 = "Agree/disagree: Authorities may: Let armed police or the army patrol the streets.",
+                      NORDFORSK2_OBJECT = 'Randomly, uniformly assigned treatment variable',
+                      NORDFORSK2_TENSE = 'Randomly, uniformly assigned treatment variable',
+                      NORDFORSK2_DV = "How great threat is terrorism for [you/Europe][today/in the future]",
+                      NORDFORSK3 = "Agree/disagree: Preserving safety should limit individual freedoms." ,
+                      NORDFORSK4 = "How important are counter-terrorist measures for you." ,
+                      NORDFORSK5 = "Which political party do you think has the best policies aimed at combating terrorist attacks in Iceland?",
+                      NORDFORSK6_1 = "How capable of handling terrorist attacks: International organizations.",
+                      NORDFORSK6_2 = "How capable of handling terrorist attacks: National authorities.",
+                      NORDFORSK6_3 = "How capable of handling terrorist attacks: Local authorities." ,
+                      NORDFORSK6_4 = "How capable of handling terrorist attacks: Police." ,
+                      NORDFORSK6_5 = "How capable of handling terrorist attacks: Voluntary organizations." ,
+                      NORDFORSK6_6 = "How capable of handling terrorist attacks: The individual citizen.",
+                      NORDFORSK7_EVENT = 'Randomly, uniformly assigned treatment variable',
+                      NORDFORSK7_DV = "For/against: 100 million NOK per life saved on measures to limit damages from [natural disasters/terrorist attacks]." ,
+                      NORDFORSK8_PRE = "How has immigration from muslim countries affected the risk of terrorist attacks in the receiving countries.",
+                      NORDFORSK8_TREAT = 'Randomly, uniformly assigned treatment variable',
+                      NORDFORSK8_DV_A =  "Will the risk of terrorist attacks in Norway increase if we accept more immigrants from muslim countries.",
+                      NORDFORSK8_DV_B = "Should Norway accept more of fewer immigrants than today?" ,
+                      NORDFORSK8_DV_C = "Agree/disagree: Norway should reduce the share of immigrants with muslim backgrounds.",
+                      GENDER= "Gender",
+                      AGE = "Age categories",
+                      EDUCATION = 'Dichotomous education variable')
+
+```
+
+## Display overview of data set
+```{r view_df}
+#Display overview of pooled data
+view_df(d_pool, show.type = TRUE, show.frq = TRUE, show.prc = TRUE, show.na = TRUE)
+```
+
+## Write data files
+```{r write_data}
+write_sav(d_pool, 'nordforsk-pooled.sav')
+save(d_pool, file = 'nordforsk-pooled.RData')
+write_dta(d_pool, 'nordforsk-pooled.dta')
+```

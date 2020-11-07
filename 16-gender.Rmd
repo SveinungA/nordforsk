@@ -21,7 +21,7 @@ knitr::opts_chunk$set(echo = FALSE, knitr.kable.NA = "", cache = FALSE, message 
 
 ```{r GENDER_PRE}
 Source <- c('Male', 'Female')
-Iceland <- count(di, as_label(kyn))
+Iceland <- count(di_is, as_label(kyn))
 Norway <- count(dn, as_label(r15P1))
 Sweden <- count(ds, as_label(sex)) 
 GENDER <- bind_cols(Source, Iceland, Norway, Sweden)

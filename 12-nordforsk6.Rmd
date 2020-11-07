@@ -46,7 +46,7 @@ Internationella organisationer
 
 ```{r nordforsk6_1}
 Source <- c('Extremely good', 'Very good', 'Somewhat good', 'Neither good nor bad', 'Somewhat bad', 'Very bad', 'Extremely bad', NA)
-Iceland <- count(di, as_label(sp9_1))
+Iceland <- count(di_is, as_label(sp9_1))
 Norway <- count(dn, as_label(r15pad_terror8_1)) %>% filter(`as_label(r15pad_terror8_1)` != 'Ikke spurt')
 Sweden <- count(ds, as_label(q282_1))
 nordforsk6_1 <- bind_cols(Source, Iceland, Norway, Sweden)
@@ -70,7 +70,7 @@ Nationella myndigheter
 
 ```{r nordforsk6_2}
 Source <- c('Extremely good', 'Very good', 'Somewhat good', 'Neither good nor bad', 'Somewhat bad', 'Very bad', 'Extremely bad', NA)
-Iceland <- count(di, as_label(sp9_2)) 
+Iceland <- count(di_is, as_label(sp9_2)) 
 Norway <- count(dn, as_label(r15pad_terror8_2)) %>% filter(`as_label(r15pad_terror8_2)` != 'Ikke spurt')
 Sweden <- count(ds, as_label(q282_2))
 nordforsk6_2 <- bind_cols(Source, Iceland, Norway, Sweden)
@@ -94,7 +94,7 @@ Lokala myndigheter
 
 ```{r nordforsk6_3}
 Source <- c('Extremely good', 'Very good', 'Somewhat good', 'Neither good nor bad', 'Somewhat bad', 'Very bad', 'Extremely bad', NA)
-Iceland <- count(di, as_label(sp9_3)) 
+Iceland <- count(di_is, as_label(sp9_3)) 
 Norway <- count(dn, as_label(r15pad_terror8_3)) %>% filter(`as_label(r15pad_terror8_3)` != 'Ikke spurt')
 Sweden <- count(ds, as_label(q282_3))
 nordforsk6_3 <- bind_cols(Source, Iceland, Norway, Sweden)
@@ -118,7 +118,7 @@ Polisen
 
 ```{r nordforsk6_4}
 Source <- c('Extremely good', 'Very good', 'Somewhat good', 'Neither good nor bad', 'Somewhat bad', 'Very bad', 'Extremely bad', NA)
-Iceland <- count(di, as_label(sp9_4)) 
+Iceland <- count(di_is, as_label(sp9_4)) 
 Norway <- count(dn, as_label(r15pad_terror8_4)) %>% filter(`as_label(r15pad_terror8_4)` != 'Ikke spurt')
 Sweden <- count(ds, as_label(q282_4))
 nordforsk6_4 <- bind_cols(Source, Iceland, Norway, Sweden)
@@ -142,7 +142,7 @@ Frivilligorganisationer
 
 ```{r nordforsk6_5}
 Source <- c('Extremely good', 'Very good', 'Somewhat good', 'Neither good nor bad', 'Somewhat bad', 'Very bad', 'Extremely bad', NA)
-Iceland <- count(di, as_label(sp9_5)) 
+Iceland <- count(di_is, as_label(sp9_5)) 
 Norway <- count(dn, as_label(r15pad_terror8_5)) %>% filter(`as_label(r15pad_terror8_5)` != 'Ikke spurt')
 Sweden <- count(ds, as_label(q282_5)) %>% add_row(`as_label(q282_5)`=NA, n= NA, .before=1)
 nordforsk6_5 <- bind_cols(Source, Iceland, Norway, Sweden)
@@ -167,7 +167,7 @@ Den enskilde invånaren
 
 ```{r nordforsk6_6}
 Source <- c('Extremely good', 'Very good', 'Somewhat good', 'Neither good nor bad', 'Somewhat bad', 'Very bad', 'Extremely bad', NA)
-Iceland <- count(di, as_label(sp9_6)) 
+Iceland <- count(di_is, as_label(sp9_6)) 
 Norway <- count(dn, as_label(r15pad_terror8_6)) %>% filter(`as_label(r15pad_terror8_6)` != 'Ikke spurt')
 Sweden <- count(ds, as_label(q282_6)) %>% add_row(`as_label(q282_6)`=NA, n=NA, .before = 1)
 nordforsk6_6 <- bind_cols(Source, Iceland, Norway, Sweden)
