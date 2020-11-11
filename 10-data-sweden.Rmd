@@ -1,0 +1,9 @@
+# Original data set Sweden
+
+This chapter describes the data set as it was before being pooled with the data sets from Iceland and Norway.
+Please note that not all the information is visible in the html format. The codebook can be downloaded as an excel for full view.
+
+```{r view_df_sweden, cache = TRUE, echo = FALSE}
+if(!require("codebook")){install.packages("codebook");  library(codebook)}
+compact_codebook(ds)
+```

@@ -17,3 +17,21 @@ description: "This is the guide to the survey on the challenge from terrorism in
 This document is a guide to the survey of the research project *The challenge from terrorism in the Nordic countries*.
 The project is a collaboration between Iceland, Norway, and Sweden, and funded by the Nordic Research Council (NORDFORSK).
 
+The involved researchers are:
+
+* Jacob Aars  
+* Mattias Agerberg  
+* Sveinung Arnesen
+* Dag Arne Christensen (Principal Investigator) 
+* Elisabeth Ivarsflaten
+* Guðbjörg Andrea Jónsdóttir  
+* Gunnar Helgi Kristinsson  
+* Johan Martinson  
+* Jon Kåre Skiple  
+* Jacob Sohlberg  
+* Hulda Þórisdóttir  
+* Margrét Valdimarsdóttir  
+
+Chapter \@ref(question-wordings-and-translations) displays the question wordings in the respective languages.
+Chapter \@ref(pool-datasets) shows the script for the merging procedure of the three datasets.
+Chapter \@ref(view-pooled-data-file) presents the output of the common data set, while the next three chapters show the codebook for the original data sets from Iceland, Norway, and Sweden, respectively. 

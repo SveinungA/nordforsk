@@ -1,6 +1,7 @@
 # NORDFORSK1
 
 ```{r setup, include=FALSE, echo=FALSE}
+if(!require("codebook")){install.packages("codebook");  library(codebook)}
 if(!require("gt")){install.packages("gt");  library(gt)}
 if(!require("haven")){install.packages("haven");  library(haven)}
 if(!require("here")){install.packages("here");  library(here)}
@@ -27,7 +28,7 @@ News coverage suggests [NORDFORSK1_MOTIVATION].
 
 **Translations**
 Icelandic
-NA
+[NORDFORSK1_TACTIC1] sér stað við [NORDFORSK1_TARGET] á Íslandi. [NORDFORSK1_CASUALTIES] í [NORDFORSK1_TACTIC2] sem [tid(singular/plural)] framkvæmd af [NORDFORSK1_ADJECTIVE] [NORDFORSK1_SUBJECTIVE]. Fréttaumfjöllun bendir til að [NORDFORSK1_MOTIVATION]. Myndir þú flokka þetta sem hryðjuverk? 
 
 Norwegian  
 Vi ber deg nå se for deg en tenkt hendelse i Norden, og ta stilling til noen spørsmål vi stiller om hendelsen under.
@@ -42,9 +43,7 @@ händelsen.
 dödades i [NORDFORSK1_TACTIC2] som utfördes av [NORDFORSK1_ADJECTIVE]
 [NORDFORSK1_SUBJECTIVE]. Nyhetsrapporteringen tyder på [NORDFORSK1_MOTIVATION].
 
-## NORDFORSK1_TACTIC1
 ```{r conjoint_tactic1}
-
 Source <- count(d_pool, NORDFORSK1_TACTIC1) %>% filter(n > 10)
 #Source = c('protest', 'sabotage', 'hostage taking', 'shooting', 'bombing')
 Iceland <- count(di_is, taktikk1)  
@@ -367,4 +366,3 @@ post <- bind_cols(Source, Iceland, Norway, Sweden)
 kable(post, booktabs = T, linesep = "", escape = F, caption = "Panel variable names and values",  col.names = linebreak(c("Pooled", "Iceland", 'n', "Norway", 'n', "Sweden", 'n'))) %>%
  footnote(general = "Variable names. Iceland = sp4_7, Norway =  r15pad_terror1_b_7, Sweden = q272_7")
 ```
-

@@ -1,0 +1,13 @@
+# Original data set Norway
+
+This chapter describes the Norwegian language data set as it was before being pooled with the data sets from Iceland and Sweden.
+Please note that not all the information is visible in the html format. The codebook can be downloaded as an excel for full view.
+
+```{r view_df_norway, cache = TRUE, echo = FALSE}
+if(!require("codebook")){install.packages("codebook");  library(codebook)}
+
+dn_no <-  read_sav('C:\\Users/svein/Documents/nordforskdata/Norwegian Citizen Panel wave 1-15 - NO.sav')
+dn_no <- dn_no %>% select(starts_with('r15pad_terror'), responseid, r15P1, r15P4_2, r15P5_1, r14pk8_1, r15Weight1) %>% filter(!is.na(r15pad_terror1_ran1))
+
+compact_codebook(dn_no)
+```

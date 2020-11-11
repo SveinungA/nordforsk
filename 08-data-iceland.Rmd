@@ -1,0 +1,10 @@
+# Original data set Iceland
+
+This chapter describes the data set as it was before being pooled with the data sets from Norway and Sweden.
+Please note that not all the information is visible in the html format. The codebook can be downloaded as an excel for full view.
+
+```{r codebook_iceland, cache = TRUE, echo = FALSE}
+if(!require("codebook")){install.packages("codebook");  library(codebook)}
+di_is <- sjlabelled::read_spss('C:\\Users/svein/Documents/NORDFORSKdata/Terrorism_Iceland_is.sav')
+compact_codebook(di_is)
+```

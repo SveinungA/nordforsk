@@ -2,11 +2,12 @@ bookdown::gitbook:
   css: style.css
   config:
     toc:
+      collapse: section
       before: |
         <li><a href="./">The Challenge from Terrorism in the Nordic Countries</a></li>
 
     edit: https://github.com/SveinungA/nordforsk%s
-    download: ["pdf", "epub"]
+    download: []
 bookdown::pdf_book:
   includes:
     in_header: preamble.tex

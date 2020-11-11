@@ -1,4 +1,4 @@
-# POOL DATASETS
+# Pool datasets
 ```{r POOL_setup, include=FALSE, echo=FALSE}
 if(!require("haven")){install.packages("haven");  library(haven)}
 if(!require("kableExtra")){install.packages("kableExtra");  library(kableExtra)}
@@ -6,6 +6,7 @@ if(!require("knitr")){install.packages("knitr");  library(knitr)}
 if(!require("labelled")){install.packages("labelled");  library(labelled) }
 if(!require("magrittr")){install.packages("magrittr");  library(magrittr) }
 if(!require("readxl")){install.packages("readxl");  library(readxl)}
+if(!require("rio")){install.packages("rio");  library(rio)}
 if(!require("sjlabelled")){install.packages("sjlabelled");  library(sjlabelled)}
 if(!require("sjPlot")){install.packages("sjPlot");  library(sjPlot)}
 if(!require("tidyverse")){install.packages("tidyverse");  library(tidyverse)}
@@ -59,7 +60,7 @@ NORDFORSK8_PRE = sp12,
 sp13, sp14,
 NORDFORSK8_DV_B = sp15,
 NORDFORSK8_DV_C = sp16,
-GENDER = Gender,
+SEX = Gender,
 AGE = Age,
 EDUCATION = Education,
 LEFTRIGHT = sp24
@@ -93,7 +94,7 @@ di_pool <- di_pool %>% mutate(NORDFORSK1_TACTIC1 = case_when(NORDFORSK1_TACTIC1 
                  NORDFORSK1_SUBJECTIVE = case_when(NORDFORSK1_SUBJECTIVE == 'organization' ~ 1,
                                                 NORDFORSK1_SUBJECTIVE == 'group' ~ 2,
                                                 NORDFORSK1_SUBJECTIVE == 'indiviudal' ~ 3,
-                                                NORDFORSK1_SUBJECTIVE == 'individual of unsound mind' ~ 4),
+                                                NORDFORSK1_SUBJECTIVE == 'mentally ill individual' ~ 4),
                  NORDFORSK1_MOTIVATION = case_when(NORDFORSK1_MOTIVATION == 'there was no clear motivation behind the incident' ~ 1,
                                                 NORDFORSK1_MOTIVATION == 'the incident was carried out with the aim of changing goverment policy' ~ 2,
                  NORDFORSK1_MOTIVATION == 'the motivation behind the incident came from a hatred towards the target' ~ 3),
@@ -142,8 +143,7 @@ di_pool <- di_pool %>% mutate(NORDFORSK5 = case_when(NORDFORSK5 == 2 ~ 1,
 di_pool <- pivot_longer(di_pool, sp13:sp14, names_to = 'NORDFORSK8_TREAT', values_to = 'NORDFORSK8_DV_A', values_drop_na = TRUE) %>% 
    mutate(NORDFORSK8_TREAT=replace(NORDFORSK8_TREAT, which(NORDFORSK8_TREAT=='sp13'), 1),
          NORDFORSK8_TREAT=replace(NORDFORSK8_TREAT, which(NORDFORSK8_TREAT=='sp14'), 2),
-         NORDFORSK8_TREAT= as_numeric(NORDFORSK8_TREAT)
-         )
+         NORDFORSK8_TREAT= as_numeric(NORDFORSK8_TREAT))
 ```
 
 ## Norway
@@ -153,7 +153,7 @@ dn <- read_sav('C:\\Users/svein/Documents/nordforskdata/Norwegian Citizen Panel 
 dn <- dn %>% select(starts_with('r15pad_terror'), responseid, r15P1, r15P4_2, r15P5_1, r14pk8_1, r15Weight1) %>% filter(!is.na(r15pad_terror1_ran1))
 ```
 
-## Select variables 
+### Select variables 
 ```{r pool_select_vars_Norway}
 dn_pool <- dn %>% select(ResponseId = responseid,
 NORDFORSK1_TACTIC1 = r15pad_terror1_ran1,
@@ -190,7 +190,7 @@ NORDFORSK8_TREAT = r15pad_terror11_ran,
 NORDFORSK8_DV_A =  r15pad_terror11posta,
 NORDFORSK8_DV_B =  r15pad_terror11postb,
 NORDFORSK8_DV_C = r15pad_terror11postc,
-GENDER = r15P1,
+SEX = r15P1,
 AGE = r15P5_1,
 EDUCATION = r15P4_2,
 LEFTRIGHT = r14pk8_1,
@@ -209,24 +209,24 @@ dn_pool <- dn_pool %>% mutate(AGE = case_when(AGE >5 ~ 1,
                                               AGE == 1 ~ 6),
                               EDUCATION = case_when(EDUCATION <6 ~ 1,
                                                     EDUCATION %in% 5:11 ~ 2),
-                              NORDFORSK5 = case_when(NORDFORSK5 == 1 ~ 11,
-                                                     NORDFORSK5 == 2 ~ 12,
-                                                     NORDFORSK5 == 3 ~ 13,
-                                                     NORDFORSK5 == 4 ~ 14,
-                                                     NORDFORSK5 == 5 ~ 15,
-                                                     NORDFORSK5 == 6 ~ 16,
-                                                     NORDFORSK5 == 7 ~ 17,
-                                                     NORDFORSK5 == 8 ~ 18,
-                                                     NORDFORSK5 == 9 ~ 19,
-                                                     NORDFORSK5 == 10 ~ 20,
-                                                     NORDFORSK5 == 11 ~ 21))
+                              NORDFORSK5 = case_when(NORDFORSK5 == 1 ~ 21,
+                                                     NORDFORSK5 == 2 ~ 22,
+                                                     NORDFORSK5 == 3 ~ 23,
+                                                     NORDFORSK5 == 4 ~ 24,
+                                                     NORDFORSK5 == 5 ~ 25,
+                                                     NORDFORSK5 == 6 ~ 26,
+                                                     NORDFORSK5 == 7 ~ 27,
+                                                     NORDFORSK5 == 8 ~ 28,
+                                                     NORDFORSK5 == 9 ~ 29,
+                                                     NORDFORSK5 == 10 ~ 30,
+                                                     NORDFORSK5 == 11 ~ 31))
 ```
 
 ## Sweden
 ### Load data
 ```{r pool_load_sweden}
 ds <- read_dta('C:\\Users/svein/Documents/nordforskdata/s5_sohlberg.dta') 
-#ds <- ds %>% select(-(starts_with('t_q')))
+ds <- ds %>% select(-(starts_with('t_q'))) #Do not include time stamps
 ```
 
 ### Select variables
@@ -266,7 +266,7 @@ NORDFORSK8_TREAT = q288,
 NORDFORSK8_DV_A =  q290,
 NORDFORSK8_DV_B =  q292,
 NORDFORSK8_DV_C = q294,
-GENDER = sex,
+SEX = sex,
 AGE = age6,
 EDUCATION = edu_mp36,
 LEFTRIGHT = lrpown_mp36)
@@ -285,7 +285,7 @@ ds_pool <- ds_pool %>% mutate(NORDFORSK1_TACTIC1 = case_when(NORDFORSK1_TACTIC1 
                                                 NORDFORSK1_TACTIC1 == 'Ett gisslantagande' ~ 3,
                                                 NORDFORSK1_TACTIC1 == 'En skjutning' ~ 4,
                                                 NORDFORSK1_TACTIC1 == 'En bombning' ~ 5), 
-                            NORDFORSK1_TARGET = case_when(NORDFORSK1_TARGET == 'på en militäranläggning' ~ 1,
+                              NORDFORSK1_TARGET = case_when(NORDFORSK1_TARGET == 'på en militäranläggning' ~ 1,
                                                           NORDFORSK1_TARGET == 'på en polisstation' ~ 2,
                                                           NORDFORSK1_TARGET == 'i en skola' ~ 3,
                                                           NORDFORSK1_TARGET == 'i en kyrka' ~ 4,
@@ -317,16 +317,16 @@ ds_pool <- ds_pool %>% mutate(NORDFORSK1_TACTIC1 = case_when(NORDFORSK1_TACTIC1 
                                                NORDFORSK2_OBJECT == 'Europa' ~ 3),
                  NORDFORSK2_TENSE = case_when(NORDFORSK2_TENSE == 'idag' ~ 1,
                                               NORDFORSK2_TENSE == 'i framtiden' ~ 2),
-                  NORDFORSK5 = case_when(NORDFORSK5 == 1 ~ 31,
-                                                     NORDFORSK5 == 2 ~ 32,
-                                                     NORDFORSK5 == 3 ~ 33,
-                                                     NORDFORSK5 == 4 ~ 34,
-                                                     NORDFORSK5 == 5 ~ 35,
-                                                     NORDFORSK5 == 6 ~ 36,
-                                                     NORDFORSK5 == 7 ~ 37,
-                                                     NORDFORSK5 == 8 ~ 38,
-                                                     NORDFORSK5 == 10 ~39,
-                                                     NORDFORSK5 == 11 ~ 40),
+                  NORDFORSK5 = case_when(NORDFORSK5 == 1 ~ 41,
+                                                     NORDFORSK5 == 2 ~ 42,
+                                                     NORDFORSK5 == 3 ~ 43,
+                                                     NORDFORSK5 == 4 ~ 44,
+                                                     NORDFORSK5 == 5 ~ 45,
+                                                     NORDFORSK5 == 6 ~ 46,
+                                                     NORDFORSK5 == 7 ~ 47,
+                                                     NORDFORSK5 == 8 ~ 48,
+                                                     NORDFORSK5 == 10 ~49,
+                                                     NORDFORSK5 == 11 ~ 50),
                  NORDFORSK7_EVENT = case_when(NORDFORSK7_EVENT == 'naturkatastrofer' ~ 1,
                                                 NORDFORSK7_EVENT == 'terrorattacker' ~ 2),
                  NORDFORSK8_TREAT = case_when(NORDFORSK8_TREAT == 1 ~ 1,
@@ -370,7 +370,7 @@ d_pool <- d_pool %>% set_labels(Country, labels = c('Iceland' = 1,
                                            'a church' = 4,
                                            'a mosque' = 5,
                                            'a synagogue' = 6)) %>% 
-  set_labels(NORDFORSK1_CASUALTIES, labels = c('No' = 1,
+  set_labels(NORDFORSK1_CASUALTIES, labels = c('No one' = 1,
                                                'One person' = 2,
                                                'Two people' = 3,
                                                'Ten people' = 4)) %>% 
@@ -387,7 +387,7 @@ d_pool <- d_pool %>% set_labels(Country, labels = c('Iceland' = 1,
   set_labels(NORDFORSK1_SUBJECTIVE, labels = c('organisation' = 1,
                                               'group' = 2,
                                               'individual' = 3,
-                                              'individual of unsound mind' = 4)) %>% 
+                                              'mentally ill individual' = 4)) %>% 
     set_labels(NORDFORSK1_MOTIVATION, labels = c('there was no clear motivation behind the incident' = 1,
                                               'the incident was carried out with the aim of changing government policy' = 2,
                                               'the motivation behind the incident came from a hatred towards the target' = 3)) %>% 
@@ -448,49 +448,54 @@ set_labels(NORDFORSK1_DV_A, labels = c('Yes, this is terrorism' = 1,
   set_labels(NORDFORSK2_TENSE, labels = c('today' = 1,
                                           'in the future' = 2)) %>% 
   set_labels(NORDFORSK2_DV, labels = c('Very serious' = 1,
-                                                              'Serious' = 2,
-                                                              'Somewhat serious' = 3,
-                                                              'Not very serious' = 4,
-                                                              'Not a threat' = 5)) %>% 
+                                       'Serious' = 2,
+                                       'Somewhat serious' = 3,
+                                       'Not very serious' = 4,
+                                       'Not a threat' = 5)) %>% 
   set_labels(NORDFORSK3, labels = c('Strongly agree' = 1,
-                                                              'Agree' = 2,
-                                                              'Agree somewhat' = 3,
-                                                              'Neither agree nor disagree' = 4,
-                                                              'Disagree somewhat' = 5,
-                                                              'Disagree' = 6,
-                                                              'Strongly disagree' = 7)) %>% 
+                                    'Agree' = 2,
+                                    'Agree somewhat' = 3,
+                                    'Neither agree nor disagree' = 4,
+                                    'Disagree somewhat' = 5,
+                                    'Disagree' = 6,
+                                    'Strongly disagree' = 7)) %>% 
   set_labels(NORDFORSK4, labels = c('Very important' = 1,
-                                                              'Important' = 2,
-                                                              'Somewhat important' = 3,
-                                                              'Slightly important' = 4,
-                                                              'Not important at all' = 5)) %>% 
+                                    'Important' = 2,
+                                    'Somewhat important' = 3,
+                                    'Slightly important' = 4,
+                                    'Not important at all' = 5)) %>% 
    set_labels(NORDFORSK5, labels = c('Progress Party (Iceland)'= 1,
-                                                         'Reform Party' = 2,
-                                                         'Independence Party' = 3,
-                                                         'The Peoples Party' = 4,
-                                                         'The Pirate Party' = 5,
-                                                         'Social Democrats (Iceland)' = 6,
-                                                         'Left-Green Party' = 7,
-                                                         'The Center Party (Iceland)' = 8,
-                                                         'Other' = 9,
-                                                         'None' = 10,
-                                     'The Labour Party'= 11,
-                                                         'The Progress Party (Norway)' = 12,
-                                                         'The Conservative Party' = 13,
-                                                         'The Socialist Left Party' = 14,
-                                                         'The Centre Party (Norway)' = 15,
-                                                         'The Christian Democrats (Norway)' = 16,
-                                                         'The Liberal Party (Norway)' = 17,
-                                                         'The Red Party' = 18,
-                                                         'The Green Party (Norway)' = 19,
-                                     'The Social Democrats (Sweden)'= 21,
-                                                         'The Sweden Democrats' = 22,
-                                                         'The Moderates' = 23,
-                                                         'The Left Party' = 24,
-                                                         'The Centre Party (Sweden)' = 25,
-                                                         'The Christian Democrats (Norway)' = 26,
-                                                         'The Liberal Party (Sweden)' = 27,
-                                                         'The Green Party (Sweden)' = 28)
+                                     'Reform Party' = 2,
+                                     'Independence Party' = 3,
+                                     'The Peoples Party' = 4,
+                                     'The Pirate Party' = 5,
+                                     'Social Democrats (Iceland)' = 6,
+                                     'Left-Green Party' = 7,
+                                     'The Center Party (Iceland)' = 8,
+                                     'Other (Iceland)' = 9,
+                                     'None (Iceland)' = 10,
+                                     'The Labour Party'= 21,
+                                     'The Progress Party (Norway)' = 22,
+                                     'The Conservative Party' = 23,
+                                     'The Socialist Left Party' = 24,
+                                     'The Centre Party (Norway)' = 25,
+                                     'The Christian Democrats (Norway)' = 26,
+                                     'The Liberal Party (Norway)' = 27,
+                                     'The Red Party (Norway)' = 28,
+                                     'The Green Party (Norway)' = 29,
+                                     'Other (Norway)' = 30,
+                                     'None (Norway)' = 31,
+                                     'The Social Democrats (Sweden)'= 41,
+                                     'The Sweden Democrats (Sweden)' = 42,
+                                     'The Moderates (Sweden)' = 43,
+                                     'The Left Party (Sweden)' = 44,
+                                     'The Centre Party (Sweden)' = 45,
+                                     'The Christian Democrats (Sweden)' = 46,
+                                     'The Liberal Party (Sweden)' = 47,
+                                     'The Green Party (Sweden)' = 48,
+                                     'Other (Sweden)' = 49,
+                                     'None (Sweden)' = 50
+                                     )
               ) %>% 
  set_labels(NORDFORSK6_1, labels = c('Extremely good' = 1,
                                                               'Very good' = 2,
@@ -576,7 +581,7 @@ set_labels(NORDFORSK1_DV_A, labels = c('Yes, this is terrorism' = 1,
                              '50-59' = 4,
                              '60-69' = 5,
                              '70 or older' = 6)) %>% 
-  set_labels(GENDER, labels = c('Male' = 1,
+  set_labels(SEX, labels = c('Male' = 1,
                                 'Female' = 2)) %>% 
   set_labels(EDUCATION, labels = c('No higher education' = 1,
                                    'Higher education' = 2))
@@ -613,27 +618,23 @@ d_pool <- d_pool %>% var_labels(ResponseId = 'Response ID',
                       NORDFORSK6_5 = "How capable of handling terrorist attacks: Voluntary organizations." ,
                       NORDFORSK6_6 = "How capable of handling terrorist attacks: The individual citizen.",
                       NORDFORSK7_EVENT = 'Randomly, uniformly assigned treatment variable',
-                      NORDFORSK7_DV = "For/against: 100 million NOK per life saved on measures to limit damages from [natural disasters/terrorist attacks]." ,
+                      NORDFORSK7_DV = "For/against: [~€10 million in country currency]  per life saved on measures to limit damages from [natural disasters/terrorist attacks]." ,
                       NORDFORSK8_PRE = "How has immigration from muslim countries affected the risk of terrorist attacks in the receiving countries.",
                       NORDFORSK8_TREAT = 'Randomly, uniformly assigned treatment variable',
-                      NORDFORSK8_DV_A =  "Will the risk of terrorist attacks in Norway increase if we accept more immigrants from muslim countries.",
-                      NORDFORSK8_DV_B = "Should Norway accept more of fewer immigrants than today?" ,
-                      NORDFORSK8_DV_C = "Agree/disagree: Norway should reduce the share of immigrants with muslim backgrounds.",
-                      GENDER= "Gender",
+                      NORDFORSK8_DV_A =  "Will the risk of terrorist attacks in [country] increase if we accept more refugees from muslim countries.",
+                      NORDFORSK8_DV_B = "Should [country] accept more of fewer refugees than today?" ,
+                      NORDFORSK8_DV_C = "Agree/disagree: [Country] should reduce the share of refugees with muslim backgrounds.",
+                      SEX= "Sex",
                       AGE = "Age categories",
                       EDUCATION = 'Dichotomous education variable')
-
-```
-
-## Display overview of data set
-```{r view_df}
-#Display overview of pooled data
-view_df(d_pool, show.type = TRUE, show.frq = TRUE, show.prc = TRUE, show.na = TRUE)
 ```
 
 ## Write data files
 ```{r write_data}
-write_sav(d_pool, 'nordforsk-pooled.sav')
-save(d_pool, file = 'nordforsk-pooled.RData')
-write_dta(d_pool, 'nordforsk-pooled.dta')
+save(d_pool, file = 'nordforsk-pooled.RData') # as R data
+rio::export(d_pool, "nordforsk-pooled.rds") # to R data structure file
+haven::write_sav(d_pool, 'nordforsk-pooled1.sav') # to SPSS file using haven package
+rio::export(d_pool, 'nordforsk-pooled2.sav') # to SPSS file using rio package
+haven::write_dta(d_pool, 'nordforsk-pooled1.dta') # to Stata file using haven package
+rio::export(d_pool, 'nordforsk-pooled2.dta') # to Stata file using rio package
 ```

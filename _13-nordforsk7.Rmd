@@ -24,7 +24,7 @@ The state can put various measures in place to reduce the risk of [NORDFORSK7_EV
 *Translations*
 
 Iceland  
-NA 
+Þessa dagana er mikið rætt um [Field-terror10_a]. Ríkisstjórnin getur gripið til ýmissa aðgerða til að draga úr hættunni á [Field-terror10_b], en fólk er ósammála um hversu miklum peningum ríkið eigi að nota til að leggja áherslu á slík úrræði. 
 
 Norway  
 I disse dager er det stor oppmerksomhet rundt [NORDFORSK7_EVENT]. 
@@ -55,7 +55,7 @@ kable(NORDFORSK7_EVENT, booktabs = T, linesep = "", escape = F, caption = "Panel
 *Translations*
 
 Iceland
-NA
+Ef ríkið getur reiknað með að bjarga einu mannslífi með því að eyða 1.500 milljónum króna í úrræði til að draga úr líkunum á dauðsföllum vegna [Field-terror10_c], ert þú hlynnt(ur) því að ríkið eigi að setja þessi úrræði í forgang? Ætti ríkisstjórnin að ráðast í slíkar ráðstafanir ef það verður að fjármagna þær með hærri sköttum á almenning?
 
 Norway  
 Hvis staten kan regne med å redde ett menneskeliv ved å bruke 100 millioner kroner på tiltak for å redusere faren

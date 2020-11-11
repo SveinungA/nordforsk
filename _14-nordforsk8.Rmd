@@ -30,7 +30,7 @@ terrorism changed as a result of increased immigration from Muslim countries.
 *Translations*
 
 Iceland  
-NA 
+Til upplýsingar, rannsakendurnir sem greindu tengslin milli innflytjenda frá löndum þar sem múslimar eru í meirihluta og hryðjuverkaárása í móttökulöndum komust að því að aukinn fjöldi innflytjenda frá múslimskum löndum hefði engin áhrif á fjölda hryðjuverka í móttökulöndunum.Telur þú að 
 
 Norway  
 I løpet av de siste tjue årene har det vært høy innvandring fra muslimske land i Afrika, Asia og Midtøsten til Europa.
@@ -104,7 +104,7 @@ kable(NORDFORSK8_TREAT, booktabs = T, linesep = "", escape = F, caption = "Panel
 ```
 
 ## NORDFORSK8_DV_A
-
+ > Over the next ten years, do you think the terror threat in [country] will increase if we choose to receive more immigrants from Muslim countries in Africa, Asia, and the Middle East? The terror threat will...
 
 *Transalations*
 
