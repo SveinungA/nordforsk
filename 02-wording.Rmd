@@ -5,7 +5,7 @@ if(!require("kableExtra")){install.packages("kableExtra");  library(kableExtra)}
 knitr::opts_chunk$set(echo = TRUE, knitr.kable.NA = "", cache = FALSE, message = FALSE )
 ```
 Below are the question wordings of the text that is not retrievable in the data set. Languages are English (translated), Icelandic, Norwegian, and Swedish.
-The variable placements in the text are indicated in [BRACKETS].
+The variable placements in the text are indicated in [BRACKETS], which are presented in Chapter \@ref(view-pooled-data-file).
 
 ## NORDFORSK1
 
@@ -13,6 +13,7 @@ The variable placements in the text are indicated in [BRACKETS].
 The incident involves a [NORDFORSK1_TACTIC1] that targeted [NORDFORSK1_TARGET] [in/on country]. 
 [NORDFORSK1_CASUALTIES] were killed in [NORDFORSK1_TACTIC2], which was performed by [NORDFORSK1_ADJECTIVE] [NORDFORSK1_SUBJECTIVE]. 
 News coverage suggests [NORDFORSK1_MOTIVATION].
+
 
 
 Icelandic  
@@ -311,6 +312,7 @@ Swedish
 Den enskilde invånaren
 
 
+## NORDFORSK7
 > Presently, there is great deal of attention focused on [NORDFORSK7_EVENT]. 
 The state can put various measures in place to reduce the risk of [NORDFORSK7_EVENT], but there is controversy over how much money the state should prioritize to spend on such measures.
 
@@ -327,7 +329,6 @@ För närvarande är det mycket uppmärksamhet kring [NORDFORSK7_EVENT]. Staten 
 vidta olika åtgärder för att minska risken för [NORDFORSK7_EVENT], men det råder oenighet om hur mycket pengar staten bör prioritera att spendera på sådana åtgärder.
  
 
-## NORDFORSK7
 
 ### NORDFORSK7_DV
 > If the state can expect to save one human life by spending NOK 100 million on measures to reduce the risk of [NORDFORSK7_EVENT], do you think the state should prioritize these measures? These measures should be carried out if they have to be funded through increased taxes among the population?
@@ -396,7 +397,6 @@ påverkat mottagarländerna?
 
 
 Icelandic  
-
 Telur þú að hryðjuverkaógnin á Íslandi muni aukast á næstu tíu árum ef við tökum á móti fleiri innflytjendum frá múslimskum löndum í Afríku, Asíu og Miðausturlöndum?
 
 Norwegian  
@@ -425,7 +425,6 @@ Tycker du att Sverige bör ta emot fler eller färre flyktingar än idag?
 > To what extent do you agree or disagree that Norway should reduce the proportion of refugees with Muslim backgrounds?
 
 Icelandic  
-
 Hversu sammála eða ósammála ert þú að Ísland eigi að reyna að lækka hlutfall flóttamanna sem eru múslimar?
 
 Norwegian  

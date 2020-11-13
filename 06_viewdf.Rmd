@@ -3,11 +3,10 @@
 ```{r view_df_setup, include=FALSE, echo=FALSE}
 if(!require("sjPlot")){install.packages("sjPlot");  library(sjPlot)}
 if(!require("codebook")){install.packages("codebook");  library(codebook)}
-knitr::opts_chunk$set(echo = TRUE, knitr.kable.NA = "", cache = FALSE, message = FALSE )
+knitr::opts_chunk$set(echo = FALSE, knitr.kable.NA = "", cache = FALSE, message = FALSE )
 ```
 
 ```{r view_df}
 #Display overview of pooled data
-#view_df(d_pool, show.type = TRUE, show.frq = TRUE, show.prc = TRUE, show.na = TRUE)
-codebook(d_pool)
+compact_codebook(d_pool)
 ```

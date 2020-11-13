@@ -15,7 +15,8 @@ description: "This is the guide to the survey on the challenge from terrorism in
 # About 
 
 This document is a guide to the survey of the research project *The challenge from terrorism in the Nordic countries*.
-The project is a collaboration between Iceland, Norway, and Sweden, and funded by the Nordic Research Council (NORDFORSK).
+The project is a Nordic collaboration, and funded by the Nordic Research Council (NORDFORSK).
+The survey was conducted with online, probability-based samples of Icelandic, Norwegian, and Swedish citizens.
 
 The involved researchers are:
 
@@ -34,4 +35,35 @@ The involved researchers are:
 
 Chapter \@ref(question-wordings-and-translations) displays the question wordings in the respective languages.
 Chapter \@ref(pool-datasets) shows the script for the merging procedure of the three datasets.
-Chapter \@ref(view-pooled-data-file) presents the output of the common data set, while the next three chapters show the codebook for the original data sets from Iceland, Norway, and Sweden, respectively. 
+Chapter \@ref(view-pooled-data-file) presents the output of the common data set, while the three chapters \@ref(original-data-set-iceland), \@ref(original-data-set-norway), and \@ref(original-data-set-sweden) show the codebook for the original data sets from Iceland, Norway, and Sweden, respectively. 
+
+## About the survey panels
+
+### Iceland
+[The Social Science Research Institute (SSRI)](http://fel.hi.is/english) is an academic research institute within the University of Iceland. 
+It was established in 1986 and manages various different projects, such as different types of surveys and project evaluations, as well as the research and analysis of human society and sociological issues. 
+Since the online panel was first launched in 2010, data has been collected for a number of both Icelandic and international studies, covering broad scientific topics. It pertains to the Faculty of Social and Human Sciences, the Faculty of Social Work and the Faculty of Political Science. 
+SSRI is a setting for research and development for the three faculties. 
+The online panel consists of Icelandic residents aged 18 and older who have agreed to participate in SSRI's online surveys. 
+Panel members are recruited by telephone interviews with random samples from the National register and care is given to rebalancing when needed. 
+Therefore, samples drawn from the online panel are representative of the Icelandic nation.
+SSRI is committed to ensuring that the online panel represents the Icelandic population at all times and provides reliable and valid results. 
+
+### Norway
+[The Norwegian Citizen Panel (NCP)](https://www.uib.no/medborger)  is a research-purpose internet panel with over 6000 active participants. It is based on a probability sample of the general Norwegian population above the age of 18 drawn from the Norwegian National Registry. Panel members complete an online questionnaire three times a year of 15 minutes each. The NCP is a core component of The Digital Social Science Core Facilities (DIGSSCORE), and  was established in 2013 as a collaboration between several departments at the Faculty of Social Sciences at the University of Bergen and NORCE -- Norwegian Research Centre. 
+The survey is based on a online questionnaire with postal recruitment. 
+The National Population Registry includes everyone born in Norway as well as former and current inhabitants.
+The NORDFORSK questions are part of the Norwegian Citizen Panel Wave 15, and available to researchers globally, free of charge through [The Norwegian Centre for Research Data](http://nsd.uib.no).
+
+
+### Sweden
+[The Citizen Panel](https://lore.gu.se/surveys/citizen/aboutcp) in Sweden is an online panel survey run by the Laboratory of Opinion Research (LORE), established in 2010 by the Multidiciplinary Opinion and Democracy (MOD) research group at the faculty of social science, University of Gothenburg. 
+Participants in the Citizen Panel are required to answer an initial profile survey where questions about the respondent's background, such as gender, education, age, and labor market position are asked.
+A small number of general political attitude variables are included in these fundamental profile data: ideological self-placement on a left-right scale, political trust and interest in politics.
+Within the Citizen Panel there are a number of panel questions that are asked twice a year to a subsample of the Citizen Panel. Among these panel questions are questions about institutional trust, political interest, concerns for various problems, interpersonal trust, as well as attitudes towards political parties and political issues.
+
+The first large scale recruitment to the Citizen Panel was initiated during the election campaign for the Swedish general election in 2010, mainly through advertising on social media platforms. 
+In 2012 the Citizen Panel begun to complement its self-recruited sample with participants recruited by random probability sampling, first through telephone interviews, but since then mainly through postal invitations. 
+The random probability sample in the Citizen Panel now consists of approximately 9,000 individuals.
+
+
