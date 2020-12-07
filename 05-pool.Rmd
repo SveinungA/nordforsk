@@ -265,7 +265,7 @@ di_pool <- di_pool %>% mutate(NORDFORSK1_TACTIC1 = case_when(NORDFORSK1_TACTIC1 
                               EDUCATION = case_when(EDUCATION == 1 ~ 1,
                                                     EDUCATION %in% 2:3 ~ 2,
                                                     EDUCATION == 4 ~ 3,
-                                                    EDUCATION %in% 5:6 ~ 4),
+                                                    EDUCATION %in% 5:8 ~ 4),
                  LEFTRIGHT = case_when(LEFTRIGHT == 0 ~ 1,
                                        LEFTRIGHT == 1 ~ 2,
                                        LEFTRIGHT == 2 ~ 3,
@@ -1104,7 +1104,7 @@ d_pool <- d_pool %>% var_labels(ResponseId = 'Response ID',
 save(d_pool, file = 'nordforsk-pooled.RData') # as R data
 rio::export(d_pool, "nordforsk-pooled.rds") # to R data structure file
 #haven::write_sav(d_pool, 'nordforsk-pooled1.sav') # to SPSS file using haven package
-rio::export(d_pool, 'nordforsk-pooled2.sav') # to SPSS file using rio package
+rio::export(d_pool, 'nordforsk-pooled.sav') # to SPSS file using rio package
 #haven::write_dta(d_pool, 'nordforsk-pooled1.dta') # to Stata file using haven package
-rio::export(d_pool, 'nordforsk-pooled2.dta') # to Stata file using rio package
+rio::export(d_pool, 'nordforsk-pooled.dta') # to Stata file using rio package
 ```
